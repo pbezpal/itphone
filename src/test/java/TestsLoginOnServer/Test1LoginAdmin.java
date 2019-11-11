@@ -11,6 +11,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import io.qameta.allure.model.Status;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -25,6 +26,7 @@ public class Test1LoginAdmin {
 
     @Story(value = "Авторизация под Администратором")
     @Description(value = "Тестирование авторизации на сервер, под учётной записью 'Администртаор'")
+    @Disabled
     @Test
     void test_Login_Admin(){
         if(MonitoringPage.isCheckUser(webLoginAdmin)) Allure.step("Пользователь " + webLoginAdmin + " успешно авторизовался на сервере", Status.PASSED);

@@ -145,10 +145,10 @@
                             <value>${project.build.directory}/allure-results</value>
                         </property>
                     </systemProperties>
-                    <includes>
+                    <!--<includes>
                         <include>**\Test3SettingsSipServer.java</include>
                         <include>**\Test4Providers.java</include>
-                    </includes>
+                    </includes>-->
                     <excludes>
                         <exclude>**\Test1LoginAdmin.java</exclude>
                         <exclude>**\Test1LoginOper.java</exclude>
