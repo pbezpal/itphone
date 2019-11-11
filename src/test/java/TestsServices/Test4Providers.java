@@ -91,7 +91,7 @@ public class Test4Providers {
         assertTrue(dx500Page.isConfigurationServerSIP(), "На сервере некорректная конфигурация сервера SIP");
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverSIP), "Не удалось запустить сервер " + serverSIP);
-        assertTrue(dx500Page.isCheckStartServersDX500(serverSIP), "Сервер " + serverSIP + " не запущен");
+        assertTrue(dx500Page.isCheckStartServers(serverSIP), "Сервер " + serverSIP + " не запущен");
     }
 
 
@@ -104,7 +104,7 @@ public class Test4Providers {
         assertTrue(dx500Page.isConfigurationServerBooster(), "На сервере некорректная конфигурация сервера Ассистентов");
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverBooster), "Не удалось запустить сервер " + serverBooster);
-        assertTrue(dx500Page.isCheckStartServersDX500(serverBooster), "Сервер " + serverBooster + " не запущен");
+        assertTrue(dx500Page.isCheckStartServers(serverBooster), "Сервер " + serverBooster + " не запущен");
     }
 
     @Story(value = "Тестирование запуска сервера Пультов провайдера DX500")
@@ -116,7 +116,7 @@ public class Test4Providers {
         assertTrue(dx500Page.isConfigurationServerPult(), "На сервере некорректная конфигурация сервера Пультов");
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverPult), "Не удалось запустить сервер " + serverPult);
-        assertTrue(dx500Page.isCheckStartServersDX500(serverPult), "Сервер " + serverPult + " не запущен");
+        assertTrue(dx500Page.isCheckStartServers(serverPult), "Сервер " + serverPult + " не запущен");
     }
 
     @Story(value = "Тестирование запуска сервера SIP-Пультов провайдера DX500")
@@ -128,7 +128,7 @@ public class Test4Providers {
         assertTrue(dx500Page.isConfigurationSIPPult(), "На сервере некорректная конфигурация сервера SIP Пульт");
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverSIPPult), "Не удалось запустить сервер " + serverSIPPult);
-        assertTrue(dx500Page.isCheckStartServersDX500(serverSIPPult), "Сервер " + serverSIPPult + " не запущен");
+        assertTrue(dx500Page.isCheckStartServers(serverSIPPult), "Сервер " + serverSIPPult + " не запущен");
     }
 
     @Story(value = "Тестирование сохранение настроек провайдера DX500")
