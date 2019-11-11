@@ -1,4 +1,4 @@
-package TestsSettingsServer;
+package TestsServices;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureServerTests;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @EpicServicesTests
 @FeatureServerTests
 @ExtendWith(BeforeAllTests.class)
-public class Test3SettingsSipServer {
+public class Test3SipServer {
     private LoginPage loginPage = null;
     private MonitoringPage monitoringPage = null;
     private SipServerPage sipServerPage = null;

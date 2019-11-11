@@ -137,11 +137,11 @@ public class SipServerPage {
     @Step(value = "Проверяем, что настройки успешно применены")
     public boolean isCheckSettingsSuccessfully(){
         try{
-            elementSettingsSuccessfully.shouldBe(Condition.exist);
-            return true;
+            elementSettingsSuccessfully.waitUntil(Condition.visible, 30000).isEnabled();
         }catch (ElementShouldNot element){
             return false;
         }
+        return true;
     }
 
     public boolean setSettingsSIPServer(String externalIP, String sipPort, String minTurnPort, String maxTurnPort){

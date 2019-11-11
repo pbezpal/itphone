@@ -1,11 +1,10 @@
-package TestsSettingsServer;
+package TestsServices;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureServerTests;
 import Pages.LoginPage;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
-import Pages.Providers.KATSPage;
 import Pages.SipServerPage;
 import RecourcesTests.BeforeAllTests;
 import io.qameta.allure.Description;
@@ -14,8 +13,6 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.DataLogin.*;
-import static DataTests.DataSipServer.*;
-import static DataTests.DataSipServer.turnPortMax;
 import static DataTests.Providers.DataProvidersDX500.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

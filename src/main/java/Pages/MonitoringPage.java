@@ -92,7 +92,7 @@ public class MonitoringPage extends LoginPage{
     public Object openSectionWEB(String section){
         switch(section){
             case linkSipServerPage:
-                if(! SipServerPage.isCheckSipSettingsPage()) clickItemMenu(section);
+                if(! SipServerPage.getInstance().isCheckSipSettingsPage()) clickItemMenu(section);
                 return SipServerPage.getInstance();
         }
         return null;

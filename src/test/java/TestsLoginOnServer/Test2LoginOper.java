@@ -25,7 +25,6 @@ public class Test2LoginOper {
 
     @Story(value = "Авторизация под Оператором")
     @Description(value = "Тестирование авторизации на сервер, под учётной записью 'Оператор'")
-    @Disabled
     @Test
     void test_Login_Oper(){
         if(MonitoringPage.isCheckUser(webLoginOper)) Allure.step("Пользователь " + webLoginOper + " успешно авторизовался на сервере", Status.PASSED);

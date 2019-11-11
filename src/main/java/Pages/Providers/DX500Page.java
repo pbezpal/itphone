@@ -164,7 +164,7 @@ public class DX500Page extends ProvidersPage{
         return true;
     }
 
-    @Step(value = "Проверяемб что сервер {serverName} запущен")
+    @Step(value = "Проверяем, что сервер {serverName} запущен")
     public boolean isCheckStatusStartServer(String serverName){
         SelenideElement elementStartServer = $(By.xpath("//form[contains(@id,'" + serverName + "')]//div[@class='provider-flex-row-dx500 group-button-control']//i[contains(@class,'status-start')]"));
         try {
