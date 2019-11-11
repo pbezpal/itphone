@@ -27,7 +27,7 @@ public class BeforeAllTests implements BeforeAllCallback {
     @Override
     public void beforeAll(ExtensionContext context){
 
-        assertTrue(isAvailableWebServer(), "Web сервер недоступен!!!");
+        //assertTrue(isAvailableWebServer(), "Web сервер недоступен!!!");
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("firefox");
