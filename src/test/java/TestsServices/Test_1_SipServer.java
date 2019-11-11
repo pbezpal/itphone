@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @EpicServicesTests
 @FeatureServerTests
 @ExtendWith(BeforeAllTests.class)
-public class Test3SipServer {
+public class Test_1_SipServer {
     private LoginPage loginPage = null;
     private MonitoringPage monitoringPage = null;
     private SipServerPage sipServerPage = null;

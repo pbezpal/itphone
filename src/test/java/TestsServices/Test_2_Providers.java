@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @FeatureServerTests
 @ExtendWith(BeforeAllTests.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class Test4Providers {
+public class Test_2_Providers {
 
     private LoginPage loginPage = null;
     private MonitoringPage monitoringPage = null;

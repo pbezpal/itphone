@@ -25,5 +25,5 @@ public @interface DataSipServer {
     String commandCheckAVPExternalIP = "cat /etc/opensips/opensips.cfg | grep '$avp(external_ip)=\"" + urlServer + "\";'";
     String commandCheckSettingsTurnMinPort = "cat /etc/turnserver/turnserver.conf | grep min-port=" + turnPortMin;
     String commandCheckSettingsTurnMaxPort = "cat /etc/turnserver/turnserver.conf | grep max-port=" + turnPortMax;
-    String commandStatusSIPServer = "systemctl status opensips|grep active";
+    String commandStatusSIPServer = "pgrep opensips";
 }
