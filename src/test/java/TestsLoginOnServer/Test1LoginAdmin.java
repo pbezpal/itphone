@@ -27,6 +27,7 @@ public class Test1LoginAdmin {
     @Story(value = "Авторизация под Администратором")
     @Description(value = "Тестирование авторизации на сервер, под учётной записью 'Администртаор'")
     @Test
+    @Disabled
     void test_Login_Admin(){
         if(MonitoringPage.isCheckUser(webLoginAdmin)) Allure.step("Пользователь " + webLoginAdmin + " успешно авторизовался на сервере", Status.PASSED);
         else {
