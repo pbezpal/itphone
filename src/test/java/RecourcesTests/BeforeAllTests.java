@@ -45,8 +45,6 @@ public class BeforeAllTests implements BeforeAllCallback {
         }
         WebDriverRunner.setWebDriver(driver);
 
-        //Configuration.browser = "firefox";
-        //Configuration.screenshots = true;
         Configuration.baseUrl = "https://" + urlServer + ":40443";
         Configuration.startMaximized = true;
 
