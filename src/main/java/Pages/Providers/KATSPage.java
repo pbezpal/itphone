@@ -57,7 +57,7 @@ public class KATSPage extends ProvidersPage implements IProvidersPage {
     public boolean addMX1000(String name, String domain, String username, String password, String dialplan, String interval){
         isCheckProviderPage();
         $("#add_provider").click();
-        $("#provider_dialog_params").waitUntil(Condition.visible, 60000);
+        isFormEditProvider();
         clickSelectTypeProvider(KATS);
         setNameProvider(name);
         setInputAddress(domain);

@@ -27,6 +27,11 @@ public interface IProvidersPage {
         return true;
     }
 
+    @Step(value = "Проверяем, открыта ли форма редактирования провайдера")
+    default SelenideElement isFormEditProvider(){
+        return $("#provider_dialog_params").shouldBe(Condition.visible);
+    }
+
     @Step(value = "Проверяем, есть ли провайдер {provider} в таблице провайдеров")
     default boolean isCheckProvider(String provider){
         if($$("table#it_phone_providers td").findBy(Condition.text(provider)).isDisplayed()) return true;

@@ -18,7 +18,7 @@ public class DX500Page extends ProvidersPage implements IProvidersPage{
     public boolean addDX500Provider(){
         isCheckProviderPage();
         $("#add_provider").click();
-        $("#provider_dialog_params").shouldBe(Condition.visible);
+        isFormEditProvider();
         clickSelectTypeProvider(DX500);
         addServers();
         setNameProvider(DX500);

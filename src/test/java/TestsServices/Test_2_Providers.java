@@ -6,6 +6,7 @@ import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
 import Pages.Providers.KATSPage;
+import Pages.Providers.ProvidersPage;
 import RecourcesTests.BeforeAllTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
@@ -25,15 +26,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Test_2_Providers {
 
-    private DX500Page dx500Page = null;
-    private KATSPage katsPage = null;
+    private DX500Page dx500Page = DX500Page.getInstance();
+    private KATSPage katsPage = KATSPage.getInstance();
 
     @Story(value = "Добавление провайдера DX500")
     @Description(value = "Проверяем, что через СУ можно успешно добавить провайдер DX500")
     @Order(1)
     @Test
     void test_Add_Provider_DX500() {
-        if(dx500Page == null) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if( ! dx500Page.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
         if( ! dx500Page.isCheckProvider(DX500)) assertTrue(dx500Page.addDX500Provider(), "Провайдер DX500 не был добавлен");
         assertTrue(dx500Page.isMySqlDialplan(), "Маршрут для DX500 не был добавлен в БД MySql");
     }
@@ -43,7 +44,8 @@ public class Test_2_Providers {
     @Order(2)
     @Test
     void test_Start_DX500_Server_SIP() {
-        if(dx500Page == null) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if( ! dx500Page.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500);
         assertTrue(dx500Page.isConfigurationServerSIP(), "Некорректная конфигурация сервера SIP");
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverSIP), "Не удалось запустить сервер " + serverSIP);
@@ -56,7 +58,8 @@ public class Test_2_Providers {
     @Order(3)
     @Test
     void test_Start_DX500_Server_Booster() {
-        if(dx500Page == null) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if( ! dx500Page.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500);
         assertTrue(dx500Page.isConfigurationServerBooster(), "Некорректная конфигурация сервера Ассистентов");
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverBooster), "Не удалось запустить сервер " + serverBooster);
@@ -68,7 +71,8 @@ public class Test_2_Providers {
     @Order(4)
     @Test
     void test_Start_Server_Pult() {
-        if(dx500Page == null) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if( ! dx500Page.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500);
         assertTrue(dx500Page.isConfigurationServerPult(), "Некорректная конфигурация сервера Пультов");
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverPult), "Не удалось запустить сервер " + serverPult);
@@ -80,7 +84,8 @@ public class Test_2_Providers {
     @Order(5)
     @Test
     void test_Start_Server_SIP_Pult() {
-        if(dx500Page == null) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if( ! dx500Page.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500);
         assertTrue(dx500Page.isConfigurationSIPPult(), "Некорректная конфигурация сервера SIP Пульт");
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverSIPPult), "Не удалось запустить сервер " + serverSIPPult);
@@ -92,7 +97,8 @@ public class Test_2_Providers {
     @Order(6)
     @Test
     void test_Save_Provider_DX500() {
-        if(dx500Page == null) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if( ! dx500Page.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500);
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.clickSaveProvider(DX500), "После сохранения провайдера " + DX500 + "запись в таблице пропала" );
     }
