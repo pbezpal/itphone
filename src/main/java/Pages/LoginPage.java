@@ -1,49 +1,29 @@
 package Pages;
 
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ex.ElementNotFound;
-import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Selectors.byName;
 import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage {
 
-    private static final SelenideElement elementFormLogin = $(By.xpath("//div[@class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-buttons']"));
-    private static final SelenideElement elementInputLogin = $(By.xpath("//input[@id='name']"));
-    private static final SelenideElement elementInputPassword = $(By.xpath("//input[@id='password']"));
-    private static final SelenideElement elementButtonEnter = $(By.xpath("//button"));
-
     public LoginPage(){}
 
-    @Step(value = "Вводим логин {login}")
-    public LoginPage sendLogin(String login){
-        elementInputLogin.clear();
-        elementInputLogin.sendKeys(login);
-
-        return this;
-    }
-
-    @Step(value = "Вводим пароль {password}")
-    public LoginPage sendPassword(String password){
-        elementInputPassword.clear();
-        elementInputPassword.sendKeys(password);
-
-        return this;
-    }
-
-    @Step(value = "Нажимаем кнопку 'Войти'")
-    public void clickButton(){ elementButtonEnter.click(); }
-
-    public MonitoringPage loginOnServer(String login, String password){
-        try{
-            elementFormLogin.isEnabled();
-            sendLogin(login);
-            sendPassword(password);
-            clickButton();
-            return new MonitoringPage();
-        }catch (ElementNotFound element){
-            return null;
+    public static boolean isLoginForm(){
+        try {
+            $("div#dialog-authentication-form").shouldBe(Condition.visible);
+        }catch (ElementNotFound elementNotFound){
+            return false;
         }
+        return true;
+    }
+
+    public static void loginOnServer(String login, String password){
+        $(byName("name")).clear();
+        $(byName("name")).sendKeys(login);
+        $(byName("password")).clear();
+        $(byName("password")).sendKeys(password);
+        $("button").click();
     }
 }

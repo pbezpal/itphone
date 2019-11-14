@@ -6,14 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import static DataTests.DataLogin.urlServer;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DataProvidersDX500 {
-
-    /***** Общие пармаетры *****/
-    String linkProvidersPage = "Провайдеры";
+public @interface DataProviderDX500 {
 
     /***** Параметры настройки провайдера DX *****/
     String DX500 = "DX500";
-    String patternRoute = "5XXX";
+    String dialplanDX500 = "5XXX";
 
     /***** Параметры настройки SIP(абон)-DX *****/
     String nameSIP = "gw-q";
@@ -84,4 +81,7 @@ public @interface DataProvidersDX500 {
     String MSG3_Enable = "grep -E 'SMG3_ENABLE=1' /etc/smg.cfg";
     String SMG3_SG3DEV = "grep -E \"SG3_DEV='" + urlServer + ":2323->172.22.50.113:2300'\" /etc/smg.cfg";
     String SMG3_MG3DEV = "grep -E \"MG3_DEV='" + urlServer + ":2363->172.22.50.113:2350|10.10.11.129:2323'\" /etc/smg.cfg";
+
+    /***** Проверяем, что в БД mysql записался маршрут вызова *****/
+    String mysqlDialplan = "mysql -hlocalhost -uroot -p123456 -e 'select * from dialplan' opensips | grep " + dialplanDX500;
 }

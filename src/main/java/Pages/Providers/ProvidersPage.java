@@ -4,9 +4,11 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
+import static DataTests.Providers.DataProviderDX500.DX500;
+import static DataTests.Providers.DataProviderKATS.KATS;
 import static com.codeborne.selenide.Selenide.$;
 
-public class ProvidersPage implements IProvidersPage {
+public class ProvidersPage implements IProvidersPage{
 
     /***** Элементы страницы Провайдеры *****/
     private static final SelenideElement elementButtonAddProvider = $(By.xpath("//button[@id='add_provider']")); //Кнопка добавления провайдера
@@ -20,27 +22,6 @@ public class ProvidersPage implements IProvidersPage {
     public static ProvidersPage providersPage = new ProvidersPage();
     public static ProvidersPage getInstance() {return providersPage;}
 
-    @Step(value = "Нажимаем кнопку 'Редактировать' у провайдера {provider}")
-    public void clickButtonEditProvider(String provider){
-        SelenideElement elementTableProvider = $(By.xpath("//table[@id='it_phone_providers']//td[text()='" + provider + "']//parent::tr//img[@class='cmd-button cmd-button-edit']"));
-        elementTableProvider.click();
-    }
-
-    @Step(value = "Нажимаем на кнопку 'Добавить'")
-    public void clickButtonAddProvider(){
-        elementButtonAddProvider.click();
-    }
-
-    @Step(value = "Выбираем тип провайдера - {type}")
-    public void clickSelectTypeProvider(String type){
-        if(isCheckFormEditProvider()){
-            elementSelectTypeProvider.click();
-            elementSelectTypeProvider.$(By.xpath("option[@value='" + type +"']")).click();
-        }
-    }
-
-    @Step(value = "Нажимаем кнопку 'Добавить'")
-    public void clickButtonAddProviders(){ elementButtonAddProviders.click(); }
 
     public String getTextAdd(){
         return textAdd;
@@ -56,6 +37,17 @@ public class ProvidersPage implements IProvidersPage {
 
     public String getTextDelete(){
         return textDelete;
+    }
+
+    @Override
+    public Object getInstanceProvider(String provider){
+        switch(provider){
+            case DX500:
+                return DX500Page.getInstance();
+            case KATS:
+                return KATSPage.getInstance();
+        }
+        return null;
     }
 
 }

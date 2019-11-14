@@ -2,34 +2,14 @@ package Pages;
 
 import HelperClasses.SSHManager;
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
-import com.codeborne.selenide.ex.ElementShouldNot;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 
 import static DataTests.DataSipServer.*;
+import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class SipServerPage {
-
-    /***** Кнопка Мониторинг *****/
-    private SelenideElement elementButtonMonitoringPage = $(By.xpath("//a[@class='link_menu link_top_menu' and text()='Мониторинг']"));
-
-    /***** Раздел SIP сервер *****/
-    private static final SelenideElement elementTitleForm = $(By.xpath("//a[@id='sv-opensips']")); //
-    private static final SelenideElement elementInputSIPExternalAddr = $(By.xpath("//input[@name='opensips-extern-addr']")); // Поле - Основной IP адрес
-    private static final SelenideElement elementInputSipAddressList = $(By.xpath("//input[@name='opensips-address-list']")); // Поле - Дополнительные IP адреса
-    private static final SelenideElement elementInputSIPPort = $(By.xpath("//input[@name='opensips-server-port']")); // Поле - Порт сервера
-    private static final SelenideElement elementUseITBooster = $(By.xpath("//input[@name='opensips-use-it-booster']")); // Чекбокс - Ассистент (booster)
-    private static final SelenideElement elementUseRTPProxy = $(By.xpath("//input[@name='opensips-use-rtp-proxy']")); // Чекбокс - RTP прокси
-    private static final SelenideElement elementInputTurnPortMin = $(By.xpath("//input[@name='opensips-range-ports-start']")); // Поле - Диапазон портов (начальный порт)
-    private static final SelenideElement elementInputTurnPortMax = $(By.xpath("//input[@name='opensips-range-ports-stop']")); // Поле - Диапазон портов (конечный порт)
-    private static final SelenideElement elementButtonSave = $(By.xpath("//button[@class='save_setting button button_standart']")); // Кнопка - Сохранить
-    private static final SelenideElement elementFormConfirmSave = $(By.xpath("//div[@class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-buttons ui-draggable']")); // Окно - Сохранение настроек
-    private static final SelenideElement elementButtonConfirmOk = $(By.xpath("//span[@class='ui-button-text' and text()='Ok']")); // Кнопка - ОК, в окне сохранение настроек
-    private static final SelenideElement elementRestartServer = $(By.xpath("//div[@id='restart_server']//span")); // Ссылка для рестарта сервисов
-    private static final SelenideElement elementSettingsSuccessfully = $(By.xpath("//div[@id='restart_server']/p[text()='Настройки успешно изменены']")); // Надпись после сохранения и перезагрузки сервисов
 
     public static SipServerPage sipServerPage = new SipServerPage();
     public static SipServerPage getInstance() {return sipServerPage;}
@@ -37,50 +17,37 @@ public class SipServerPage {
     @Step(value = "Проверяем, что мы на странице 'SIP-сервер'")
     public static boolean isCheckSipSettingsPage(){
         try{
-            elementTitleForm.waitUntil(Condition.visible, 10000).isEnabled();
-            return true;
-        }catch(ElementNotFound element){
+            $("#sv-opensips").waitUntil(Condition.visible, 10000);
+        }catch (ElementNotFound elementNotFound){
             return false;
         }
+        return true;
     }
 
     @Step(value = "Вводим {IP} в поле 'Основной IP адрес'")
     public SipServerPage sendExternalIPAddress(String externalIP){
-        if( ! elementInputSIPExternalAddr.getValue().equals(externalIP)){
-            elementInputSIPExternalAddr.clear();
-            elementInputSIPExternalAddr.sendKeys(externalIP);
+        if( ! $(byName("opensips-extern-addr")).getValue().equals(externalIP)){
+            $(byName("opensips-extern-addr")).clear();
+            $(byName("opensips-extern-addr")).sendKeys(externalIP);
         }
-
         return this;
     }
 
     @Step(value = "Вводим {sipPort} в поле 'Порт сервера'")
     public SipServerPage sendSipPort(String sipPort){
-        if( ! elementInputSIPPort.getValue().equals(sipPort)){
-            elementInputSIPPort.clear();
-            elementInputSIPPort.sendKeys(sipPort);
+        if( ! $(byName("opensips-server-port")).getValue().equals(sipPort)){
+            $(byName("opensips-server-port")).clear();
+            $(byName("opensips-server-port")).sendKeys(sipPort);
         }
 
         return this;
     }
 
-    @Step(value="Проверяем, что стоит галочка 'Ассистент (booster)'")
-    public boolean isCheckSelectedUseITBooster(){
-        if(elementUseITBooster.isSelected()) return true;
-        else return false;
-    }
-
-    @Step(value = "Проверяем, что чтоит галочка 'RTP прокси'")
-    public boolean isCheckSelectedUseRTPProxy(){
-        if(elementUseRTPProxy.isSelected()) return true;
-        else return false;
-    }
-
     @Step(value = "Вводим минимальный порт {minPort} в поле 'Диапазон портов'")
     public SipServerPage sendTurnPortMin(String minPort){
-        if( ! elementInputTurnPortMin.getValue().equals(minPort)){
-            elementInputTurnPortMin.clear();
-            elementInputTurnPortMin.sendKeys(minPort);
+        if( ! $(byName("opensips-range-ports-start")).getValue().equals(minPort)){
+            $(byName("opensips-range-ports-start")).clear();
+            $(byName("opensips-range-ports-start")).sendKeys(minPort);
         }
 
         return this;
@@ -88,76 +55,34 @@ public class SipServerPage {
 
     @Step(value = "Вводим максимальный порт {maxPort} в поле 'Диапазон портов'")
     public SipServerPage sendTurnPortMax(String maxPort){
-        if( ! elementInputTurnPortMax.getValue().equals(maxPort)){
-            elementInputTurnPortMax.clear();
-            elementInputTurnPortMax.sendKeys(maxPort);
+        if( ! $(byName("opensips-range-ports-stop")).getValue().equals(maxPort)){
+            $(byName("opensips-range-ports-stop")).clear();
+            $(byName("opensips-range-ports-stop")).sendKeys(maxPort);
         }
 
         return this;
-    }
-
-    @Step(value = "Нажимаем кнопку 'Сохранить'")
-    public SipServerPage clickButtonSave(){
-        elementButtonSave.click();
-        return this;
-    }
-
-    @Step(value = "Проверяем, что появилось окно 'Сохранение настроек'")
-    public boolean isCheckConfirmSave(){
-        try{
-            elementFormConfirmSave.isEnabled();
-            return true;
-        }catch (ElementNotFound element){
-            return false;
-        }
-    }
-
-    @Step(value = "Нажимаем кнопку 'Ok' в окне 'Сохранение настроек'")
-    public SipServerPage clickButtonOkConfirmSave(){
-        if(isCheckConfirmSave()) elementButtonConfirmOk.click();
-        return this;
-    }
-
-    @Step(value = "Проверяем, что появилась ссылка для перезагрузки служб")
-    public boolean isCheckLinkRestartServer(){
-        try{
-            elementRestartServer.isEnabled();
-            return true;
-        }catch (ElementNotFound element){
-            return false;
-        }
-    }
-
-    @Step(value = "Перезагружаем службы связанные с SIP сервером")
-    public SipServerPage clickLinkRestartServer(){
-        if(isCheckLinkRestartServer()) elementRestartServer.click();
-        return this;
-    }
-
-    @Step(value = "Проверяем, что настройки успешно применены")
-    public boolean isCheckSettingsSuccessfully(){
-        try{
-            elementSettingsSuccessfully.waitUntil(Condition.visible, 30000).isEnabled();
-        }catch (ElementShouldNot element){
-            return false;
-        }
-        return true;
     }
 
     public boolean setSettingsSIPServer(String externalIP, String sipPort, String minTurnPort, String maxTurnPort){
         if(isCheckSipSettingsPage()){
             sendExternalIPAddress(externalIP);
             sendSipPort(sipPort);
-            if( ! isCheckSelectedUseITBooster()) elementUseITBooster.click();
-            if( ! isCheckSelectedUseRTPProxy()) elementUseRTPProxy.click();
+            if( ! $(byName("opensips-use-it-booster")).isSelected()) $(byName("opensips-use-it-booster")).click();
+            if( ! $(byName("opensips-use-rtp-proxy")).isSelected()) $(byName("opensips-use-rtp-proxy")).click();
             sendTurnPortMin(minTurnPort);
             sendTurnPortMax(maxTurnPort);
-            clickButtonSave();
-            clickButtonOkConfirmSave();
-            clickLinkRestartServer();
+            $("button").shouldHave(Condition.text("Сохранить")).click();
+            $(byXpath("//div[@class='ui-dialog-buttonset']")).find("span").shouldHave(Condition.text("Ok")).click();
+            $(byId("restart_server")).find("span").click();
         }
 
-        return isCheckSettingsSuccessfully();
+        try{
+            $(byId("restart_server")).find("p").waitUntil(Condition.text("Настройки успешно изменены"), 30000);
+        }catch (ElementNotFound elementNotFound){
+            return false;
+        }
+        return true;
+
     }
 
     @Step(value = "Проверяем. что на сервере сохранились настройки для SIP Ассистента")
@@ -192,8 +117,7 @@ public class SipServerPage {
     public boolean isCheckStatusOpensips(){ return SSHManager.isCheckQuerySSH(commandStatusSIPServer); }
 
     @Step(value = "Переходим в раздел 'Мониторинг'")
-    public MonitoringPage clickButtonMonitoringPage(){
-        elementButtonMonitoringPage.click();
-        return new MonitoringPage();
+    public void clickButtonMonitoringPage(){
+        $("a.link_menu.link_top_menu").shouldHave(Condition.text("Мониторинг")).click();
     }
 }

@@ -1,21 +1,23 @@
 package RecourcesTests;
 
 import DataTests.DataLogin;
+import Pages.LoginPage;
+import Pages.MonitoringPage;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
-import io.qameta.allure.Step;
+
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.stqa.selenium.factory.WebDriverPool;
 
-import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.UnknownHostException;
 
-import static DataTests.DataLogin.urlServer;
+
+import static DataTests.DataLogin.*;
+import static Pages.MonitoringPage.monitoringPage;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -23,11 +25,10 @@ public class BeforeAllTests implements BeforeAllCallback {
 
     private String urlHub = DataLogin.urlHUB;
     private String portHub = DataLogin.portHub;
+    private LoginPage loginPage = null;
 
     @Override
     public void beforeAll(ExtensionContext context){
-
-        //assertTrue(isAvailableWebServer(), "Web сервер недоступен!!!");
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("firefox");
@@ -45,26 +46,20 @@ public class BeforeAllTests implements BeforeAllCallback {
         WebDriverRunner.setWebDriver(driver);
 
         //Configuration.browser = "firefox";
-        Configuration.screenshots = false;
+        //Configuration.screenshots = true;
+        Configuration.baseUrl = "https://" + urlServer + ":40443";
         Configuration.startMaximized = true;
 
-        open("https://" + urlServer + ":40443");
-    }
+        if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains("https://" + urlServer + ":40443")) open("/");
 
-    @Step(value = "Проверяем, пингуется ли сервер")
-    public boolean isAvailableWebServer(){
-
-        InetAddress address = null;
-        try{
-            address = InetAddress.getByName(urlServer);
-        }catch (UnknownHostException host){
-            host.printStackTrace();
+        if(String.valueOf(context.getTestClass()).contains("SipServer") || String.valueOf(context.getTestClass()).contains("Providers")){
+            if (LoginPage.isLoginForm()) LoginPage.loginOnServer(webLoginAdmin, webPassword);
+            else if (MonitoringPage.isCheckLogin() && ! MonitoringPage.isCheckUser(webLoginAdmin)) {
+                MonitoringPage.clickButtonLogout();
+                LoginPage.loginOnServer(webLoginAdmin, webPassword);
+            }
+            assertTrue(MonitoringPage.isCheckLogin(), "Не удалось авторизоваться на сервере");
         }
-        boolean availableServer = false;
-        try{
-            availableServer = address.isReachable(10000);
-        }catch (Exception e){}
 
-        return availableServer;
     }
 }
