@@ -76,11 +76,11 @@ public interface IProvidersPage {
 
     @Step(value = "Переходим в раздел 'Маршрутизация вызовов' и настраиваем маршрут {patternRoute}")
     default void setRouteCalls(String patternRoute){
-        $("#provider_tab_name").findAll("li").findBy(Condition.attribute("aria-controls", "provider_calls")).click();
+        $$("#provider_tab_name li").findBy(Condition.attribute("aria-controls", "provider_calls")).click();
         if($("#provider_table_dialplans").find("tr").isDisplayed()){
-            if( ! $("#provider_table_dialplans").find("tr").find("span[data-bind-prov-param*='attrs.match_mask']").getText().equals(patternRoute))
+            if( ! $$("#provider_table_dialplans span").findBy(Condition.text(patternRoute)).isDisplayed())
             {
-                $$("#provider_table_dialplans img").findBy(Condition.attribute("title", "Редактирвоать")).click();
+                $$("#provider_table_dialplans img").findBy(Condition.cssClass("cmd-button-edit")).click();
             }
         }else $("#provider_add_dialplan").click();
 
