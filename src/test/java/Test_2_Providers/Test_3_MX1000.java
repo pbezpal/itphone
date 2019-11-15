@@ -5,12 +5,10 @@ import AnnotationsTests.ServicesTests.FeatureServerTests;
 import Pages.MonitoringPage;
 import Pages.Providers.KATSPage;
 import Pages.Providers.ProvidersPage;
-import RecourcesTests.BeforeAllTests;
 import RecourcesTests.BeforeEachTests;
 import RecourcesTests.TestRules;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
-import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,12 +20,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EpicServicesTests
 @FeatureServerTests
+@ExtendWith(TestRules.class)
 public class Test_3_MX1000 {
 
     private KATSPage katsPage = null;
-
-    @Rule
-    TestRules testRules = new TestRules();
 
     @BeforeEach
     void setUp(){

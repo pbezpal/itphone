@@ -8,9 +8,9 @@ import RecourcesTests.BeforeEachTests;
 import RecourcesTests.TestRules;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
-import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.DataLogin.*;
 import static DataTests.DataSipServer.*;
@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EpicServicesTests
 @FeatureServerTests
+@ExtendWith(TestRules.class)
 public class Test_1_SipServer {
 
     private SipServerPage sipServerPage = null;
@@ -27,9 +28,6 @@ public class Test_1_SipServer {
     private boolean tableStatusSipServer = false;
     private boolean statusSipServer = false;
     private String messageStatusSipServer = "";
-
-    @Rule
-    TestRules testRules = new TestRules();
 
     @BeforeEach
     void setUp(){

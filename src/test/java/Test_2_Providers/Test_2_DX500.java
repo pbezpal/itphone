@@ -9,8 +9,8 @@ import RecourcesTests.BeforeEachTests;
 import RecourcesTests.TestRules;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
-import org.junit.Rule;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.Providers.DataProviderDX500.*;
 import static DataTests.Providers.Providers.linkProvidersPage;
@@ -18,13 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EpicServicesTests
 @FeatureServerTests
+@ExtendWith(TestRules.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Test_2_DX500 {
 
     private DX500Page dx500Page;
-
-    @Rule
-    TestRules testRules = new TestRules();
 
     @BeforeEach
     void setUp(){
