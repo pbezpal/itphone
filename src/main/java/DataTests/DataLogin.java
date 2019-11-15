@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 public @interface DataLogin {
 
     /***** Общие пармаетры *****/
-    String urlServer = "10.10.11.55";
+    String urlServer = "10.10.11.110";
     String urlHUB = "http://10.10.199.45:";
     String portHub = "4444";
 

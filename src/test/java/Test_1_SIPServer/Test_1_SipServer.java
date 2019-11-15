@@ -2,24 +2,15 @@ package Test_1_SIPServer;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureServerTests;
-import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
 import Pages.SipServerPage;
-import RecourcesTests.BeforeAllTests;
 import RecourcesTests.BeforeEachTests;
-import com.codeborne.selenide.WebDriverRunner;
-import io.qameta.allure.Attachment;
+import RecourcesTests.TestRules;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import org.junit.Rule;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.TestWatcher;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-
-import java.io.IOException;
 
 import static DataTests.DataLogin.*;
 import static DataTests.DataSipServer.*;
@@ -28,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EpicServicesTests
 @FeatureServerTests
-@ExtendWith({BeforeAllTests.class, BeforeEachTests.class})
 public class Test_1_SipServer {
 
     private SipServerPage sipServerPage = null;
@@ -37,6 +27,14 @@ public class Test_1_SipServer {
     private boolean tableStatusSipServer = false;
     private boolean statusSipServer = false;
     private String messageStatusSipServer = "";
+
+    @Rule
+    TestRules testRules = new TestRules();
+
+    @BeforeEach
+    void setUp(){
+        BeforeEachTests.beforeStartTests();
+    }
 
     @Story(value = "Тестирование настройки SIP-сервера")
     @Description(value = "Проверяем, что через СУ настраивается SIP-сервер, настройки сохраняются на сервере и корректно отображается статус SIP сервера")
@@ -65,26 +63,4 @@ public class Test_1_SipServer {
         }
         assertTrue(statusSipServer, messageStatusSipServer);
     }
-
-    /*@AfterEach
-    void tearDown() throws IOException {
-        @Rule
-        public TestWatcher screenshotOnFailure = new TestWatcher() {
-            @Override
-            protected void failed(Throwable e, Description description) {
-                makeScreenshotOnFailure();
-            }
-
-            @Override
-            protected void finished(Description description) {
-                WebDriverRunner.getWebDriver().close();
-            }
-
-            @Attachment(type = "image/png")
-            public byte[] makeScreenshotOnFailure() {
-                return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
-            }
-
-        };
-    }*/
 }

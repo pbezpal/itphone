@@ -5,12 +5,12 @@ import AnnotationsTests.ServicesTests.FeatureServerTests;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
 import Pages.Providers.ProvidersPage;
-import RecourcesTests.BeforeAllTests;
 import RecourcesTests.BeforeEachTests;
+import RecourcesTests.TestRules;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
+import org.junit.Rule;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.Providers.DataProviderDX500.*;
 import static DataTests.Providers.Providers.linkProvidersPage;
@@ -18,14 +18,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EpicServicesTests
 @FeatureServerTests
-@ExtendWith({BeforeAllTests.class, BeforeEachTests.class})
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Test_2_DX500 {
 
     private DX500Page dx500Page;
 
+    @Rule
+    TestRules testRules = new TestRules();
+
     @BeforeEach
     void setUp(){
+        BeforeEachTests.beforeStartTests();
         if( ! ProvidersPage.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
         if( dx500Page == null ) dx500Page = DX500Page.getInstance();
     }
@@ -93,9 +96,4 @@ public class Test_2_DX500 {
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.clickSaveProvider(DX500), "После сохранения провайдера " + DX500 + "запись в таблице пропала" );
     }
-
-    /*@AfterEach
-    void tearDown() throws IOException {
-        ScreenshotTests.screenshot();
-    }*/
 }
