@@ -47,17 +47,9 @@ public class BeforeAllTests implements BeforeAllCallback {
 
         Configuration.baseUrl = "https://" + urlServer + ":40443";
         Configuration.startMaximized = true;
+        Configuration.screenshots = false;
 
         if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains("https://" + urlServer + ":40443")) open("/");
-
-        if(String.valueOf(context.getTestClass()).contains("SipServer") || String.valueOf(context.getTestClass()).contains("Providers")){
-            if (LoginPage.isLoginForm()) LoginPage.loginOnServer(webLoginAdmin, webPassword);
-            else if (MonitoringPage.isCheckLogin() && ! MonitoringPage.isCheckUser(webLoginAdmin)) {
-                MonitoringPage.clickButtonLogout();
-                LoginPage.loginOnServer(webLoginAdmin, webPassword);
-            }
-            assertTrue(MonitoringPage.isCheckLogin(), "Не удалось авторизоваться на сервере");
-        }
 
     }
 }

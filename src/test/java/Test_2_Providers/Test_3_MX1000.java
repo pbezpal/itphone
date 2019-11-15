@@ -5,20 +5,19 @@ import Pages.MonitoringPage;
 import Pages.Providers.KATSPage;
 import Pages.Providers.ProvidersPage;
 import RecourcesTests.BeforeAllTests;
+import RecourcesTests.BeforeEachTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.io.IOException;
 
 import static DataTests.Providers.DataProviderKATS.*;
 import static DataTests.Providers.Providers.linkProvidersPage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ExtendWith(BeforeAllTests.class)
+@ExtendWith({BeforeAllTests.class, BeforeEachTests.class})
 public class Test_3_MX1000 {
 
     private KATSPage katsPage = null;
@@ -39,8 +38,8 @@ public class Test_3_MX1000 {
         assertTrue(katsPage.isSelectDialplan(), "Шаблон номера для MX1000 не найден в базе данных MySql");
     }
 
-    @AfterEach
+    /*@AfterEach
     void tearDown() throws IOException {
         ScreenshotTests.screenshot();
-    }
+    }*/
 }

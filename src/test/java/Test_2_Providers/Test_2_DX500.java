@@ -2,17 +2,15 @@ package Test_2_Providers;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureServerTests;
-import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
 import Pages.Providers.ProvidersPage;
 import RecourcesTests.BeforeAllTests;
+import RecourcesTests.BeforeEachTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.io.IOException;
 
 import static DataTests.Providers.DataProviderDX500.*;
 import static DataTests.Providers.Providers.linkProvidersPage;
@@ -20,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EpicServicesTests
 @FeatureServerTests
-@ExtendWith(BeforeAllTests.class)
+@ExtendWith({BeforeAllTests.class, BeforeEachTests.class})
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Test_2_DX500 {
 
@@ -96,8 +94,8 @@ public class Test_2_DX500 {
         assertTrue(dx500Page.clickSaveProvider(DX500), "После сохранения провайдера " + DX500 + "запись в таблице пропала" );
     }
 
-    @AfterEach
+    /*@AfterEach
     void tearDown() throws IOException {
         ScreenshotTests.screenshot();
-    }
+    }*/
 }
