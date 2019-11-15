@@ -31,7 +31,11 @@ public class TestRules implements TestWatcher {
 
         @Override
         public void testFailed(ExtensionContext context, Throwable cause) {
-            System.out.println("FAILED TEST");
+            try {
+                makeScreenshotOnFailure();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             close();
             WebDriverPool.DEFAULT.dismissAll();
         }

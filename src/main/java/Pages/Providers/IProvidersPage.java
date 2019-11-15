@@ -8,6 +8,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static Pages.Providers.ProvidersPage.isCheckProviderPage;
+import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -36,7 +37,7 @@ public interface IProvidersPage {
 
     @Step(value = "Нажимаем кнопку 'Редактировать' у провайдера {provider}")
     default void clickButtonEditProvider(String provider){
-        $$("table#it_phone_providers td").findBy(Condition.text(provider)).find(By.xpath("parent::tr")).find("img.cmd-button-edit").click();
+        $(byXpath("//table[@id='it_phone_providers']//td[text()='" + provider + "']//parent::tr//img[contains(@class,'cmd-button-edit')]")).click();
     }
 
     @Step(value = "Выбираем тип провайдера - {type}")
