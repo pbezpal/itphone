@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class DX500Page extends ProvidersPage implements IProvidersPage{
 
     public static DX500Page dx500Page = new DX500Page();
-    public static DX500Page getInstance() {return dx500Page;}
+    public static DX500Page getInstance() { return dx500Page; }
 
     public boolean addDX500Provider(){
         isCheckProviderPage();

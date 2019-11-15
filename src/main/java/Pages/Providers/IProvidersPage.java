@@ -7,15 +7,11 @@ import com.codeborne.selenide.ex.ElementNotFound;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
+import static Pages.Providers.ProvidersPage.isCheckProviderPage;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public interface IProvidersPage {
-
-    @Step(value = "Проверяем, что мы находимся на странице, Провайдеры")
-    default SelenideElement isCheckProviderPage() {
-        return $("#provider_button_panel").waitUntil(Condition.visible, 30000);
-    }
 
     @Step(value = "Проверяем, что появился провайдер {provider} в таблице провайдеров")
     default boolean isCheckProvider(String provider, int milliseconds){
@@ -29,7 +25,7 @@ public interface IProvidersPage {
 
     @Step(value = "Проверяем, открыта ли форма редактирования провайдера")
     default SelenideElement isFormEditProvider(){
-        return $("#provider_dialog_params").shouldBe(Condition.visible);
+        return $("#provider_dialog_params");
     }
 
     @Step(value = "Проверяем, есть ли провайдер {provider} в таблице провайдеров")
@@ -58,7 +54,7 @@ public interface IProvidersPage {
 
     @Step(value = "Нажимаем кнопку 'Сохранить' у провайдера {provider}")
     default boolean clickSaveProvider(String provider){
-        isCheckProviderPage();
+        isCheckProviderPage().shouldBe(Condition.visible);
         $("#provider_dialog_params").waitUntil(Condition.visible, 60000);
         $("#save_and_restart_server").click();
         $("div.blockUI.blockMsg.blockPage").waitUntil(Condition.not(Condition.visible), 60000);
