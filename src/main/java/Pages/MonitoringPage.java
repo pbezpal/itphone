@@ -9,6 +9,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static DataTests.DataSipServer.linkSipServerPage;
+import static DataTests.DataSubscribers.linkSubscribers;
 import static DataTests.Providers.Providers.linkProvidersPage;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -85,8 +86,11 @@ public class MonitoringPage extends LoginPage{
     public static Object openSectionWEB(String section){
         switch(section){
             case linkSipServerPage:
-                if(! SipServerPage.getInstance().isCheckSipSettingsPage()) clickItemMenu(section);
+                clickItemMenu(section);
                 return SipServerPage.getInstance();
+            case linkSubscribers:
+                clickItemMenu(section);
+                return SubscribersPage.getInstance();
         }
         return null;
     }

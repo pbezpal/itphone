@@ -1,14 +1,11 @@
 package RecourcesTests;
 
 import DataTests.DataLogin;
+import HelperClasses.ScreenshotTests;
 import Pages.LoginPage;
 import Pages.MonitoringPage;
-import Pages.Providers.DX500Page;
-import Pages.Providers.ProvidersPage;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.stqa.selenium.factory.WebDriverPool;
@@ -45,6 +42,9 @@ public class BeforeEachTests {
 
         Configuration.baseUrl = "https://" + urlServer + ":40443";
         Configuration.startMaximized = true;
+        Configuration.screenshots = true;
+
+        ScreenshotTests.deleteAllScreenshots();
 
         if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains("https://" + urlServer + ":40443")) open("/");
 

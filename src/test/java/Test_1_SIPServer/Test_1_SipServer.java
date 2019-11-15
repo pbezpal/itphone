@@ -1,29 +1,27 @@
 package Test_1_SIPServer;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
-import AnnotationsTests.ServicesTests.FeatureServerTests;
+import AnnotationsTests.ServicesTests.FeatureSIPServerTests;
 import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
 import Pages.SipServerPage;
 import RecourcesTests.BeforeEachTests;
 import RecourcesTests.TestRules;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
-import io.qameta.allure.model.Status;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.io.IOException;
 
 import static DataTests.DataLogin.*;
 import static DataTests.DataSipServer.*;
 import static com.codeborne.selenide.Selenide.refresh;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @EpicServicesTests
-@FeatureServerTests
+@FeatureSIPServerTests
 @ExtendWith(TestRules.class)
 public class Test_1_SipServer {
 
@@ -42,10 +40,10 @@ public class Test_1_SipServer {
     @Story(value = "Тестирование настройки SIP-сервера")
     @Description(value = "Проверяем, что через СУ настраивается SIP-сервер, настройки сохраняются на сервере и корректно отображается статус SIP сервера")
     @Test
-    void test_Settings_SIP_Server() throws IOException {
+    void test_Settings_SIP_Server() {
         sipServerPage = (SipServerPage) MonitoringPage.openSectionWEB(linkSipServerPage);
         assertTrue(sipServerPage.setSettingsSIPServer(urlServer, sipServerPort, turnPortMin, turnPortMax), "Ошибка при настройке SIP сервера");
-        if( ! sipServerPage.isCheckSettingsSipServer()) Allure.step("Настройки SIP сервера не сохранились на сервере", Status.BROKEN);
+        assertTrue(sipServerPage.isCheckSettingsSipServer(), "Настройки SIP сервера не сохранились на сервере");
         sipServerPage.clickButtonMonitoringPage();
         statusOpensips = sipServerPage.isCheckStatusOpensips();
         moduleStatusSipServer = MonitoringPage.isCheckModuleStatusSIPServer();
@@ -65,8 +63,14 @@ public class Test_1_SipServer {
             messageStatusSipServer = "На сервере запущен SIP сервер, однако в WEB отображается некорреткный статус SIP сервера";
         }
         if( ! statusSipServer) {
-            Allure.step(messageStatusSipServer, Status.BROKEN);
             ScreenshotTests.screenshot();
+            fail(messageStatusSipServer);
         }
     }
+
+    @AfterEach
+    void teatDown(){
+        ScreenshotTests.deleteAllScreenshots();
+    }
+
 }
