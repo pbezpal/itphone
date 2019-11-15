@@ -45,7 +45,6 @@ public class BeforeEachTests {
 
         Configuration.baseUrl = "https://" + urlServer + ":40443";
         Configuration.startMaximized = true;
-        Configuration.screenshots = false;
 
         if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains("https://" + urlServer + ":40443")) open("/");
 
