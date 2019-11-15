@@ -46,6 +46,7 @@ public class Test_2_DX500 {
     @Test
     void test_Start_DX500_Server_SIP() {
         assertTrue(dx500Page.isConfigurationServerSIP(), "Некорректная конфигурация сервера SIP");
+        clickEditFormProvider();
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverSIP), "Не удалось запустить сервер " + serverSIP);
         assertTrue(dx500Page.isCheckStartServers(serverSIP), "Сервер " + serverSIP + " не запущен");
@@ -58,6 +59,7 @@ public class Test_2_DX500 {
     @Test
     void test_Start_DX500_Server_Booster() {
         assertTrue(dx500Page.isConfigurationServerBooster(), "Некорректная конфигурация сервера Ассистентов");
+        clickEditFormProvider();
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverBooster), "Не удалось запустить сервер " + serverBooster);
         assertTrue(dx500Page.isCheckStartServers(serverBooster), "Сервер " + serverBooster + " не запущен");
@@ -69,6 +71,7 @@ public class Test_2_DX500 {
     @Test
     void test_Start_DX500_Server_Pult() {
         assertTrue(dx500Page.isConfigurationServerPult(), "Некорректная конфигурация сервера Пультов");
+        clickEditFormProvider();
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverPult), "Не удалось запустить сервер " + serverPult);
         assertTrue(dx500Page.isCheckStartServers(serverPult), "Сервер " + serverPult + " не запущен");
@@ -80,6 +83,7 @@ public class Test_2_DX500 {
     @Test
     void test_Start_Server_SIP_Pult() {
         assertTrue(dx500Page.isConfigurationSIPPult(), "Некорректная конфигурация сервера SIP Пульт");
+        clickEditFormProvider();
         dx500Page.clickSectionDX500();
         assertTrue(dx500Page.startServer(serverSIPPult), "Не удалось запустить сервер " + serverSIPPult);
         assertTrue(dx500Page.isCheckStartServers(serverSIPPult), "Сервер " + serverSIPPult + " не запущен");
@@ -90,8 +94,11 @@ public class Test_2_DX500 {
     @Order(6)
     @Test
     void test_Save_Provider_DX500() {
-        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500);
-        dx500Page.clickSectionDX500();
+        clickEditFormProvider();
         assertTrue(dx500Page.clickSaveProvider(DX500), "После сохранения провайдера " + DX500 + "запись в таблице пропала" );
+    }
+
+    public void clickEditFormProvider(){
+        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500);
     }
 }
