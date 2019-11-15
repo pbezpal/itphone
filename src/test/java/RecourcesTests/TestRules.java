@@ -17,12 +17,18 @@ import static com.codeborne.selenide.Selenide.close;
 public class TestRules implements TestWatcher {
 
         @Override
-        public void testFailed(ExtensionContext context, Throwable cause) {
+        public void testAborted(ExtensionContext context, Throwable cause){
             try {
                 makeScreenshotOnFailure();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            close();
+            WebDriverRunner.getWebDriver().close();
+        }
+
+        @Override
+        public void testFailed(ExtensionContext context, Throwable cause) {
             close();
             WebDriverRunner.getWebDriver().close();
         }
