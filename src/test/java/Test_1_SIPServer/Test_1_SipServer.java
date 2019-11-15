@@ -1,16 +1,14 @@
-package TestsServices;
+package Test_1_SIPServer;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureServerTests;
 import HelperClasses.ScreenshotTests;
-import Pages.LoginPage;
 import Pages.MonitoringPage;
 import Pages.SipServerPage;
 import RecourcesTests.BeforeAllTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 

@@ -149,6 +149,8 @@
                     <excludes>
                         <exclude>**/Test1LoginAdmin.java</exclude>
                         <exclude>**/Test2LoginOper.java</exclude>
+                        <exclude>**/Test_2_DX500.java</exclude>
+                        <exclude>**/Test_3_MX1000.java</exclude>
                     </excludes>
                 </configuration>
                 <dependencies>

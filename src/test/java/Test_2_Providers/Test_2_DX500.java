@@ -1,4 +1,4 @@
-package TestProviders;
+package Test_2_Providers;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureServerTests;
