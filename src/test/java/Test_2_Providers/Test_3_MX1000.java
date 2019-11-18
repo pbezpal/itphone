@@ -27,18 +27,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class Test_3_MX1000 {
 
     private KATSPage katsPage = null;
-    private boolean test;
-    private boolean screenshot;
-    private String failedMessage;
 
     @BeforeEach
     void setUp(){
         BeforeEachTests.beforeStartTests();
         if( ! ProvidersPage.isCheckProviderPage().isDisplayed()) katsPage = (KATSPage) MonitoringPage.openSectionWEB(linkProvidersPage, KATS);
         if( katsPage == null ) katsPage = KATSPage.getInstance();
-        test = true;
-        screenshot = false;
-        failedMessage = "";
     }
 
     @Story(value = "Добавление провайдетра MX1000")
@@ -53,18 +47,8 @@ public class Test_3_MX1000 {
         if( ! katsPage.isMX1000()) failedTestWithScreenshot("Сервер MX1000 не установлен на сервер", false);
     }
 
-    @AfterEach
-    void tearDown(){
-        if(!test){
-            fail(failedMessage);
-            if(screenshot) ScreenshotTests.screenshot();
-        }
-        ScreenshotTests.deleteAllScreenshots();
-    }
-
     void failedTestWithScreenshot(String message, boolean screenshot) {
-        test = false;
-        this.screenshot = screenshot;
-        failedMessage = message;
+        fail(message);
+        if(screenshot) ScreenshotTests.screenshot();
     }
 }

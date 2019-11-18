@@ -10,7 +10,7 @@ import static DataTests.DataLogin.urlServer;
 import static DataTests.Providers.DataProviderDX500.*;
 import static com.codeborne.selenide.Selenide.$;
 
-public class DX500Page extends ProvidersPage implements IProvidersPage{
+public class DX500Page extends ProvidersPage{
 
     public static DX500Page dx500Page = new DX500Page();
     public static DX500Page getInstance() { return dx500Page; }
@@ -181,6 +181,11 @@ public class DX500Page extends ProvidersPage implements IProvidersPage{
                 && SSHManager.isCheckQuerySSH(SMG3_SG3DEV) && SSHManager.isCheckQuerySSH(SMG3_MG3DEV)) return true;
 
         return false;
+    }
+
+    @Step(value = "Проверяем, запущен ли сервер {serverName}")
+    public static boolean isCheckStartServers(String serverName){
+        return SSHManager.isCheckQuerySSH("systemctl status " + serverName + " | awk '/active/ && !/inactive/'");
     }
 
     @Step(value = "Проверяем, что в БД записался диалплан для DX500")

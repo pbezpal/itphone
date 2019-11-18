@@ -25,6 +25,7 @@
         <!--Allure versions-->
         <allure-junit5.version>2.13.0</allure-junit5.version>
         <allure-junit-platform.version>2.13.0</allure-junit-platform.version>
+        <allure-selenide.version>2.13.0</allure-selenide.version>
         <!--Extra instruments versions-->
         <jsch.version>0.1.55</jsch.version>
         <commons-io.version>2.6</commons-io.version>
@@ -103,6 +104,12 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit-platform</artifactId>
             <version>${allure-junit-platform.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-selenide -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-selenide</artifactId>
+            <version>${allure-selenide.version}</version>
         </dependency>
         <!--Dependencies extra instruments-->
         <!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->

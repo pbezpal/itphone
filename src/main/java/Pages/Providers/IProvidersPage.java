@@ -62,11 +62,6 @@ public interface IProvidersPage {
         return isCheckProvider(provider, 60000);
     }
 
-    @Step(value = "Проверяем, запущен ли сервер {serverName}")
-    default boolean isCheckStartServers(String serverName){
-        return SSHManager.isCheckQuerySSH("systemctl status " + serverName + " | awk '/active/ && !/inactive/'");
-    }
-
     default Object getInstanceProvider(String provider){ return null; }
 
     @Step(value = "Вводим название провайдера {providerName}")

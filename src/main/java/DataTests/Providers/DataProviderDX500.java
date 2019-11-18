@@ -15,9 +15,10 @@ public @interface DataProviderDX500 {
     /***** Параметры настройки SIP(абон)-DX *****/
     String nameSIP = "gw-q";
     String serverSIP = "gw-sip";
+    String serverSIPModule = serverSIP + "-dx";
     String SMGSIP = "0";
     String IPConverterSIP = "172.22.50.111";
-    String configSIP = serverSIP + "dx-p2.cfg";
+    String configSIP = serverSIPModule + ".cfg";
 
     /***** Параметры настрйоки Ассистента *****/
     String serverBooster = "gw-booster";
@@ -26,19 +27,19 @@ public @interface DataProviderDX500 {
     String numberStation = "auto";
     String gateIP = "0.0.0.0";
     String gatePort = "1223";
-    String configBooster = serverBooster + "-p2.cfg";
+    String configBooster = serverBooster + ".cfg";
 
     /***** Параметры настройки Пульт *****/
     String serverPult = "gw-pult";
     String SMGPult = "1";
     String IPConverterPult = "172.22.50.112";
-    String configPult = serverPult + "-p2.cfg";
+    String configPult = serverPult + ".cfg";
 
     /***** Параметры настройки SIP Пульт *****/
     String serverSIPPult = "sv-ipult";
-    String SMGSIPPult = "3";
+    String SMGSIPPult = "2";
     String IPConverterSIPPult = "172.22.50.113";
-    String configSipPult = serverSIPPult + "-p2.cfg";
+    String configSipPult = serverSIPPult + ".cfg";
 
     /***** Прооверка конфигурационных файлов на сервере *****/
 

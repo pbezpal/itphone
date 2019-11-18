@@ -11,6 +11,7 @@ public @interface DataSipServer {
     /***** Параметры SIP сервера *****/
 
     String linkSipServerPage = "SIP-сервер";
+    String serverNameModule = "sv-opensips";
     String sipServerPort = "5060";
     String sipBoosterPort = "5160";
     String turnPortMin = "49152";

@@ -6,6 +6,8 @@ import Pages.LoginPage;
 import Pages.MonitoringPage;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.stqa.selenium.factory.WebDriverPool;
@@ -43,12 +45,12 @@ public class BeforeEachTests {
         Configuration.baseUrl = "https://" + urlServer + ":40443";
         Configuration.startMaximized = true;
         Configuration.screenshots = true;
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
 
-        ScreenshotTests.deleteAllScreenshots();
 
         if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains("https://" + urlServer + ":40443")) open("/");
 
-        if (LoginPage.isLoginForm()) LoginPage.loginOnServer(webLoginAdmin, webPassword);
+        if (LoginPage.isLoginForm().isDisplayed()) LoginPage.loginOnServer(webLoginAdmin, webPassword);
         else if (MonitoringPage.isCheckLogin() && ! MonitoringPage.isCheckUser(webLoginAdmin)) {
             MonitoringPage.clickButtonLogout();
             LoginPage.loginOnServer(webLoginAdmin, webPassword);

@@ -72,12 +72,12 @@ public class SipServerPage {
             sendTurnPortMin(minTurnPort);
             sendTurnPortMax(maxTurnPort);
             $("button").shouldHave(Condition.text("Сохранить")).click();
-            $(byXpath("//div[@class='ui-dialog-buttonset']")).find("span").shouldHave(Condition.text("Ok")).click();
-            $(byId("restart_server")).find("span").click();
+            $("div.ui-draggable").findAll("div.ui-dialog-buttonset span").findBy(Condition.text("Ok")).click();
+            $("div#restart_server").find("span").click();
         }
 
         try{
-            $(byId("restart_server")).find("p").waitUntil(Condition.text("Настройки успешно изменены"), 30000);
+            $("div#restart_server").find("p").waitUntil(Condition.text("Настройки успешно изменены"), 30000);
         }catch (ElementNotFound elementNotFound){
             return false;
         }
