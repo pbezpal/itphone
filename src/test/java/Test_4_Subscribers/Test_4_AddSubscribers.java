@@ -1,37 +1,25 @@
-package Test_5_Subscribers;
+package Test_4_Subscribers;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureSubscribersTests;
 import HelperClasses.SSHManager;
 import HelperClasses.ScreenshotTests;
-import Pages.MonitoringPage;
-import Pages.SubscribersPage;
 import RecourcesTests.BeforeEachTests;
 import RecourcesTests.TestRules;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.DataSubscribers.*;
+import static Pages.SubscribersPage.subscribersPage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @EpicServicesTests
 @FeatureSubscribersTests
-@ExtendWith(TestRules.class)
-public class Test_5_AddSubscribers {
-
-    private SubscribersPage subscribersPage = null;
-
-    @BeforeEach
-    void setUp() {
-        BeforeEachTests.beforeStartTests();
-        if (!SubscribersPage.isSubscribersPage().isDisplayed())
-            subscribersPage = (SubscribersPage) MonitoringPage.openSectionWEB(linkSubscribers);
-        if (subscribersPage == null) subscribersPage = SubscribersPage.getInstance();
-    }
+@ExtendWith({TestRules.class, BeforeEachTests.class})
+public class Test_4_AddSubscribers {
 
     @Story(value = "Добавляем абонента " + subscriber5000)
     @Description(value = "Добавляем пользьзователя " + subscriber5000 + " и проверяем, что пользователь " + subscriber5000 + " был успешно добавился")

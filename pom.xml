@@ -153,10 +153,12 @@
                             <value>${project.build.directory}/allure-results</value>
                         </property>
                     </systemProperties>
-                    <excludes>
-                        <exclude>**/Test1LoginAdmin.java</exclude>
-                        <exclude>**/Test2LoginOper.java</exclude>
-                    </excludes>
+                    <includes>
+                        <include>**/Test_1_DX500.java</include>
+                        <include>**/Test_2_MX1000.java</include>
+                        <include>**/Test_3_StatusServers.java</include>
+                        <include>**/Test_4_AddSubscribers.java</include>
+                    </includes>
                 </configuration>
                 <dependencies>
                     <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->

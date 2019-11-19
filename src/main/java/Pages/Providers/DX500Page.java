@@ -94,21 +94,24 @@ public class DX500Page extends ProvidersPage{
         return this;
     }
 
-    public DX500Page setServer(){
-        if( ! $("#provider_dx500_tab_elem").find("a[id*='" + serverBooster + "']").isDisplayed()) addServer(serverBooster);
-        clickSectionServer(serverBooster);
-        $("form[id*='" + serverBooster + "']").find(By.name("ip")).clear();
-        $("form[id*='" + serverBooster + "']").find(By.name("ip")).sendKeys(dbIP);
-        $("form[id*='" + serverBooster + "']").find(By.name("adapter_name")).selectOptionByValue(adapterName);
-        $("form[id*='" + serverBooster + "']").find(By.name("station")).sendKeys(numberStation);
-        $("form[id*='" + serverBooster + "']").find(By.name("gate_ip")).sendKeys(gateIP);
-        $("form[id*='" + serverBooster + "']").find(By.name("gate_port")).sendKeys(gatePort);
+    public DX500Page setServer(String server){
+        if( ! $("#provider_dx500_tab_elem").find("a[id*='" + server + "']").isDisplayed()) addServer(server);
+        clickSectionServer(server);
+        if(server.equals(serverBooster)){
+            $("form[id*='" + server + "']").find(By.name("ip")).clear();
+            $("form[id*='" + server + "']").find(By.name("ip")).sendKeys(dbIP);
+            $("form[id*='" + server + "']").find(By.name("station")).sendKeys(numberStation);
+            $("form[id*='" + server + "']").find(By.name("gate_ip")).sendKeys(gateIP);
+            $("form[id*='" + server + "']").find(By.name("gate_port")).sendKeys(gatePort);
+        }
+        $("form[id*='" + server + "']").find(By.name("adapter_name")).selectOptionByValue(adapterName);
         return this;
     }
 
     public DX500Page addServers(){
         setServer(serverSIP, SMGSIP, IPConverterSIP);
-        setServer();
+        setServer(serverBooster);
+        setServer(serverBusy);
         setServer(serverPult, SMGPult, IPConverterPult);
         setServer(serverSIPPult, SMGSIPPult, IPConverterSIPPult);
         return this;
@@ -136,51 +139,6 @@ public class DX500Page extends ProvidersPage{
             return false;
         }
         return true;
-    }
-
-    /***** Проверка конфигурации серверов DX500 *****/
-
-    @Step(value = "Проверяем конфигурацию сервера Ассистентов")
-    public boolean isConfigurationServerBooster(){
-        if(SSHManager.isCheckQuerySSH(boosterDBIP) && SSHManager.isCheckQuerySSH(boosterDBPort)
-                && SSHManager.isCheckQuerySSH(boosterAdapterName) && SSHManager.isCheckQuerySSH(boosterStation)
-                && SSHManager.isCheckQuerySSH(boosterIP) && SSHManager.isCheckQuerySSH(boosterPort)) return true;
-
-        return false;
-    }
-
-    @Step(value = "Проверка конфигурации сервера Пультов")
-    public boolean isConfigurationServerPult(){
-        if(SSHManager.isCheckQuerySSH(pultContactIP) && SSHManager.isCheckQuerySSH(pultContactPort)
-                && SSHManager.isCheckQuerySSH(pultSGP) && SSHManager.isCheckQuerySSH(pultIP)
-                && SSHManager.isCheckQuerySSH(pultPort) && SSHManager.isCheckQuerySSH(pultMGP)
-                && SSHManager.isCheckQuerySSH(SMG1_Enable) && SSHManager.isCheckQuerySSH(SMG1_SG1DEV)
-                && SSHManager.isCheckQuerySSH(SMG1_MG1DEV)) return true;
-
-        return false;
-    }
-
-    @Step(value = "Проверка конфигурации сервера SIP")
-    public boolean isConfigurationServerSIP(){
-        if(SSHManager.isCheckQuerySSH(sipIP) && SSHManager.isCheckQuerySSH(sipPort)
-                && SSHManager.isCheckQuerySSH(sipDBIP) && SSHManager.isCheckQuerySSH(sipDPort)
-                && SSHManager.isCheckQuerySSH(sipSGI) && SSHManager.isCheckQuerySSH(sipSGP)
-                && SSHManager.isCheckQuerySSH(sipMGI) && SSHManager.isCheckQuerySSH(sipMGP)
-                && SSHManager.isCheckQuerySSH(SMG0_Enable) && SSHManager.isCheckQuerySSH(SMG0_SG0DEV)
-                && SSHManager.isCheckQuerySSH(SMG0_MG0DEV)) return true;
-
-        return false;
-    }
-
-    @Step(value = "Проверка конфигурации сервера SIP Пульт")
-    public boolean isConfigurationSIPPult(){
-        if(SSHManager.isCheckQuerySSH(sipPultSGPort) && SSHManager.isCheckQuerySSH(sipPultIP)
-                && SSHManager.isCheckQuerySSH(sipPultPort) && SSHManager.isCheckQuerySSH(sipPultDBIP)
-                && SSHManager.isCheckQuerySSH(sipPultDBPort) && SSHManager.isCheckQuerySSH(sipPultMPPort)
-                && SSHManager.isCheckQuerySSH(sipPultRingin) && SSHManager.isCheckQuerySSH(MSG3_Enable)
-                && SSHManager.isCheckQuerySSH(SMG3_SG3DEV) && SSHManager.isCheckQuerySSH(SMG3_MG3DEV)) return true;
-
-        return false;
     }
 
     @Step(value = "Проверяем, запущен ли сервер {serverName}")

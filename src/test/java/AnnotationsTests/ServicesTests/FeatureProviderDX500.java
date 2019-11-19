@@ -6,6 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Feature(value = "Тестирование раздела 'SIP-сервер'")
-public @interface FeatureSIPServerTests {
+@Feature(value = "Провайдер DX500")
+public @interface FeatureProviderDX500 {
 }

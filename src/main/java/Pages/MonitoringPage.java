@@ -1,5 +1,6 @@
 package Pages;
 
+import HelperClasses.SSHManager;
 import Pages.Providers.ProvidersPage;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ex.ElementNotFound;
@@ -9,6 +10,7 @@ import org.openqa.selenium.By;
 
 import static DataTests.DataSipServer.linkSipServerPage;
 import static DataTests.DataSubscribers.linkSubscribers;
+import static DataTests.Providers.DataProviderDX500.adapterName;
 import static DataTests.Providers.Providers.linkProvidersPage;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -116,16 +118,16 @@ public class MonitoringPage extends LoginPage{
 
     /***** Раздел состояний серверов *****/
 
-    @Step(value = "Проверяем, что на 'Холодильнике' у {server} сервера зеленый статус")
-    public static boolean isCheckModuleStatusServer(String server){
+    @Step(value = "Проверяем статус службы {server}")
+    public static boolean isCheckModuleStatusServer(String service){
         if(isCheckNotVisibleElement()){
-            if($("#" + server).find("img").getAttribute("src").contains("green-icon.png")) return true;
+            if($("#" + service).find("img").getAttribute("src").contains("green-icon.png")) return true;
             return false;
         }
         return false;
     }
 
-    @Step(value = "Проверяем, что в поле состояние SIP сервера, стоит статус Ok")
+    @Step(value = "Проверяем статус SIP сервера в СУ")
     public static boolean isCheckTableStatusServer(){
         if(isCheckNotVisibleElement()){
             $("#sv-opensips").find(byClassName("label_type_module")).click();
@@ -136,34 +138,72 @@ public class MonitoringPage extends LoginPage{
         return false;
     }
 
-    @Step(value = "Проверяем, что в таблице состояний, у {server} стоит статус Ok")
-    public static boolean isCheckTableStatusServer(String server){
+    @Step(value = "Проверяем на СУ состояние службы {service}")
+    public static boolean isStatusService(String service){
         if(isCheckNotVisibleElement()){
-            boolean statusService = false;
-            boolean statusServerContacts = false;
-            boolean connectStationDX500 = false;
-            $("#" + server).find(byClassName("label_type_module")).click();
-            $("table#text-info").find("td").waitUntil(Condition.text("состояние службы:"), 30000);
-            if($(By.xpath("article[@class='module width_quarter']//td[text()='состояние службы:']//parent::tr//img[contains[@src,'stat_ok.png']]")).isDisplayed()) statusService = true;
-            if($(By.xpath("article[@class='module width_quarter']//td[text()='сервер контактов:']//parent::tr//img[contains[@src,'stat_ok.png']]")).isDisplayed()) statusServerContacts = true;
-            if($(By.xpath("article[@class='module width_quarter']//td[text()='соединение со станцией:']//parent::tr//img[contains[@src,'stat_ok.png']]")).isDisplayed()) connectStationDX500 = true;
-            if(statusService && statusServerContacts && connectStationDX500) return true;
+            if( ! $("table#text-info").find("td").text().contains("состояние службы")) $("#" + service).find(byClassName("label_type_module")).click();
+            $("table#text-info").find("td").waitUntil(Condition.text("состояние службы: "), 30000);
+            if($(By.xpath("article[@class='module width_quarter']//td[text()='состояние службы: ']//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed()) return true;
         }
         return false;
     }
 
-    @Step(value = "Проверяем состояние конвертера на 'Холодильнике")
-    public static boolean isCheckModuleConverterLanE1(String server){
+    @Step(value = "Проверяем на СУ состояние срвера контактов у службы {service}")
+    public static String isConnectServerContacts(String service, String controlPort){
         if(isCheckNotVisibleElement()){
-            if($("div[server='" + server + "']").find("img").getAttribute("src").contains("lite-green-icon.png")) return true;
+            if( ! $("table#text-info").find("td").text().contains("сервер контактов")) $("#" + service).find(byClassName("label_type_module")).click();
+            $("table#text-info").find("td").waitUntil(Condition.text("сервер контактов: "), 30000);
+            boolean statusSU = $(By.xpath("article[@class='module width_quarter']//td[text()='сервер контактов: ']//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
+            boolean statusServer = SSHManager.isCheckQuerySSH(" echo s | nc l " + controlPort + " | grep 'db: logined'");
+            if(statusServer && ! statusSU) return "Соединение с сервером контактов: на сервере - logined, в СУ - NOK";
+            else if( ! statusServer & statusSU) return "Соединение с сервером контактов: на сервере - disconnected, в СУ - OK";
+            return null;
+        }
+        return "Не удалось получить статус сервера контактов";
+    }
+
+    @Step(value = "Проверяем на СУ соединение со станцией у службы {service}")
+    public static String isConnectStation(String service, String command){
+        if(isCheckNotVisibleElement()){
+            if( ! $("table#text-info").find("td").text().contains("соединение со станцией")) $("#" + service).find(byClassName("label_type_module")).click();
+            $("table#text-info").find("td").waitUntil(Condition.text("соединение со станцией: "), 30000);
+            boolean statusSU = $(By.xpath("article[@class='module width_quarter']//td[text()='соединение со станцией: ']//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
+            boolean statusServer = SSHManager.isCheckQuerySSH(command);
+            if(statusServer && ! statusSU) return "Соединение со станцией: на сервере - lapd_establish, в СУ - NOK";
+            else if( ! statusServer & statusSU) return "Соединение со станцией: на сервере - disconnected, в СУ - OK";
+            return null;
+        }
+        return "Не удалось получить статус станции";
+    }
+
+    @Step(value = "Проверяем на СУ имя интерфейса у службы {service}")
+    public static String isAdapterName(String service){
+        if(isCheckNotVisibleElement()){
+            if( ! $("table#text-info").find("td").text().contains("имя интерфейса")) $("#" + service).find(byClassName("label_type_module")).click();
+            $("table#text-info").find("td").waitUntil(Condition.text("имя интерфейса: "), 30000);
+            boolean statusSU = $(By.xpath("article[@class='module width_quarter']//td[text()='имя интерфейса: ']//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
+            boolean adapterSU = $(By.xpath("article[@class='module width_quarter']//td[text()='имя интерфейса: ']//parent::tr/td[contains(text(),'" + adapterName + "')]")).isDisplayed();
+            boolean serverAdapter = SSHManager.isCheckQuerySSH("echo s | nc l 2220 | grep 'adapter_255: 0, eth0, ready'");
+            if(statusSU && adapterSU && ! serverAdapter) return "Имя интерфейса: на сервере указан некорректный сетевой интерфейс, на СУ статус интерфейса - OK";
+            else if(!statusSU && adapterSU && serverAdapter) return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK";
+            else if(statusSU && !adapterSU && serverAdapter) return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK, но указан некорректное имя интерфеса";
+            return null;
+        }
+        return "Не удалось получить статус сетевого интерфейса";
+    }
+
+    @Step(value = "Проверяем состояние конвертера на 'Холодильнике")
+    public static boolean isCheckModuleConverterLanE1(String service){
+        if(isCheckNotVisibleElement()){
+            if($("div[server='" + service + "']").find("img").getAttribute("src").contains("lite-green-icon.png")) return true;
         }
         return false;
     }
 
     @Step(value = "Проверяем состояние конвертера в таблице состояний")
-    public static boolean isCheckTableConverterLanE1(String server){
+    public static boolean isCheckTableConverterLanE1(String service){
         if(isCheckNotVisibleElement()){
-            $("div[server='" + server + "']").click();
+            $("div[server='" + service + "']").click();
             $("table#text-info").find("td").waitUntil(Condition.text("второй уровень:"), 30000);
             if($("article.module.width_quarter").find("img").getAttribute("src").contains("stat_ok.png")) return true;
         }
