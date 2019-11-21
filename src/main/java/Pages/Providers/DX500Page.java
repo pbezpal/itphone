@@ -143,7 +143,7 @@ public class DX500Page extends ProvidersPage{
 
     @Step(value = "Проверяем, запущен ли сервер {serverName}")
     public static boolean isCheckStartServers(String serverName){
-        return SSHManager.isCheckQuerySSH("systemctl status " + serverName + " | awk '/active/ && !/inactive/'");
+        return SSHManager.isCheckQuerySSH("systemctl | grep " + serverName) && SSHManager.isCheckQuerySSH("systemctl status " + serverName + " | awk '/active/ && !/inactive/'");
     }
 
     @Step(value = "Проверяем, что в БД записался диалплан для DX500")

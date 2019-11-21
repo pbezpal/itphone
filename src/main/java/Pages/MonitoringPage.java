@@ -156,12 +156,12 @@ public class MonitoringPage extends LoginPage{
         if(isCheckNotVisibleElement()){
             if( ! $("table#text-info").find("td").text().contains(label)) $("#" + service).find(byClassName("label_type_module")).click();
             if(isCheckNotVisibleElement()) {
-                $("table#text-info").find("td").waitUntil(Condition.text(label), 30000);
+                $$("table#text-info td").findBy(Condition.text(label));
                 boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'" + label + "')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
                 boolean statusServer = SSHManager.isCheckQuerySSH(command);
-                if (statusServer && !statusSU) return label + " на сервере - connect, в СУ - disconnect";
-                else if (!statusServer & statusSU) return label + "на сервере - disconnected, в СУ - connect";
-                else if (!statusServer & !statusSU) return label + " на сервере - disconnected, в СУ - disconnected";
+                if (statusServer && ! statusSU) return label + " на сервере - connect, в СУ - disconnect";
+                else if ( ! statusServer & statusSU) return label + " на сервере - disconnected, в СУ - connect";
+                else if ( ! statusServer & ! statusSU) return label + " на сервере - disconnected, в СУ - disconnected. Проверьте соединение со станцией!!!";
                 return null;
             }
         }
@@ -187,7 +187,7 @@ public class MonitoringPage extends LoginPage{
         if(isCheckNotVisibleElement()){
             if( ! $("table#text-info").find("td").text().contains("имя интерфейса")) $("#" + service).find(byClassName("label_type_module")).click();
             if(isCheckNotVisibleElement()) {
-                $("table#text-info").find("td").waitUntil(Condition.text("имя интерфейса: "), 30000);
+                $$("table#text-info td").findBy(Condition.text("имя интерфейса: "));
                 boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'имя интерфейса')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
                 boolean adapterSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'имя интерфейса')]//parent::tr/td[contains(text(),'" + DX500_BOOSTER_ADAPTER_NAME + "')]")).isDisplayed();
                 boolean serverAdapter = SSHManager.isCheckQuerySSH("echo s | nc l 2220 | grep 'adapter_255: 0, eth0, ready'");

@@ -43,8 +43,7 @@ public class BeforeAllTests implements BeforeAllCallback {
 
         Configuration.baseUrl = HOST_SERVER;
         Configuration.startMaximized = true;
-        Configuration.screenshots = true;
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
+        Configuration.screenshots = false;
 
         if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains(HOST_SERVER)) open("/");
 

@@ -6,6 +6,7 @@ import io.qameta.allure.Step;
 
 import static DataTests.LOGIN.IP_SERVER;
 import static DataTests.Providers.PROVIDER_MX1000.*;
+import static Pages.MonitoringPage.isCheckNotVisibleDownload;
 import static com.codeborne.selenide.Selenide.$;
 
 public class KATSPage extends ProvidersPage implements IProvidersPage {
@@ -55,22 +56,24 @@ public class KATSPage extends ProvidersPage implements IProvidersPage {
     }
 
     public boolean addMX1000(String name, String domain, String username, String password, String dialplan, String interval){
-        isCheckProviderPage();
-        $("#add_provider").click();
-        isFormEditProvider();
-        clickSelectTypeProvider(MX1000_TYPE_PROVIDER);
-        setNameProvider(name);
-        setInputAddress(domain);
-        setUsername(username);
-        setPassword(password);
-        setConfirmPassword(password);
-        selectIPSipServer();
-        setPeriodRegistration(interval);
-        setRouteCalls(dialplan);
-        clickButtonAddProviders();
+        if(isCheckNotVisibleDownload()) {
+            isCheckProviderPage();
+            $("#add_provider").click();
+            isFormEditProvider();
+            clickSelectTypeProvider(MX1000_TYPE_PROVIDER);
+            setNameProvider(name);
+            setInputAddress(domain);
+            setUsername(username);
+            setPassword(password);
+            setConfirmPassword(password);
+            selectIPSipServer();
+            setPeriodRegistration(interval);
+            setRouteCalls(dialplan);
+            clickButtonAddProviders();
+            if(isCheckNotVisibleDownload()) return isCheckProvider(MAX1000_NAME);
+        }
 
-        $("div.blockUI.blockMsg.blockPage").waitUntil(Condition.not(Condition.visible), 60000);
-        return isCheckProvider(MAX1000_NAME);
+        return false;
     }
 
     @Step(value = "Проверяем, добавление провайдера в базу данных")

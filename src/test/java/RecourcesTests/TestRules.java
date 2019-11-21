@@ -10,4 +10,9 @@ public class TestRules implements TestWatcher {
         public void testFailed(ExtensionContext context, Throwable cause) {
             ScreenshotTests.screenshot();
         }
+
+        @Override
+        public void testAborted(ExtensionContext context, Throwable cause) {
+            ScreenshotTests.screenshot();
+        }
 }

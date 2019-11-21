@@ -13,6 +13,7 @@ public @interface OPENSIPS {
     /***** Параметры SIP сервера *****/
 
     String OPENSIPS_ITEM_MENU = "SIP-сервер";
+    String OPENSIPS_SERVER = getProperty("OPENSIPS_SERVER");
     String OPENSIPS_MODULE_ID = getProperty("OPENSIPS_MODULE_ID");
     String OPENSIPS_SERVER_PORT = getProperty("OPENSIPS_SERVER_PORT");
     String OPENSIPS_BOOSTER_PORT = getProperty("OPENSIPS_BOOSTER_PORT");
