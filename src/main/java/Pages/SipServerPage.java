@@ -5,7 +5,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ex.ElementNotFound;
 import io.qameta.allure.Step;
 
-import static DataTests.DataSipServer.*;
+import static DataTests.OPENSIPS.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -86,25 +86,25 @@ public class SipServerPage {
     }
 
     @Step(value = "Проверяем. что на сервере сохранились настройки для SIP Ассистента")
-    public boolean isCheckSaveSettingsITBooster(){ return SSHManager.isCheckQuerySSH(commandCheckSettingsDXTP); }
+    public boolean isCheckSaveSettingsITBooster(){ return SSHManager.isCheckQuerySSH(OPENSIPS_CONFIG_DXTP); }
 
     @Step(value = "Проверяем. что на сервере сохранились настройки для SIP сервера (listen=udp)")
-    public boolean isCheckSaveSettingsSIPServer() { return SSHManager.isCheckQuerySSH(commandCheckSettingsUDPServer); }
+    public boolean isCheckSaveSettingsSIPServer() { return SSHManager.isCheckQuerySSH(OPENSIPS_CONFIG_UDP_SERVER); }
 
     @Step(value = "Проверяем. что на сервере сохранились настройки для SIP сервера (localhost)")
-    public boolean isCheckSaveSettingsLocalhost() { return SSHManager.isCheckQuerySSH(commandCheckSettingsUDPLocalhost); }
+    public boolean isCheckSaveSettingsLocalhost() { return SSHManager.isCheckQuerySSH(OPENSIPS_CONFIG_UDP_LOCALHOST); }
 
     @Step(value = "Проверяем. что на сервере сохранились настройки для SIP сервера ($avp(local_ip))")
-    public boolean isCheckSaveSettingsAVPLocalhostIP() { return SSHManager.isCheckQuerySSH(commandCheckAVPLocalIP); }
+    public boolean isCheckSaveSettingsAVPLocalhostIP() { return SSHManager.isCheckQuerySSH(OPENSIPS_CONFIG_AVP_LOCAL_IP); }
 
     @Step(value = "Проверяем. что на сервере сохранились настройки для SIP сервера ($avp(external_ip))")
-    public boolean isCheckSaveSettingsAVPExternalIP() { return SSHManager.isCheckQuerySSH(commandCheckAVPExternalIP); }
+    public boolean isCheckSaveSettingsAVPExternalIP() { return SSHManager.isCheckQuerySSH(OPENSIPS_CONFIG_AVP_EXTERNAL_IP); }
 
     @Step(value = "Проверяем. что на сервере сохранились настройки минимального порта Turn сервера")
-    public boolean isCheckSaveSettingsMinTurnPort() { return SSHManager.isCheckQuerySSH(commandCheckSettingsTurnMinPort); }
+    public boolean isCheckSaveSettingsMinTurnPort() { return SSHManager.isCheckQuerySSH(OPENSIPS_CONFIG_TURN_MIN_PORT); }
 
     @Step(value = "Проверяем. что на сервере сохранились настройки максимального порта Turn сервера")
-    public boolean isCheckSaveSettingsMaxTurnPort() { return SSHManager.isCheckQuerySSH(commandCheckSettingsTurnMaxPort); }
+    public boolean isCheckSaveSettingsMaxTurnPort() { return SSHManager.isCheckQuerySSH(OPENSIPS_CONFIG_TURN_MAX_PORT); }
 
     public boolean isCheckSettingsSipServer(){
         if(isCheckSaveSettingsITBooster() && isCheckSaveSettingsSIPServer() && isCheckSaveSettingsLocalhost()
@@ -114,7 +114,7 @@ public class SipServerPage {
     }
 
     @Step(value = "Проверяем, что на сервере запущен SIP сервер")
-    public boolean isCheckStatusOpensips(){ return SSHManager.isCheckQuerySSH(commandStatusSIPServer); }
+    public boolean isCheckStatusOpensips(){ return SSHManager.isCheckQuerySSH(OPENSIPS_STATUS); }
 
     @Step(value = "Переходим в раздел 'Мониторинг'")
     public void clickButtonMonitoringPage(){

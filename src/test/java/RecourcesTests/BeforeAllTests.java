@@ -1,11 +1,12 @@
 package RecourcesTests;
 
-import DataTests.DataLogin;
 import Pages.LoginPage;
 import Pages.MonitoringPage;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.WebDriver;
@@ -16,16 +17,11 @@ import java.net.MalformedURLException;
 import java.net.URI;
 
 
-import static DataTests.DataLogin.*;
-import static Pages.MonitoringPage.monitoringPage;
+import static DataTests.LOGIN.*;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BeforeAllTests implements BeforeAllCallback {
-
-    private String urlHub = DataLogin.urlHUB;
-    private String portHub = DataLogin.portHub;
-    private LoginPage loginPage = null;
 
     @Override
     public void beforeAll(ExtensionContext context){
@@ -39,17 +35,25 @@ public class BeforeAllTests implements BeforeAllCallback {
 
         WebDriver driver = null;
         try {
-            driver = WebDriverPool.DEFAULT.getDriver(URI.create(urlHub + portHub + "/wd/hub").toURL(), capabilities);
+            driver = WebDriverPool.DEFAULT.getDriver(URI.create(HOST_HUB).toURL(), capabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         WebDriverRunner.setWebDriver(driver);
 
-        Configuration.baseUrl = "https://" + urlServer + ":40443";
+        Configuration.baseUrl = HOST_SERVER;
         Configuration.startMaximized = true;
-        Configuration.screenshots = false;
+        Configuration.screenshots = true;
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
 
-        if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains("https://" + urlServer + ":40443")) open("/");
+        if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains(HOST_SERVER)) open("/");
+
+        if (LoginPage.isLoginForm().isDisplayed()) LoginPage.loginOnServer(LOGIN_ADMIN_WEB, LOGIN_PASSWORD_WEB);
+        else if (MonitoringPage.isCheckLogin() && ! MonitoringPage.isCheckUser(LOGIN_ADMIN_WEB)) {
+            MonitoringPage.clickButtonLogout();
+            LoginPage.loginOnServer(LOGIN_ADMIN_WEB, LOGIN_PASSWORD_WEB);
+        }
+        assertTrue(MonitoringPage.isCheckLogin(), "Не удалось авторизоваться на сервере");
 
     }
 }

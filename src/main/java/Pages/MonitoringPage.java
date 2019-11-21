@@ -8,10 +8,10 @@ import com.codeborne.selenide.ex.ElementShould;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import static DataTests.DataSipServer.linkSipServerPage;
-import static DataTests.DataSubscribers.linkSubscribers;
-import static DataTests.Providers.DataProviderDX500.adapterName;
-import static DataTests.Providers.Providers.linkProvidersPage;
+import static DataTests.OPENSIPS.OPENSIPS_ITEM_MENU;
+import static DataTests.SUBSCRIBERS.*;
+import static DataTests.Providers.PROVIDER_DX500.DX500_BOOSTER_ADAPTER_NAME;
+import static DataTests.Providers.PROVIDERS.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -33,7 +33,7 @@ public class MonitoringPage extends LoginPage{
 
     @Step(value = "Проверяем, что находимся в раздеде 'Мониторинг'")
     public static boolean isSectionMonitoring(){
-        if($("article#header").find("h3").text().equals("Состояние системы")) return true;
+        if($("div#main_server").isDisplayed() && $("article#ext_info").isDisplayed()) return true;
         return false;
     }
 
@@ -48,8 +48,10 @@ public class MonitoringPage extends LoginPage{
     }
 
     @Step(value = "Переходим в раздел 'Мониторинг'")
-    public static void clickButtonMonitoringPage(){
+    public static boolean clickButtonMonitoringPage(){
         $("a.link_menu.link_top_menu").shouldHave(Condition.text("Мониторинг")).click();
+        if(isCheckNotVisibleElement()) return true;
+        return false;
     }
 
     @Step(value = "Ждём, когда пропадёт блок загрузки")
@@ -96,10 +98,10 @@ public class MonitoringPage extends LoginPage{
     @Step(value = "Переходим в раздел {section}")
     public static Object openSectionWEB(String section){
         switch(section){
-            case linkSipServerPage:
+            case OPENSIPS_ITEM_MENU:
                 clickItemMenu(section);
                 return SipServerPage.getInstance();
-            case linkSubscribers:
+            case SUBSCRIBERS_ITEM_MENU:
                 clickItemMenu(section);
                 return SubscribersPage.getInstance();
         }
@@ -109,7 +111,7 @@ public class MonitoringPage extends LoginPage{
     @Step(value = "Переходим в раздел {section}")
     public static Object openSectionWEB(String section, String form){
         switch(section){
-            case linkProvidersPage:
+            case PROVIDERS_ITEM_MENU:
                 clickItemMenu(section);
                 return ProvidersPage.getInstance().getInstanceProvider(form);
         }
@@ -122,6 +124,7 @@ public class MonitoringPage extends LoginPage{
     public static boolean isCheckModuleStatusServer(String service){
         if(isCheckNotVisibleElement()){
             if($("#" + service).find("img").getAttribute("src").contains("green-icon.png")) return true;
+            if($("#" + service).find("img").getAttribute("src").contains("yellow-icon.png")) return true;
             return false;
         }
         return false;
@@ -143,23 +146,26 @@ public class MonitoringPage extends LoginPage{
         if(isCheckNotVisibleElement()){
             if( ! $("table#text-info").find("td").text().contains("состояние службы")) $("#" + service).find(byClassName("label_type_module")).click();
             $("table#text-info").find("td").waitUntil(Condition.text("состояние службы: "), 30000);
-            if($(By.xpath("article[@class='module width_quarter']//td[text()='состояние службы: ']//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed()) return true;
+            if($(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'состояние службы')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed()) return true;
         }
         return false;
     }
 
-    @Step(value = "Проверяем на СУ состояние срвера контактов у службы {service}")
-    public static String isConnectServerContacts(String service, String controlPort){
+    @Step(value = "Проверяем на СУ состояние {label} у службы {service}")
+    public static String isConnectService(String service, String command, String label){
         if(isCheckNotVisibleElement()){
-            if( ! $("table#text-info").find("td").text().contains("сервер контактов")) $("#" + service).find(byClassName("label_type_module")).click();
-            $("table#text-info").find("td").waitUntil(Condition.text("сервер контактов: "), 30000);
-            boolean statusSU = $(By.xpath("article[@class='module width_quarter']//td[text()='сервер контактов: ']//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
-            boolean statusServer = SSHManager.isCheckQuerySSH(" echo s | nc l " + controlPort + " | grep 'db: logined'");
-            if(statusServer && ! statusSU) return "Соединение с сервером контактов: на сервере - logined, в СУ - NOK";
-            else if( ! statusServer & statusSU) return "Соединение с сервером контактов: на сервере - disconnected, в СУ - OK";
-            return null;
+            if( ! $("table#text-info").find("td").text().contains(label)) $("#" + service).find(byClassName("label_type_module")).click();
+            if(isCheckNotVisibleElement()) {
+                $("table#text-info td").find("td").waitUntil(Condition.text(label), 30000);
+                boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'" + label + "')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
+                boolean statusServer = SSHManager.isCheckQuerySSH(command);
+                if (statusServer && !statusSU) return label + " на сервере - connect, в СУ - disconnect";
+                else if (!statusServer & statusSU) return label + "на сервере - disconnected, в СУ - connect";
+                else if (!statusServer & !statusSU) return label + " на сервере - disconnected, в СУ - disconnected";
+                return null;
+            }
         }
-        return "Не удалось получить статус сервера контактов";
+        return "Не удалось получить статус сервиса";
     }
 
     @Step(value = "Проверяем на СУ соединение со станцией у службы {service}")
@@ -167,7 +173,7 @@ public class MonitoringPage extends LoginPage{
         if(isCheckNotVisibleElement()){
             if( ! $("table#text-info").find("td").text().contains("соединение со станцией")) $("#" + service).find(byClassName("label_type_module")).click();
             $("table#text-info").find("td").waitUntil(Condition.text("соединение со станцией: "), 30000);
-            boolean statusSU = $(By.xpath("article[@class='module width_quarter']//td[text()='соединение со станцией: ']//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
+            boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'со станцией:')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
             boolean statusServer = SSHManager.isCheckQuerySSH(command);
             if(statusServer && ! statusSU) return "Соединение со станцией: на сервере - lapd_establish, в СУ - NOK";
             else if( ! statusServer & statusSU) return "Соединение со станцией: на сервере - disconnected, в СУ - OK";
@@ -180,14 +186,19 @@ public class MonitoringPage extends LoginPage{
     public static String isAdapterName(String service){
         if(isCheckNotVisibleElement()){
             if( ! $("table#text-info").find("td").text().contains("имя интерфейса")) $("#" + service).find(byClassName("label_type_module")).click();
-            $("table#text-info").find("td").waitUntil(Condition.text("имя интерфейса: "), 30000);
-            boolean statusSU = $(By.xpath("article[@class='module width_quarter']//td[text()='имя интерфейса: ']//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
-            boolean adapterSU = $(By.xpath("article[@class='module width_quarter']//td[text()='имя интерфейса: ']//parent::tr/td[contains(text(),'" + adapterName + "')]")).isDisplayed();
-            boolean serverAdapter = SSHManager.isCheckQuerySSH("echo s | nc l 2220 | grep 'adapter_255: 0, eth0, ready'");
-            if(statusSU && adapterSU && ! serverAdapter) return "Имя интерфейса: на сервере указан некорректный сетевой интерфейс, на СУ статус интерфейса - OK";
-            else if(!statusSU && adapterSU && serverAdapter) return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK";
-            else if(statusSU && !adapterSU && serverAdapter) return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK, но указан некорректное имя интерфеса";
-            return null;
+            if(isCheckNotVisibleElement()) {
+                $("table#text-info").find("td").waitUntil(Condition.text("имя интерфейса: "), 30000);
+                boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'имя интерфейса')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
+                boolean adapterSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'имя интерфейса')]//parent::tr/td[contains(text(),'" + DX500_BOOSTER_ADAPTER_NAME + "')]")).isDisplayed();
+                boolean serverAdapter = SSHManager.isCheckQuerySSH("echo s | nc l 2220 | grep 'adapter_255: 0, eth0, ready'");
+                if (statusSU && adapterSU && !serverAdapter)
+                    return "Имя интерфейса: на сервере указан некорректный сетевой интерфейс, на СУ статус интерфейса - OK";
+                else if (!statusSU && adapterSU && serverAdapter)
+                    return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK";
+                else if (statusSU && !adapterSU && serverAdapter)
+                    return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK, но указан некорректное имя интерфеса";
+                return null;
+            }
         }
         return "Не удалось получить статус сетевого интерфейса";
     }

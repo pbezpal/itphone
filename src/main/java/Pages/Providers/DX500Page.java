@@ -6,8 +6,8 @@ import com.codeborne.selenide.ex.ElementNotFound;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import static DataTests.DataLogin.urlServer;
-import static DataTests.Providers.DataProviderDX500.*;
+import static DataTests.LOGIN.IP_SERVER;
+import static DataTests.Providers.PROVIDER_DX500.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class DX500Page extends ProvidersPage{
@@ -19,18 +19,18 @@ public class DX500Page extends ProvidersPage{
         isCheckProviderPage();
         $("#add_provider").click();
         isFormEditProvider();
-        clickSelectTypeProvider(DX500);
+        clickSelectTypeProvider(DX500_TYPE_PROVIDER);
         addServers();
-        setNameProvider(DX500);
-        setRouteCalls(dialplanDX500);
+        setNameProvider(DX500_TYPE_PROVIDER);
+        setRouteCalls(DX500_DIALPLAN);
         clickButtonAddProviders();
 
-        return isCheckProvider(DX500, 60000);
+        return isCheckProvider(DX500_TYPE_PROVIDER, 60000);
     }
 
     @Step(value = "Создаем сервер {serverName}")
     public DX500Page addServer(String serverName){
-        if (serverName.equals(serverSIP)) serverName = nameSIP;
+        if (serverName.equals(DX500_SIP_ABON_DX)) serverName = DX500_SIP_ABON_DX_OPTION;
         $("#sel_add_new_server_to_prov").click();
         $("#sel_add_new_server_to_prov").selectOptionByValue(serverName);
         $("#btn_add_new_server_to_prov").click();
@@ -78,13 +78,13 @@ public class DX500Page extends ProvidersPage{
 
     @Step(value = "Выбираем IP адрес шлюза для сервера {serverName}")
     public DX500Page selectGateIP(String serverName){
-        $("form[id*='" + serverName + "']").find(By.name("gate_ip")).selectOptionByValue(urlServer);
+        $("form[id*='" + serverName + "']").find(By.name("gate_ip")).selectOptionByValue(IP_SERVER);
         return this;
     }
 
     public DX500Page setServer(String serverName, String numberSMG, String converterIP){
         if( ! $("#provider_dx500_tab_elem").find("a[id*='" + serverName + "']").isDisplayed()) addServer(serverName);
-        if(serverName.equals(nameSIP)) serverName = serverSIP;
+        if(serverName.equals(DX500_SIP_ABON_DX_OPTION)) serverName = DX500_SIP_ABON_DX;
         clickSectionServer(serverName);
         clickButtonAddSMG(serverName);
         sendInputSMG(serverName, numberSMG);
@@ -97,29 +97,29 @@ public class DX500Page extends ProvidersPage{
     public DX500Page setServer(String server){
         if( ! $("#provider_dx500_tab_elem").find("a[id*='" + server + "']").isDisplayed()) addServer(server);
         clickSectionServer(server);
-        if(server.equals(serverBooster)){
+        if(server.equals(DX500_BOOSTER)){
             $("form[id*='" + server + "']").find(By.name("ip")).clear();
-            $("form[id*='" + server + "']").find(By.name("ip")).sendKeys(dbIP);
-            $("form[id*='" + server + "']").find(By.name("station")).sendKeys(numberStation);
-            $("form[id*='" + server + "']").find(By.name("gate_ip")).sendKeys(gateIP);
-            $("form[id*='" + server + "']").find(By.name("gate_port")).sendKeys(gatePort);
+            $("form[id*='" + server + "']").find(By.name("ip")).sendKeys(DX500_BOOSTER_IP_DB);
+            $("form[id*='" + server + "']").find(By.name("station")).sendKeys(DX500_BOOSTER_STATION);
+            $("form[id*='" + server + "']").find(By.name("gate_ip")).sendKeys(DX500_BOOSTER_GATE_IP);
+            $("form[id*='" + server + "']").find(By.name("gate_port")).sendKeys(DX500_BOOSTER_GATE_PORT);
         }
-        $("form[id*='" + server + "']").find(By.name("adapter_name")).selectOptionByValue(adapterName);
+        $("form[id*='" + server + "']").find(By.name("adapter_name")).selectOptionByValue(DX500_BOOSTER_ADAPTER_NAME);
         return this;
     }
 
     public DX500Page addServers(){
-        setServer(serverSIP, SMGSIP, IPConverterSIP);
-        setServer(serverBooster);
-        setServer(serverBusy);
-        setServer(serverPult, SMGPult, IPConverterPult);
-        setServer(serverSIPPult, SMGSIPPult, IPConverterSIPPult);
+        setServer(DX500_SIP_ABON_DX, DX500_SIP_ABON_DX_SMG, DX500_SIP_ABON_DX_IP_CONVERTER);
+        setServer(DX500_BOOSTER);
+        setServer(DX500_BUSY);
+        setServer(DX500_PULT, DX500_PULT_SMG, DX500_PULT_CONVERTER_IP);
+        setServer(DX500_SIP_PULT, DX500_SIP_PULT_SMG, DX500_SIP_PULT_CONVERTER_IP);
         return this;
     }
 
     @Step(value = "Переходим на вкладку DX500")
     public DX500Page clickSectionDX500(){
-        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500);
+        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500_TYPE_PROVIDER);
         $("#provider_dialog_params").waitUntil(Condition.visible, 60000);
         $("li[aria-controls='dx500_settings']").click();
         return this;
@@ -147,5 +147,5 @@ public class DX500Page extends ProvidersPage{
     }
 
     @Step(value = "Проверяем, что в БД записался диалплан для DX500")
-    public boolean isMySqlDialplan(){ return SSHManager.isCheckQuerySSH(mysqlDialplan); }
+    public boolean isMySqlDialplan(){ return SSHManager.isCheckQuerySSH(MYSQL_DX500_DIALPLAN); }
 }

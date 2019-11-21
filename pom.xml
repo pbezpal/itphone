@@ -154,10 +154,10 @@
                         </property>
                     </systemProperties>
                     <includes>
-                        <include>**/Test_1_DX500.java</include>
-                        <include>**/Test_2_MX1000.java</include>
-                        <include>**/Test_3_StatusServers.java</include>
-                        <include>**/Test_4_AddSubscribers.java</include>
+                        <include>**/Test_A_DX500.java</include>
+                        <include>**/Test_B_MX1000.java</include>
+                        <include>**/Test_C_StatusServers.java</include>
+                        <include>**/Test_D_AddSubscribers.java</include>
                     </includes>
                 </configuration>
                 <dependencies>

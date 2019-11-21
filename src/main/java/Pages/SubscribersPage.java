@@ -7,9 +7,9 @@ import com.codeborne.selenide.ex.ElementNotFound;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import static DataTests.DataLogin.urlServer;
-import static DataTests.DataSubscribers.portSIP;
-import static DataTests.DataSubscribers.subscriberPassword;
+import static DataTests.LOGIN.IP_SERVER;
+import static DataTests.SUBSCRIBERS.SUBSCRIBER_SIP_PORT;
+import static DataTests.SUBSCRIBERS.SUBSCRIBER_PASSWORD;
 import static com.codeborne.selenide.Selectors.byName;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
@@ -49,32 +49,32 @@ public class SubscribersPage {
             StepReport.stepTest("Вводим имя пользователя - " + subscriber);
             $("input#sp_user_name").clear();
             $("input#sp_user_name").setValue(subscriber);
-            if( ! $("input#sp_ns_ip").text().equals(urlServer)){
-                StepReport.stepTest("Вводим IP адрес сервера занятости - " + urlServer);
+            if( ! $("input#sp_ns_ip").text().equals(IP_SERVER)){
+                StepReport.stepTest("Вводим IP адрес сервера занятости - " + IP_SERVER);
                 $("input#sp_ns_ip").clear();
-                $("input#sp_ns_ip").setValue(urlServer);
+                $("input#sp_ns_ip").setValue(IP_SERVER);
             }
             if( ! $("input#sp_ns_port").text().equals("1220")){
                 StepReport.stepTest("Вводим порт сервера занятости - 1220");
                 $("input#sp_ns_port").clear();
                 $("input#sp_ns_port").setValue("1220");
             }
-            StepReport.stepTest("Вводим пароль - " + subscriberPassword);
-            $("input#sp_user_password").setValue(subscriberPassword);
-            StepReport.stepTest("Вводим подтверждение пароля - " + subscriberPassword);
-            $("input#sp_user_pwd_confirm").setValue(subscriberPassword);
+            StepReport.stepTest("Вводим пароль - " + SUBSCRIBER_PASSWORD);
+            $("input#sp_user_password").setValue(SUBSCRIBER_PASSWORD);
+            StepReport.stepTest("Вводим подтверждение пароля - " + SUBSCRIBER_PASSWORD);
+            $("input#sp_user_pwd_confirm").setValue(SUBSCRIBER_PASSWORD);
             StepReport.stepTest("Нажимаем кнопку для добавления учётной записи SIP");
             $(byXpath("//span[text()='SIP']//ancestor::div[@class='sp-wrap-header']/i")).click();
             By locatorsip = byXpath("//span[text()='SIP']//ancestor::fieldset[contains(@class,'dialog sp-wrap-label params-set set-type')]");
-            if( ! $(locatorsip).find(byName("serv_ip")).text().equals(urlServer)){
-                StepReport.stepTest("Вводим IP адрес SIP сервера - " + urlServer);
+            if( ! $(locatorsip).find(byName("serv_ip")).text().equals(IP_SERVER)){
+                StepReport.stepTest("Вводим IP адрес SIP сервера - " + IP_SERVER);
                 $(locatorsip).find(byName("serv_ip")).clear();
-                $(locatorsip).find(byName("serv_ip")).setValue(urlServer);
+                $(locatorsip).find(byName("serv_ip")).setValue(IP_SERVER);
             }
-            if( ! $(locatorsip).find(byName("serv_port")).text().equals(portSIP)){
-                StepReport.stepTest("Вводим порт SIP сервера - " + portSIP);
+            if( ! $(locatorsip).find(byName("serv_port")).text().equals(SUBSCRIBER_SIP_PORT)){
+                StepReport.stepTest("Вводим порт SIP сервера - " + SUBSCRIBER_SIP_PORT);
                 $(locatorsip).find(byName("serv_port")).clear();
-                $(locatorsip).find(byName("serv_port")).setValue(portSIP);
+                $(locatorsip).find(byName("serv_port")).setValue(SUBSCRIBER_SIP_PORT);
             }
             if( ! KATS) {
                 if (!$(locatorsip).find(byName("port1")).text().equals(portDX)) {

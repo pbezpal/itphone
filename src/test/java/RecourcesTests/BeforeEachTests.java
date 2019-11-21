@@ -1,6 +1,5 @@
 package RecourcesTests;
 
-import DataTests.DataLogin;
 import Pages.LoginPage;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
@@ -19,23 +18,21 @@ import ru.stqa.selenium.factory.WebDriverPool;
 import java.net.MalformedURLException;
 import java.net.URI;
 
-import static DataTests.DataLogin.*;
-import static DataTests.DataLogin.urlServer;
-import static DataTests.DataSubscribers.linkSubscribers;
-import static DataTests.Providers.DataProviderDX500.DX500;
-import static DataTests.Providers.Providers.linkProvidersPage;
+import static DataTests.LOGIN.*;
+import static DataTests.SUBSCRIBERS.SUBSCRIBERS_ITEM_MENU;
+import static DataTests.Providers.PROVIDER_DX500.DX500_TYPE_PROVIDER;
+import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BeforeEachTests implements BeforeEachCallback {
 
-    private static String urlHub = DataLogin.urlHUB;
-    private static String portHub = DataLogin.portHub;
     private static DX500Page dx500Page;
     private SubscribersPage subscribersPage;
 
     @Override
-    public void beforeEach(ExtensionContext extensionContext) throws Exception {
+    public void beforeEach(ExtensionContext extensionContext) {
+
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("firefox");
@@ -46,42 +43,39 @@ public class BeforeEachTests implements BeforeEachCallback {
 
         WebDriver driver = null;
         try {
-            driver = WebDriverPool.DEFAULT.getDriver(URI.create(urlHub + portHub + "/wd/hub").toURL(), capabilities);
+            driver = WebDriverPool.DEFAULT.getDriver(URI.create(HOST_HUB).toURL(), capabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         WebDriverRunner.setWebDriver(driver);
 
-        Configuration.baseUrl = "https://" + urlServer + ":40443";
+        Configuration.baseUrl = HOST_SERVER;
         Configuration.startMaximized = true;
         Configuration.screenshots = true;
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
 
+        if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains(HOST_SERVER)) open("/");
 
-        if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains("https://" + urlServer + ":40443")) open("/");
-
-        if (LoginPage.isLoginForm().isDisplayed()) LoginPage.loginOnServer(webLoginAdmin, webPassword);
-        else if (MonitoringPage.isCheckLogin() && ! MonitoringPage.isCheckUser(webLoginAdmin)) {
+        if (LoginPage.isLoginForm().isDisplayed()) LoginPage.loginOnServer(LOGIN_ADMIN_WEB, LOGIN_PASSWORD_WEB);
+        else if (MonitoringPage.isCheckLogin() && ! MonitoringPage.isCheckUser(LOGIN_ADMIN_WEB)) {
             MonitoringPage.clickButtonLogout();
-            LoginPage.loginOnServer(webLoginAdmin, webPassword);
+            LoginPage.loginOnServer(LOGIN_ADMIN_WEB, LOGIN_PASSWORD_WEB);
         }
         assertTrue(MonitoringPage.isCheckLogin(), "Не удалось авторизоваться на сервере");
 
-        if(String.valueOf(extensionContext.getTestClass()).contains("Test_1_DX500")){
-            if( ! ProvidersPage.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(linkProvidersPage, DX500);
+        if(String.valueOf(extensionContext.getTestClass()).contains("Test_A_DX500")){
+            if( ! ProvidersPage.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, DX500_TYPE_PROVIDER);
             if( dx500Page == null ) dx500Page = DX500Page.getInstance();
         }
 
-        if(String.valueOf(extensionContext.getTestClass()).contains("Test_3_StatusServers")){
-            if( ! MonitoringPage.isSectionMonitoring()) MonitoringPage.clickButtonMonitoringPage();
+        if(String.valueOf(extensionContext.getTestClass()).contains("Test_C_StatusServers")){
+            if( ! MonitoringPage.isSectionMonitoring()) assertTrue(MonitoringPage.clickButtonMonitoringPage());
         }
 
-        if(String.valueOf(extensionContext.getTestClass()).contains("Test_4_AddSubscribers")){
+        if(String.valueOf(extensionContext.getTestClass()).contains("Test_D_AddSubscribers")){
             if (!SubscribersPage.isSubscribersPage().isDisplayed())
-                subscribersPage = (SubscribersPage) MonitoringPage.openSectionWEB(linkSubscribers);
+                subscribersPage = (SubscribersPage) MonitoringPage.openSectionWEB(SUBSCRIBERS_ITEM_MENU);
             if (subscribersPage == null) subscribersPage = SubscribersPage.getInstance();
         }
     }
-
-
 }

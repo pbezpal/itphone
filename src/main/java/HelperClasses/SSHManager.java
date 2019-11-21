@@ -1,32 +1,24 @@
 package HelperClasses;
 
-import DataTests.DataLogin;
 import com.jcraft.jsch.*;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
-public  class SSHManager {
+import static DataTests.LOGIN.*;
 
-    private static String server = DataLogin.urlServer;
-    private static String login = DataLogin.sshLogin;
-    private static String password = DataLogin.sshPassword;
+public class SSHManager {
+
     private static JSch ssh = new JSch();
+    private static  String line;
 
     public SSHManager(){}
 
-    public SSHManager(String server, String login, String password){
-        this.server = server;
-        this.login = login;
-        this.password = password;
-    }
-
     public static boolean isCheckQuerySSH(String command){
         try {
-            Session s = ssh.getSession(login, server, 22);
-            s.setPassword(password);
+            Session s = ssh.getSession(LOGIN_ADMIN_SSH, IP_SERVER, 22);
+            s.setPassword(LOGIN_PASSWORD_SSH);
             Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
             s.setConfig(config);
@@ -43,15 +35,13 @@ public  class SSHManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String line;
-            while ((line = reader.readLine()) != null) {
-            }
+            line = reader.readLine();
 
             ce.disconnect();
             s.disconnect();
 
-            if(ce.getExitStatus() == 0) return true;
-            else return false;
+            if(line != null) return true;
+            return false;
 
         } catch (JSchException e) {
             return false;

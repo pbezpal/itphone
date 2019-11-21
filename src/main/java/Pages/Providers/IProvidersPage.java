@@ -1,11 +1,9 @@
 package Pages.Providers;
 
-import HelperClasses.SSHManager;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 
 import static Pages.Providers.ProvidersPage.isCheckProviderPage;
 import static com.codeborne.selenide.Selectors.byXpath;

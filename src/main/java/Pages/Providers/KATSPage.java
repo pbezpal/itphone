@@ -4,8 +4,8 @@ import HelperClasses.SSHManager;
 import com.codeborne.selenide.Condition;
 import io.qameta.allure.Step;
 
-import static DataTests.DataLogin.urlServer;
-import static DataTests.Providers.DataProviderKATS.*;
+import static DataTests.LOGIN.IP_SERVER;
+import static DataTests.Providers.PROVIDER_MX1000.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class KATSPage extends ProvidersPage implements IProvidersPage {
@@ -15,7 +15,7 @@ public class KATSPage extends ProvidersPage implements IProvidersPage {
 
     @Step(value = "Проверяем, установлен ли на сервер MAX1000")
     public boolean isMX1000(){
-        return SSHManager.isCheckQuerySSH(testServerMX1000);
+        return SSHManager.isCheckQuerySSH(MX1000_STATUS);
     }
 
     @Step(value = "Вводим IP адрес и порт {domain}")
@@ -44,7 +44,7 @@ public class KATSPage extends ProvidersPage implements IProvidersPage {
 
     @Step(value = "Выбираем IP SIP сервера")
     public KATSPage selectIPSipServer(){
-        $("select#provider_sip_binding_uri").selectOptionContainingText(urlServer);
+        $("select#provider_sip_binding_uri").selectOptionContainingText(IP_SERVER);
         return this;
     }
 
@@ -58,7 +58,7 @@ public class KATSPage extends ProvidersPage implements IProvidersPage {
         isCheckProviderPage();
         $("#add_provider").click();
         isFormEditProvider();
-        clickSelectTypeProvider(KATS);
+        clickSelectTypeProvider(MX1000_TYPE_PROVIDER);
         setNameProvider(name);
         setInputAddress(domain);
         setUsername(username);
@@ -70,16 +70,16 @@ public class KATSPage extends ProvidersPage implements IProvidersPage {
         clickButtonAddProviders();
 
         $("div.blockUI.blockMsg.blockPage").waitUntil(Condition.not(Condition.visible), 60000);
-        return isCheckProvider(MX1000);
+        return isCheckProvider(MAX1000_NAME);
     }
 
     @Step(value = "Проверяем, добавление провайдера в базу данных")
     public boolean isSelectProvider(){
-        return SSHManager.isCheckQuerySSH(checkSelectProvider);
+        return SSHManager.isCheckQuerySSH(MX1000_TABLE_REGISTRANT);
     }
 
     @Step(value = "Проверяем, что маршрут добавлен в базу данных")
     public boolean isSelectDialplan(){
-        return SSHManager.isCheckQuerySSH(checkSelectDialplan);
+        return SSHManager.isCheckQuerySSH(MX1000_TABLE_DIALPLAN);
     }
 }
