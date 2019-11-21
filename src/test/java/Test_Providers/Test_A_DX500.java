@@ -104,8 +104,8 @@ public class Test_A_DX500 {
             failedTestWithScreenshot("Cервер " + DX500_PULT + " не запущен.", true);
     }
 
-    @Story(value = "Конфигурацию сервера Пультов")
-    @Description(value = "Проверяем, что конфигурация сервера Пультов сохранилась")
+    @Story(value = "Конфигурацию сервера SIP(абон)-DX")
+    @Description(value = "Проверяем, что конфигурация сервера SIP(абон)-DX сохранилась")
     @Test
     void test_DX500_Configuration_SIP_Abon_DX(){
         if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_DB_IP)) failedTestWithScreenshot("Неверное значение в параметре db_ip", false);
@@ -134,8 +134,8 @@ public class Test_A_DX500 {
         else if (!webStatusSIP && !serverStatusSIP) failedTestWithScreenshot("Cервер " + DX500_SIP_ABON_DX + " не стартовал.", true);
     }
 
-    @Story(value = "Конфигурацию сервера Пультов")
-    @Description(value = "Проверяем, что конфигурация сервера Пультов сохранилась")
+    @Story(value = "Конфигурацию сервера SIP Пультов")
+    @Description(value = "Проверяем, что конфигурация сервера SIP Пультов сохранилась")
     @Test
     void test_DX500_Configuration_SIP_Pult(){
         if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_DB_IP)) failedTestWithScreenshot("Неверное значение в параметре db_ip", false);

@@ -28,10 +28,10 @@ public class Test_C_StatusServers {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;
-    private static final String labelContacts = "сервер контактов: ";
-    private static final String labelStation = "соединение со станцией: ";
-    private static final String labelLec = "линейный эхо-компенсатор: ";
-    private static final String labelBusy = "матрица занятости: ";
+    private static final String labelContacts = "сервер контактов";
+    private static final String labelStation = "соединение со станцией";
+    private static final String labelLec = "эхо-компенсатор";
+    private static final String labelBusy = "матрица занятости";
 
     @BeforeEach
     void setUp(){
@@ -49,7 +49,7 @@ public class Test_C_StatusServers {
                 MonitoringPage.isCheckTableStatusServer(),
                 OPENSIPS_MODULE_ID);
         if( ! MonitoringPage.isCheckModuleStatusServer(OPENSIPS_MODULE_ID) || ! MonitoringPage.isCheckTableStatusServer()){
-            refresh();
+            MonitoringPage.clickUpdateMonitoring();
             getStatusServer(
                     SSHManager.isCheckQuerySSH(OPENSIPS_STATUS),
                     MonitoringPage.isCheckModuleStatusServer(OPENSIPS_MODULE_ID),
@@ -68,7 +68,7 @@ public class Test_C_StatusServers {
                 MonitoringPage.isStatusService(DX500_BOOSTER),
                 DX500_BOOSTER);
         if( ! MonitoringPage.isCheckModuleStatusServer(DX500_BOOSTER) || ! MonitoringPage.isStatusService(DX500_BOOSTER)){
-            refresh();
+            MonitoringPage.clickUpdateMonitoring();
             getStatusServer(
                     DX500Page.isCheckStartServers(DX500_BOOSTER),
                     MonitoringPage.isCheckModuleStatusServer(DX500_BOOSTER),
@@ -104,7 +104,7 @@ public class Test_C_StatusServers {
                 MonitoringPage.isStatusService(DX500_PULT),
                 DX500_PULT);
         if( ! MonitoringPage.isCheckModuleStatusServer(DX500_PULT) || ! MonitoringPage.isStatusService(DX500_PULT)){
-            refresh();
+            MonitoringPage.clickUpdateMonitoring();
             getStatusServer(
                     DX500Page.isCheckStartServers(DX500_PULT),
                     MonitoringPage.isCheckModuleStatusServer(DX500_PULT),
@@ -139,7 +139,7 @@ public class Test_C_StatusServers {
                 MonitoringPage.isCheckTableConverterLanE1(DX500_PULT),
                 DX500_PULT_SMG);
         if( ! MonitoringPage.isCheckModuleConverterLanE1(DX500_PULT) || ! MonitoringPage.isCheckTableConverterLanE1(DX500_PULT)){
-            refresh();
+            MonitoringPage.clickUpdateMonitoring();
             getStatusConverter(
                     SSHManager.isCheckQuerySSH("smg.status s | grep 231" + DX500_PULT_SMG + " -A 7 | grep 'lapd_ready: establish'"),
                     MonitoringPage.isCheckModuleConverterLanE1(DX500_PULT),
@@ -158,7 +158,7 @@ public class Test_C_StatusServers {
                 MonitoringPage.isStatusService(DX500_SIP_ABON_DX),
                 DX500_SIP_ABON_DX);
         if( ! MonitoringPage.isCheckModuleStatusServer(DX500_SIP_ABON_DX) || ! MonitoringPage.isStatusService(DX500_SIP_ABON_DX)){
-            refresh();
+            MonitoringPage.clickUpdateMonitoring();
             getStatusServer(
                     DX500Page.isCheckStartServers(DX500_SIP_ABON_DX),
                     MonitoringPage.isCheckModuleStatusServer(DX500_SIP_ABON_DX),
@@ -177,7 +177,7 @@ public class Test_C_StatusServers {
                 MonitoringPage.isCheckTableConverterLanE1(DX500_SIP_ABON_DX),
                 DX500_PULT_SMG);
         if( ! MonitoringPage.isCheckModuleConverterLanE1(DX500_SIP_ABON_DX) || ! MonitoringPage.isCheckTableConverterLanE1(DX500_SIP_ABON_DX)){
-            refresh();
+            MonitoringPage.clickUpdateMonitoring();
             getStatusConverter(
                     SSHManager.isCheckQuerySSH("smg.status s | grep 231" + DX500_SIP_ABON_DX_SMG + " -A 7 | grep 'lapd_ready: establish'"),
                     MonitoringPage.isCheckModuleConverterLanE1(DX500_SIP_ABON_DX),
@@ -196,7 +196,7 @@ public class Test_C_StatusServers {
                 MonitoringPage.isStatusService(DX500_SIP_PULT),
                 DX500_SIP_PULT);
         if( ! MonitoringPage.isCheckModuleStatusServer(DX500_SIP_PULT) || ! MonitoringPage.isStatusService(DX500_SIP_PULT)){
-            refresh();
+            MonitoringPage.clickUpdateMonitoring();
             getStatusServer(
                     DX500Page.isCheckStartServers(DX500_SIP_PULT),
                     MonitoringPage.isCheckModuleStatusServer(DX500_SIP_PULT),
@@ -221,8 +221,8 @@ public class Test_C_StatusServers {
         if(this.TEST_MESSAGE != null) this.TEST_STATUS = false;
     }
 
-    @Story(value = "Статус матрицы занятости на сервере SIP Пульт")
-    @Description(value = "Проверяем корректное отображение статуса матрицы занятости на сервере SIP Пульт")
+    @Story(value = "Статус линейного эхо-компенсатора на сервере SIP Пульт")
+    @Description(value = "Проверяем корректное отображение статуса линейного эхо-компенсатора на сервере SIP Пульт")
     @Test
     void test_SIP_Pult_Status_Lec(){
         this.TEST_MESSAGE = MonitoringPage.isConnectService(DX500_SIP_PULT, SIP_PULT_STATUS_LEC, labelLec);
@@ -247,7 +247,7 @@ public class Test_C_StatusServers {
                 MonitoringPage.isCheckTableConverterLanE1(DX500_SIP_PULT),
                 DX500_SIP_PULT_SMG);
         if( ! MonitoringPage.isCheckModuleConverterLanE1(DX500_SIP_PULT) || ! MonitoringPage.isCheckTableConverterLanE1(DX500_SIP_PULT)){
-            refresh();
+            MonitoringPage.clickUpdateMonitoring();
             getStatusConverter(
                     SSHManager.isCheckQuerySSH("smg.status s | grep 231" + DX500_SIP_PULT_SMG + " -A 7 | grep 'lapd_ready: establish'"),
                     MonitoringPage.isCheckModuleConverterLanE1(DX500_SIP_PULT),
@@ -266,7 +266,7 @@ public class Test_C_StatusServers {
                 MonitoringPage.isStatusService(DX500_BUSY),
                 DX500_BUSY);
         if( ! MonitoringPage.isCheckModuleStatusServer(DX500_BUSY) || ! MonitoringPage.isStatusService(DX500_BUSY)){
-            refresh();
+            MonitoringPage.clickUpdateMonitoring();
             getStatusServer(
                     DX500Page.isCheckStartServers(DX500_BUSY),
                     MonitoringPage.isCheckModuleStatusServer(DX500_BUSY),

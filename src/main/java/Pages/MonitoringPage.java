@@ -156,7 +156,7 @@ public class MonitoringPage extends LoginPage{
         if(isCheckNotVisibleElement()){
             if( ! $("table#text-info").find("td").text().contains(label)) $("#" + service).find(byClassName("label_type_module")).click();
             if(isCheckNotVisibleElement()) {
-                $("table#text-info td").find("td").waitUntil(Condition.text(label), 30000);
+                $("table#text-info").find("td").waitUntil(Condition.text(label), 30000);
                 boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'" + label + "')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
                 boolean statusServer = SSHManager.isCheckQuerySSH(command);
                 if (statusServer && !statusSU) return label + " на сервере - connect, в СУ - disconnect";
@@ -219,6 +219,11 @@ public class MonitoringPage extends LoginPage{
             if($("article.module.width_quarter").find("img").getAttribute("src").contains("stat_ok.png")) return true;
         }
         return false;
+    }
+
+    @Step(value = "Нажимаем кнопку 'Обновить'")
+    public static void clickUpdateMonitoring(){
+        $("button#manual_update_monitoring").shouldBe(Condition.visible).click();
     }
 
     /***** Выход из СУ *****/

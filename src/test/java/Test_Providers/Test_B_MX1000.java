@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EpicServicesTests
 @FeatureProviderMX1000
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 @ExtendWith({TestRules.class, BeforeAllTests.class})
 public class Test_B_MX1000 {
 
@@ -43,9 +43,8 @@ public class Test_B_MX1000 {
 
     @Story(value = "Тестирование настройки SIP-сервера")
     @Description(value = "Проверяем, что через СУ настраивается SIP-сервер, настройки сохраняются на сервере и корректно отображается статус SIP сервера")
-    @Order(1)
     @Test
-    void test_ADD_SIP_Server() {
+    void test_ADD_MX1000_SIP_SERVER() {
         if( isCheckNotVisibleElement() ) sipServerPage = (SipServerPage) MonitoringPage.openSectionWEB(OPENSIPS_ITEM_MENU);
         assertTrue(sipServerPage.setSettingsSIPServer(IP_SERVER, OPENSIPS_SERVER_PORT, OPENSIPS_TURN_PORT_MIN, OPENSIPS_TURN_PORT_MAX), "Ошибка при настройке SIP сервера");
         assertTrue(sipServerPage.isCheckSettingsSipServer(), "Настройки SIP сервера не сохранились на сервере");
@@ -53,9 +52,8 @@ public class Test_B_MX1000 {
 
     @Story(value = "Добавление провайдетра MX1000")
     @Description(value = "Проверяем, что добавляется провайдет MX1000 типа КАТС")
-    @Order(2)
     @Test
-    void test_B_Add_Provider_MX1000() {
+    void test_ADD_PROVIDER_MX1000() {
         if( isCheckNotVisibleElement() && ! ProvidersPage.isCheckProviderPage().isDisplayed()) katsPage = (KATSPage) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, MX1000_TYPE_PROVIDER);
         if( katsPage == null ) katsPage = KATSPage.getInstance();
         if(SSHManager.isCheckQuerySSH(OPENSIPS_STATUS)) {
