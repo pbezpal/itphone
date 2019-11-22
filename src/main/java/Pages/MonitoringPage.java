@@ -3,12 +3,14 @@ package Pages;
 import HelperClasses.SSHManager;
 import Pages.Providers.ProvidersPage;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.ex.ElementShould;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static DataTests.OPENSIPS.OPENSIPS_ITEM_MENU;
+import static DataTests.OPENSIPS.OPENSIPS_MODULE_ID;
 import static DataTests.SUBSCRIBERS.*;
 import static DataTests.Providers.PROVIDER_DX500.DX500_BOOSTER_ADAPTER_NAME;
 import static DataTests.Providers.PROVIDERS.*;
@@ -142,19 +144,29 @@ public class MonitoringPage extends LoginPage{
     }
 
     @Step(value = "Проверяем на СУ состояние службы {service}")
-    public static boolean isStatusService(String service){
+    public static boolean isStatusService(String service, String head){
         if(isCheckNotVisibleElement()){
-            if( ! $("table#text-info").find("td").text().contains("состояние службы")) $("#" + service).find(byClassName("label_type_module")).click();
+            if( ! $("h3#head_ext_info").text().contains(head) && ! $("table#text-info").find("td").text().contains("состояние службы")) $("#" + service).find(byClassName("label_type_module")).click();
             $("table#text-info").find("td").waitUntil(Condition.text("состояние службы: "), 30000);
             if($(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'состояние службы')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed()) return true;
         }
         return false;
     }
 
-    @Step(value = "Проверяем на СУ состояние {label} у службы {service}")
-    public static String isConnectService(String service, String command, String label){
+    @Step(value = "Проверяем на СУ состояние SIP-сервера")
+    public static boolean isStatusOpensips(){
         if(isCheckNotVisibleElement()){
-            if( ! $("table#text-info").find("td").text().contains(label)) $("#" + service).find(byClassName("label_type_module")).click();
+            if( ! $("h3#head_ext_info").text().contains(OPENSIPS_ITEM_MENU) && ! $("table#text-info").find("td").text().contains("состояние")) $("#" + OPENSIPS_MODULE_ID).find(byClassName("label_type_module")).click();
+            $("table#text-info").find("td").waitUntil(Condition.text("состояние: "), 30000);
+            if($(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'состояние')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed()) return true;
+        }
+        return false;
+    }
+
+    @Step(value = "Проверяем на СУ состояние {label} у службы {service}")
+    public static String isConnectService(String service, String head, String command, String label){
+        if(isCheckNotVisibleElement()){
+            if( ! $("h3#head_ext_info").text().contains(head) && ! $("table#text-info").find("td").text().contains(label)) $("#" + service).find(byClassName("label_type_module")).click();
             if(isCheckNotVisibleElement()) {
                 $$("table#text-info td").findBy(Condition.text(label));
                 boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'" + label + "')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
@@ -183,9 +195,9 @@ public class MonitoringPage extends LoginPage{
     }
 
     @Step(value = "Проверяем на СУ имя интерфейса у службы {service}")
-    public static String isAdapterName(String service){
+    public static String isAdapterName(String service, String head){
         if(isCheckNotVisibleElement()){
-            if( ! $("table#text-info").find("td").text().contains("имя интерфейса")) $("#" + service).find(byClassName("label_type_module")).click();
+            if( ! $("h3#head_ext_info").text().contains(head) && ! $("table#text-info").find("td").text().contains("имя интерфейса")) $("#" + service).find(byClassName("label_type_module")).click();
             if(isCheckNotVisibleElement()) {
                 $$("table#text-info td").findBy(Condition.text("имя интерфейса: "));
                 boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'имя интерфейса')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
@@ -215,7 +227,7 @@ public class MonitoringPage extends LoginPage{
     public static boolean isCheckTableConverterLanE1(String service){
         if(isCheckNotVisibleElement()){
             $("div[server='" + service + "']").click();
-            $("table#text-info").find("td").waitUntil(Condition.text("второй уровень:"), 30000);
+            $("table#text-info").find("td").waitUntil(Condition.text("второй уровень: "), 30000);
             if($("article.module.width_quarter").find("img").getAttribute("src").contains("stat_ok.png")) return true;
         }
         return false;
@@ -224,6 +236,10 @@ public class MonitoringPage extends LoginPage{
     @Step(value = "Нажимаем кнопку 'Обновить'")
     public static void clickUpdateMonitoring(){
         $("button#manual_update_monitoring").shouldBe(Condition.visible).click();
+    }
+
+    public static SelenideElement getArticleModule(){
+        return $("article.module.width_quarter");
     }
 
     /***** Выход из СУ *****/

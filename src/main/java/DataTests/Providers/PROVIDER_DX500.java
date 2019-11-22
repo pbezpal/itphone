@@ -13,6 +13,7 @@ public @interface PROVIDER_DX500 {
     String DX500_DIALPLAN = getProperty("DX500_DIALPLAN");
 
     /***** Параметры настройки SIP(абон)-DX *****/
+    String DX500_SIP_ABON_DX_HEADER_MODULE = "SIP(аб)-DXшлюз";
     String DX500_SIP_ABON_DX = getProperty("DX500_SIP_ABON_DX");
     String DX500_SIP_ABON_DX_OPTION = getProperty("DX500_SIP_ABON_DX_OPTION");
     String DX500_SIP_ABON_DX_SMG = getProperty("DX500_SIP_ABON_DX_SMG");
@@ -20,6 +21,7 @@ public @interface PROVIDER_DX500 {
     String DX500_SIP_ABON_DX_CONFIG = getProperty("DX500_SIP_ABON_DX_CONFIG");
 
     /***** Параметры настрйоки Ассистента *****/
+    String DX500_BOOSTER_HEAD_MODULE = "Ассистент";
     String DX500_BOOSTER = getProperty("DX500_BOOSTER");
     String DX500_BOOSTER_IP_DB = getProperty("DX500_BOOSTER_IP_DB");
     String DX500_BOOSTER_ADAPTER_NAME = getProperty("DX500_BOOSTER_ADAPTER_NAME");
@@ -30,6 +32,7 @@ public @interface PROVIDER_DX500 {
     String DX500_BOOSTER_CONTROL_PORT = getProperty("DX500_BOOSTER_CONTROL_PORT");
 
     /***** Параметры настройки Пульт *****/
+    String DX500_PULT_HEAD_MODULE = "Пульт";
     String DX500_PULT = getProperty("DX500_PULT");
     String DX500_PULT_SMG = getProperty("DX500_PULT_SMG");
     String DX500_PULT_CONVERTER_IP = getProperty("DX500_PULT_CONVERTER_IP");
@@ -37,6 +40,7 @@ public @interface PROVIDER_DX500 {
     String DX500_PULT_CONTROL_PORT = getProperty("DX500_PULT_CONTROL_PORT");
 
     /***** Параметры настройки SIP Пульт *****/
+    String DX500_SIP_PULT_HEAD_MODULE = "SIP-Пульт";
     String DX500_SIP_PULT = getProperty("DX500_SIP_PULT");
     String DX500_SIP_PULT_SMG = getProperty("DX500_SIP_PULT_SMG");
     String DX500_SIP_PULT_CONVERTER_IP = getProperty("DX500_SIP_PULT_CONVERTER_IP");
@@ -44,6 +48,7 @@ public @interface PROVIDER_DX500 {
     String DX500_SIP_PULT_CONTROL_PORT = getProperty("DX500_SIP_PULT_CONTROL_PORT");
 
     /***** Параметры занятости ******/
+    String DX500_BUSY_HEAD_MODULE = "Занятость Eth";
     String DX500_BUSY = getProperty("DX500_BUSY");
     String DX500_BUSY_CONFIG = getProperty("DX500_BUSY_CONFIG");
     String DX500_BUSY_CONTROL_PORT = getProperty("DX500_BUSY_CONTROL_PORT");

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static DataTests.SUBSCRIBERS.*;
 import static Pages.SubscribersPage.subscribersPage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @EpicServicesTests
 @FeatureSubscribersTests
@@ -28,6 +29,7 @@ public class Test_D_AddSubscribers {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;
+    private static boolean screenshot;
 
     @BeforeEach
     void setUp(){
@@ -36,6 +38,7 @@ public class Test_D_AddSubscribers {
         if (subscribersPage == null) subscribersPage = SubscribersPage.getInstance();
         TEST_STATUS = true;
         TEST_MESSAGE = "";
+        screenshot = false;
     }
 
     @Story(value = "Добавляем абонента 5000")
@@ -73,21 +76,23 @@ public class Test_D_AddSubscribers {
     @Test
     void test_Subscriber_4001(){
         subscribersPage.addSubscriber(SUBSCRIBER_4001, SUBSCRIBER_PORT_DX_4001, true);
-        assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_4001), "Пользователь " + SUBSCRIBER_4001 + " не найден");
+        if( ! subscribersPage.isFilterSubscriber(SUBSCRIBER_4001)) failedTestWithScreenshot("Пользователь " + SUBSCRIBER_4001 + " не найден", true);
         if( ! SSHManager.isCheckQuerySSH("/var/db/sv-contacts/userlist.sh + grep " + SUBSCRIBER_4001)) failedTestWithScreenshot("Пользователь " + SUBSCRIBER_4001 + " не найден на сервере", false);
         if( ! SSHManager.isCheckQuerySSH(SV_CONTACTS_STATUS)) failedTestWithScreenshot("Сервер контактов не запущен", false);
     }
 
-    void failedTestWithScreenshot(String message, boolean screenshot) {
+    void failedTestWithScreenshot(String message, boolean screen) {
         Allure.step(message, Status.FAILED);
         TEST_STATUS = false;
         TEST_MESSAGE = TEST_MESSAGE + "; " + message;
-        if(screenshot) ScreenshotTests.screenshot();
+        this.screenshot = screen;
     }
 
     @AfterEach
     void tearDown(){
-        assertTrue(TEST_STATUS, TEST_MESSAGE);
+        if( ! TEST_STATUS){
+            fail(TEST_MESSAGE, new Exception(String.valueOf(screenshot)));
+        }
     }
 
 }

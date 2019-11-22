@@ -3,7 +3,6 @@ package Test_Providers;
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureProviderDX500;
 import HelperClasses.SSHManager;
-import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
 import Pages.Providers.ProvidersPage;
@@ -21,6 +20,7 @@ import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.MonitoringPage.isCheckNotVisibleElement;
 import static Pages.Providers.DX500Page.dx500Page;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @EpicServicesTests
 @FeatureProviderDX500
@@ -30,6 +30,7 @@ public class Test_A_DX500 {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;
+    private boolean screenshot;
 
     @BeforeEach
     void setUp(){
@@ -38,6 +39,7 @@ public class Test_A_DX500 {
         if( dx500Page == null ) dx500Page = DX500Page.getInstance();
         TEST_STATUS = true;
         TEST_MESSAGE = "";
+        screenshot = false;
     }
 
     @Story(value = "Добавление провайдера DX500")
@@ -188,8 +190,10 @@ public class Test_A_DX500 {
     }
 
     @AfterEach
-    void etarDown(){
-        assertTrue(TEST_STATUS, TEST_MESSAGE);
+    void tearDown(){
+        if( ! TEST_STATUS){
+            fail(TEST_MESSAGE, new Exception(String.valueOf(screenshot)));
+        }
     }
 
     @Story(value = "Сохранение настроек провайдера DX500")
@@ -200,13 +204,10 @@ public class Test_A_DX500 {
         assertTrue(dx500Page.clickSaveProvider(DX500_TYPE_PROVIDER), "После сохранения провайдера " + DX500_TYPE_PROVIDER + "запись в таблице пропала");
     }
 
-    void failedTestWithScreenshot(String message, boolean screenshot) {
+    void failedTestWithScreenshot(String message, boolean screen) {
         Allure.step(message, Status.FAILED);
         TEST_STATUS = false;
         TEST_MESSAGE = TEST_MESSAGE + "\n" + message;
-        if(screenshot) ScreenshotTests.screenshot();
+        screenshot = screen;
     }
-
-
-
 }

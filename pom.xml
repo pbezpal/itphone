@@ -26,6 +26,7 @@
         <allure-junit5.version>2.13.0</allure-junit5.version>
         <allure-junit-platform.version>2.13.0</allure-junit-platform.version>
         <allure-selenide.version>2.13.0</allure-selenide.version>
+        <ashot.version>1.5.4</ashot.version>
         <!--Extra instruments versions-->
         <jsch.version>0.1.55</jsch.version>
         <commons-io.version>2.6</commons-io.version>
@@ -110,6 +111,12 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-selenide</artifactId>
             <version>${allure-selenide.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/ru.yandex.qatools.ashot/ashot -->
+        <dependency>
+            <groupId>ru.yandex.qatools.ashot</groupId>
+            <artifactId>ashot</artifactId>
+            <version>${ashot.version}</version>
         </dependency>
         <!--Dependencies extra instruments-->
         <!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->

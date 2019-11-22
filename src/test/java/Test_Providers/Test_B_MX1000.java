@@ -5,6 +5,7 @@ import AnnotationsTests.ServicesTests.FeatureProviderMX1000;
 import HelperClasses.SSHManager;
 import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
+import Pages.Providers.DX500Page;
 import Pages.Providers.KATSPage;
 import Pages.Providers.ProvidersPage;
 import Pages.SipServerPage;
@@ -22,7 +23,9 @@ import static DataTests.OPENSIPS.*;
 import static DataTests.Providers.PROVIDER_MX1000.*;
 import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
 import static Pages.MonitoringPage.isCheckNotVisibleElement;
+import static Pages.MonitoringPage.isSectionMonitoring;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @EpicServicesTests
 @FeatureProviderMX1000
@@ -34,6 +37,7 @@ public class Test_B_MX1000 {
     private SipServerPage sipServerPage;
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;
+    private static boolean screenshot;
 
     @Story(value = "Проверяем, настроен ли сервер SIP")
     @Description(value = "Проверяем, настроен ли сервер SIP и если сервер SIP не натсроен, настраиваем его")
@@ -41,6 +45,7 @@ public class Test_B_MX1000 {
     void setUp(){
         TEST_STATUS = true;
         TEST_MESSAGE = "";
+        screenshot = false;
         if ( ! SSHManager.isCheckQuerySSH(OPENSIPS_STATUS)) settings_Opensips();
     }
 
@@ -59,21 +64,44 @@ public class Test_B_MX1000 {
         if (!katsPage.isMX1000()) failedTestWithScreenshot("Сервер MX1000 не установлен на сервер", false);
     }
 
+    @Story(value = "Статус SIP сервера")
+    @Description(value = "Проверяем корректное отображение статуса SIP сервера")
+    @Test
+    void test_Status_SIP_Server(){
+        if( isCheckNotVisibleElement() && ! isSectionMonitoring()) assertTrue(MonitoringPage.clickButtonMonitoringPage(), "Не удалось перейти в раздел Мониторинг");
+        boolean serverStatus = DX500Page.isCheckStartServers(OPENSIPS_SERVER);
+        boolean tableStatusServer = MonitoringPage.isStatusOpensips();
+        boolean moduleStatusServer = MonitoringPage.isCheckModuleStatusServer(OPENSIPS_MODULE_ID);
+        if(serverStatus && moduleStatusServer && tableStatusServer) TEST_STATUS = true;
+        else if( ! serverStatus && (moduleStatusServer || tableStatusServer)){
+            this.TEST_STATUS = false;
+            this.TEST_MESSAGE = "На сервере не запущена служба " + OPENSIPS_SERVER + ", однако в СУ отображется статус - ОК";
+        }else if(serverStatus && ( ! moduleStatusServer || ! tableStatusServer)) {
+            this.TEST_STATUS = false;
+            this.TEST_MESSAGE = "На сервере запущена служба " + OPENSIPS_SERVER + ", однако в СУ отображается статус - NOK";
+        }else{
+            this.TEST_STATUS = false;
+            this.TEST_MESSAGE = "На сервере не запущена служба " + OPENSIPS_SERVER + " и в СУ отображается статус сервера - NOK";
+        }
+    }
+
     void settings_Opensips(){
         if( isCheckNotVisibleElement() ) sipServerPage = (SipServerPage) MonitoringPage.openSectionWEB(OPENSIPS_ITEM_MENU);
         assertTrue(sipServerPage.setSettingsSIPServer(IP_SERVER, OPENSIPS_SERVER_PORT, OPENSIPS_TURN_PORT_MIN, OPENSIPS_TURN_PORT_MAX), "Ошибка при настройке SIP сервера");
         assertTrue(sipServerPage.isCheckSettingsSipServer(), "Настройки SIP сервера не сохранились на сервере");
     }
 
-    void failedTestWithScreenshot(String message, boolean screenshot) {
+    void failedTestWithScreenshot(String message, boolean screen) {
         Allure.step(message, Status.FAILED);
         TEST_STATUS = false;
-        TEST_MESSAGE = TEST_MESSAGE + "; " + message;
-        if(screenshot) ScreenshotTests.screenshot();
+        TEST_MESSAGE = TEST_MESSAGE + "\n" + message;
+        screenshot = screen;
     }
 
     @AfterEach
     void tearDown(){
-        assertTrue(TEST_STATUS, TEST_MESSAGE);
+        if( ! TEST_STATUS){
+            fail(TEST_MESSAGE, new Exception(String.valueOf(screenshot)));
+        }
     }
 }
