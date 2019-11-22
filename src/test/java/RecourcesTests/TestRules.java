@@ -15,11 +15,4 @@ public class TestRules implements TestWatcher {
                 ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()), getArticleModule());
             }else ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
         }
-
-        /*@Override
-        public void testAborted(ExtensionContext context, Throwable cause) {
-            if(cause.getMessage().equals("article module")){
-                ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()), getArticleModule());
-            }else ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
-        }*/
 }
