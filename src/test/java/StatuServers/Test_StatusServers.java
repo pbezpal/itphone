@@ -36,6 +36,8 @@ public class Test_StatusServers {
     void setUp(){
         StartTests();
         if( ! isSectionMonitoring()) MonitoringPage.clickButtonMonitoringPage();
+        if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
+        if( ! isCheckNotVisibleElement()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
         assertTrue(isSectionMonitoring(), "Не удалось перейти в раздел Мониторинг");
         TEST_STATUS = true;
     }
