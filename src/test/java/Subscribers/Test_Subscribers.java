@@ -1,12 +1,10 @@
-package Test_Subscribers;
+package Subscribers;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureSubscribersTests;
 import HelperClasses.SSHManager;
-import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
 import Pages.SubscribersPage;
-import RecourcesTests.BeforeAllTests;
 import RecourcesTests.TestRules;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -18,14 +16,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.SUBSCRIBERS.*;
+import static Pages.MonitoringPage.isCheckNotVisibleDownload;
 import static Pages.SubscribersPage.subscribersPage;
+import static RecourcesTests.BeforeSettingsTests.StartTests;
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.*;
 
 @EpicServicesTests
 @FeatureSubscribersTests
-@ExtendWith({TestRules.class, BeforeAllTests.class})
-public class Test_D_AddSubscribers {
+@ExtendWith(TestRules.class)
+public class Test_Subscribers {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;
@@ -33,9 +33,11 @@ public class Test_D_AddSubscribers {
 
     @BeforeEach
     void setUp(){
+        StartTests();
         if (!SubscribersPage.isSubscribersPage().isDisplayed())
             subscribersPage = (SubscribersPage) MonitoringPage.openSectionWEB(SUBSCRIBERS_ITEM_MENU);
         if (subscribersPage == null) subscribersPage = SubscribersPage.getInstance();
+        if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
         TEST_STATUS = true;
         TEST_MESSAGE = "";
         screenshot = false;

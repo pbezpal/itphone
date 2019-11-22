@@ -6,7 +6,7 @@ public @interface PROVIDER_MX1000 {
 
     /***** Основные настрйоки провайдера КАТС *****/
     String MX1000_TYPE_PROVIDER = "KATC";
-    String MAX1000_NAME = getProperty("MAX1000_NAME");
+    String MX1000_NAME = getProperty("MAX1000_NAME");
     String MX1000_HOST = getProperty("MX1000_HOST");
 
     /***** Раздел регистрации в провайдере *****/

@@ -161,10 +161,11 @@
                         </property>
                     </systemProperties>
                     <includes>
-                        <include>**/Test_A_DX500.java</include>
-                        <include>**/Test_B_MX1000.java</include>
-                        <include>**/Test_C_StatusServers.java</include>
-                        <include>**/Test_D_AddSubscribers.java</include>
+                        <include>**/Test_DX500.java</include>
+                        <include>**/Test_DX500_Start.java</include>
+                        <include>**/Test_MX1000.java</include>
+                        <include>**/Test_StatusServers.java</include>
+                        <include>**/Test_AddSubscribers.java</include>
                     </includes>
                 </configuration>
                 <dependencies>

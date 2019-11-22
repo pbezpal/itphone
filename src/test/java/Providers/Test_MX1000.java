@@ -1,15 +1,13 @@
-package Test_Providers;
+package Providers;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureProviderMX1000;
 import HelperClasses.SSHManager;
-import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
 import Pages.Providers.KATSPage;
 import Pages.Providers.ProvidersPage;
 import Pages.SipServerPage;
-import RecourcesTests.BeforeAllTests;
 import RecourcesTests.TestRules;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -22,16 +20,16 @@ import static DataTests.LOGIN.IP_SERVER;
 import static DataTests.OPENSIPS.*;
 import static DataTests.Providers.PROVIDER_MX1000.*;
 import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
-import static Pages.MonitoringPage.isCheckNotVisibleElement;
-import static Pages.MonitoringPage.isSectionMonitoring;
+import static Pages.MonitoringPage.*;
+import static RecourcesTests.BeforeSettingsTests.StartTests;
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.*;
 
 @EpicServicesTests
 @FeatureProviderMX1000
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
-@ExtendWith({TestRules.class, BeforeAllTests.class})
-public class Test_B_MX1000 {
+@ExtendWith(TestRules.class)
+public class Test_MX1000 {
 
     private KATSPage katsPage = null;
     private SipServerPage sipServerPage;
@@ -43,6 +41,7 @@ public class Test_B_MX1000 {
     @Description(value = "Проверяем, настроен ли сервер SIP и если сервер SIP не натсроен, настраиваем его")
     @BeforeEach
     void setUp(){
+        StartTests();
         TEST_STATUS = true;
         TEST_MESSAGE = "";
         screenshot = false;
@@ -57,7 +56,10 @@ public class Test_B_MX1000 {
             if (isCheckNotVisibleElement() && !ProvidersPage.isCheckProviderPage().isDisplayed())
                 katsPage = (KATSPage) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, MX1000_TYPE_PROVIDER);
             if (katsPage == null) katsPage = KATSPage.getInstance();
-            assertTrue(katsPage.addMX1000(MAX1000_NAME, MX1000_HOST, MX1000_USERNAME, MX1000_PASSWORD, MX1000_DIALPLAN, MX1000_DELAY_REGISTRATION), "Не удалось добавить провайдер MX1000");
+            if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
+            katsPage.addMX1000(MX1000_NAME, MX1000_HOST, MX1000_USERNAME, MX1000_PASSWORD, MX1000_DIALPLAN, MX1000_DELAY_REGISTRATION);
+            if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
+            assertTrue(katsPage.isCheckProvider(MX1000_NAME), "Не удалось добавить провайдер " + MX1000_NAME);
             if (!katsPage.isSelectProvider())
                 failedTestWithScreenshot("Провайдер MX1000 не найден в базе данных MySql", false);
             if (!katsPage.isSelectDialplan())
@@ -70,7 +72,10 @@ public class Test_B_MX1000 {
     @Description(value = "Проверяем корректное отображение статуса SIP сервера")
     @Test
     void test_Status_SIP_Server(){
-        if( isCheckNotVisibleElement() && ! isSectionMonitoring()) assertTrue(MonitoringPage.clickButtonMonitoringPage(), "Не удалось перейти в раздел Мониторинг");
+        if( ! isSectionMonitoring()) MonitoringPage.clickButtonMonitoringPage();
+        if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
+        if( ! isCheckNotVisibleElement() ) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
+        assertTrue(isSectionMonitoring(), "Не удалось перейти в раздел Мониторинг");
         boolean serverStatus = DX500Page.isCheckStartServers(OPENSIPS_SERVER);
         boolean tableStatusServer = MonitoringPage.isStatusOpensips();
         boolean moduleStatusServer = MonitoringPage.isCheckModuleStatusServer(OPENSIPS_MODULE_ID);
@@ -88,7 +93,8 @@ public class Test_B_MX1000 {
     }
 
     void settings_Opensips(){
-        if( isCheckNotVisibleElement() ) sipServerPage = (SipServerPage) MonitoringPage.openSectionWEB(OPENSIPS_ITEM_MENU);
+        sipServerPage = (SipServerPage) MonitoringPage.openSectionWEB(OPENSIPS_ITEM_MENU);
+        if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
         assertTrue(sipServerPage.setSettingsSIPServer(IP_SERVER, OPENSIPS_SERVER_PORT, OPENSIPS_TURN_PORT_MIN, OPENSIPS_TURN_PORT_MAX), "Ошибка при настройке SIP сервера");
         assertTrue(sipServerPage.isCheckSettingsSipServer(), "Настройки SIP сервера не сохранились на сервере");
     }

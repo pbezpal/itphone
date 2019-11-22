@@ -1,4 +1,4 @@
-package Test_StatusServers;
+package Monitoring;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureStatusServers;
@@ -6,29 +6,23 @@ import HelperClasses.SSHManager;
 import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
-import RecourcesTests.BeforeAllTests;
 import RecourcesTests.TestRules;
-import io.qameta.allure.Allure;
-import io.qameta.allure.AllureResultsWriter;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
-import io.qameta.allure.model.Status;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.io.IOException;
-
-import static DataTests.OPENSIPS.*;
 import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.MonitoringPage.*;
+import static RecourcesTests.BeforeSettingsTests.StartTests;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @EpicServicesTests
 @FeatureStatusServers
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
-@ExtendWith({TestRules.class, BeforeAllTests.class})
-public class Test_C_StatusServers {
+@ExtendWith(TestRules.class)
+public class Test_StatusServers {
 
     private static boolean TEST_STATUS;
     private static String TEST_MESSAGE;
@@ -40,7 +34,9 @@ public class Test_C_StatusServers {
 
     @BeforeEach
     void setUp(){
-        if( isCheckNotVisibleElement() && ! isSectionMonitoring()) assertTrue(MonitoringPage.clickButtonMonitoringPage(), "Не удалось перейти в раздел Мониторинг");
+        StartTests();
+        if( ! isSectionMonitoring()) MonitoringPage.clickButtonMonitoringPage();
+        assertTrue(isSectionMonitoring(), "Не удалось перейти в раздел Мониторинг");
         TEST_STATUS = true;
     }
 
@@ -55,16 +51,14 @@ public class Test_C_StatusServers {
     @Description(value = "Проверяем корректное отображение статус сервера контактов на сервере Ассистентов")
     @Test
     void test_Booster_Status_Server_Contacts(){
-        this.TEST_MESSAGE = MonitoringPage.isConnectService(DX500_BOOSTER, DX500_BOOSTER_HEAD_MODULE, BOOSTER_CONNECT_CONTACTS, labelContacts);
-        reportArticleModule();
+        getStatusArticleModule(DX500_BOOSTER, DX500_BOOSTER_HEAD_MODULE, BOOSTER_CONNECT_CONTACTS, labelContacts);
     }
 
     @Story(value = "Статус станции на сервере Ассистентов")
     @Description(value = "Проверяем корректное отображение статус станции на сервере Ассистентов")
     @Test
     void test_Booster_Status_Connect_Station(){
-        this.TEST_MESSAGE = MonitoringPage.isConnectService(DX500_BOOSTER, DX500_BOOSTER_HEAD_MODULE, BOOSTER_CONNECT_STATION, labelStation);
-        reportArticleModule();
+        getStatusArticleModule(DX500_BOOSTER, DX500_BOOSTER_HEAD_MODULE, BOOSTER_CONNECT_STATION, labelStation);
     }
 
 
@@ -79,16 +73,14 @@ public class Test_C_StatusServers {
     @Description(value = "Проверяем корректное отображение статус сервера контактов на сервере Пультов")
     @Test
     void test_Pult_Status_Server_Contacts(){
-        this.TEST_MESSAGE = MonitoringPage.isConnectService(DX500_PULT, DX500_PULT_HEAD_MODULE, PULT_CONNECT_CONTACTS, labelContacts);
-        reportArticleModule();
+        getStatusArticleModule(DX500_PULT, DX500_PULT_HEAD_MODULE, PULT_CONNECT_CONTACTS, labelContacts);
     }
 
     @Story(value = "Статус станции на сервере Пультов")
     @Description(value = "Проверяем корректное отображение статус станции на сервере Пультов")
     @Test
     void test_Pult_Status_Connect_Station(){
-        this.TEST_MESSAGE = MonitoringPage.isConnectService(DX500_PULT, DX500_PULT_HEAD_MODULE, PULT_CONNECT_STATION, labelStation);
-        reportArticleModule();
+        getStatusArticleModule(DX500_PULT, DX500_PULT_HEAD_MODULE, PULT_CONNECT_STATION, labelStation);
     }
 
     @Story(value = "Статус конвертера Lan/E1 сервере Пультов")
@@ -123,8 +115,7 @@ public class Test_C_StatusServers {
     @Description(value = "Проверяем корректное отображение статус сервера контактов на сервере SIP ekmn")
     @Test
     void test_SIP_Pult_Status_Server_Contacts(){
-        this.TEST_MESSAGE = MonitoringPage.isConnectService(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_CONTACTS, labelContacts);
-        reportArticleModule();
+        getStatusArticleModule(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_CONTACTS, labelContacts);
     }
 
     @Story(value = "Статус станции на сервере SIP Пульт")
@@ -139,16 +130,14 @@ public class Test_C_StatusServers {
     @Description(value = "Проверяем корректное отображение статуса линейного эхо-компенсатора на сервере SIP Пульт")
     @Test
     void test_SIP_Pult_Status_Lec(){
-        this.TEST_MESSAGE = MonitoringPage.isConnectService(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_STATUS_LEC, labelLec);
-        reportArticleModule();
+        getStatusArticleModule(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_STATUS_LEC, labelLec);
     }
 
     @Story(value = "Статус матрицы занятости на сервере SIP Пульт")
     @Description(value = "Проверяем корректное отображение статуса матрицы занятости на сервере SIP Пульт")
     @Test
     void test_SIP_Pult_Connect_BUSY(){
-        this.TEST_MESSAGE = MonitoringPage.isConnectService(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_BUSY, labelBusy);
-        reportArticleModule();
+        getStatusArticleModule(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_BUSY, labelBusy);
     }
 
     @Story(value = "Статус конвертера Lan/E1 сервере SIP Пульт")
@@ -169,6 +158,7 @@ public class Test_C_StatusServers {
     @Description(value = "Проверяем корректное отображение статус сетевого интерфейса на сервере Занятости")
     @Test
     void test_Busy_Status_Network(){
+        assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус SMG");
         this.TEST_MESSAGE = MonitoringPage.isAdapterName(DX500_BUSY, DX500_BUSY_HEAD_MODULE);
         reportArticleModule();
     }
@@ -177,8 +167,7 @@ public class Test_C_StatusServers {
     @Description(value = "Проверяем корректное отображение статус станции на сервере Занятости")
     @Test
     void test_Busy_Status_Connect_Station(){
-        this.TEST_MESSAGE = MonitoringPage.isConnectService(DX500_BUSY, DX500_BUSY_HEAD_MODULE, BUSY_CONNECT_STATION, labelStation);
-        reportArticleModule();
+        getStatusArticleModule(DX500_BUSY, DX500_BUSY_HEAD_MODULE, BUSY_CONNECT_STATION, labelStation);
     }
 
     public void reportArticleModule(){
@@ -198,6 +187,7 @@ public class Test_C_StatusServers {
     }
 
     public void getStatusServer(String server, String headModule){
+        assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус пераметра " + server);
         boolean serverStatus = DX500Page.isCheckStartServers(server);
         boolean tableStatusServer = MonitoringPage.isStatusService(server, headModule);
         boolean moduleStatusServer = MonitoringPage.isCheckModuleStatusServer(server);
@@ -216,6 +206,7 @@ public class Test_C_StatusServers {
     }
 
     public void getStatusConverter(String server, String SMG){
+        assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус SMG");
         boolean converterStatus = SSHManager.isCheckQuerySSH("smg.status s | grep 231" + SMG + " -A 7 | grep 'lapd_ready: establish'");
         boolean moduleStatusConverter = MonitoringPage.isCheckModuleConverterLanE1(server);
         boolean tableStatusConverter = MonitoringPage.isCheckTableConverterLanE1(DX500_SIP_PULT);
@@ -231,5 +222,11 @@ public class Test_C_StatusServers {
             this.TEST_MESSAGE = "На сервере статус SMG: " + SMG + " - disconnected и в СУ отображается статус SMG - disconnected. Проверьте соединение со станцией!!!";
         }
         reportModule();
+    }
+
+    void getStatusArticleModule(String service, String headModule, String command, String label){
+        assertTrue(isCheckNotVisibleElement(), "Не удалось получить статус для " + label + " для сервера " + DX500_BOOSTER);
+        this.TEST_MESSAGE = MonitoringPage.isConnectService(service, headModule, command, label);
+        reportArticleModule();
     }
 }

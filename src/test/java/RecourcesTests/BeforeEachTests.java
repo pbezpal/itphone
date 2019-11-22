@@ -22,8 +22,11 @@ import static DataTests.LOGIN.*;
 import static DataTests.SUBSCRIBERS.SUBSCRIBERS_ITEM_MENU;
 import static DataTests.Providers.PROVIDER_DX500.DX500_TYPE_PROVIDER;
 import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
+import static Pages.MonitoringPage.isCheckNotVisibleDownload;
+import static Pages.MonitoringPage.isCheckNotVisibleElement;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class BeforeEachTests implements BeforeEachCallback {
 
@@ -62,8 +65,10 @@ public class BeforeEachTests implements BeforeEachCallback {
             LoginPage.loginOnServer(LOGIN_ADMIN_WEB, LOGIN_PASSWORD_WEB);
         }
         assertTrue(MonitoringPage.isCheckLogin(), "Не удалось авторизоваться на сервере");
+        if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
+        if( ! isCheckNotVisibleElement()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
 
-        if(String.valueOf(extensionContext.getTestClass()).contains("Test_A_DX500")){
+        /*if(String.valueOf(extensionContext.getTestClass()).contains("Test_A_DX500")){
             if( ! ProvidersPage.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, DX500_TYPE_PROVIDER);
             if( dx500Page == null ) dx500Page = DX500Page.getInstance();
         }
@@ -76,6 +81,6 @@ public class BeforeEachTests implements BeforeEachCallback {
             if (!SubscribersPage.isSubscribersPage().isDisplayed())
                 subscribersPage = (SubscribersPage) MonitoringPage.openSectionWEB(SUBSCRIBERS_ITEM_MENU);
             if (subscribersPage == null) subscribersPage = SubscribersPage.getInstance();
-        }
+        }*/
     }
 }

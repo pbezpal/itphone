@@ -50,16 +50,14 @@ public class MonitoringPage extends LoginPage{
     }
 
     @Step(value = "Переходим в раздел 'Мониторинг'")
-    public static boolean clickButtonMonitoringPage(){
+    public static void clickButtonMonitoringPage(){
         $("a.link_menu.link_top_menu").shouldHave(Condition.text("Мониторинг")).click();
-        if(isCheckNotVisibleElement()) return true;
-        return false;
     }
 
     @Step(value = "Ждём, когда пропадёт блок загрузки")
     public static boolean isCheckNotVisibleDownload(){
         try{
-            $("div.blockUI.blockMsg.blockPage").waitUntil(Condition.not(Condition.visible), 60000);
+            $("div.blockUI.blockMsg.blockPage").waitUntil(Condition.not(Condition.visible), 120000);
         }catch (ElementShould element){
             return false;
         }
@@ -68,17 +66,12 @@ public class MonitoringPage extends LoginPage{
 
     @Step(value = "Ждём, когда пропадут элементы загрузки")
     public static boolean isCheckNotVisibleElement(){
-        if(isCheckNotVisibleDownload()) {
-            try {
-                $("table#text-info").find("img[src*='progress_bar.gif']").waitUntil(Condition.not(Condition.visible), 60000);
-            } catch (ElementShould element) {
-                return false;
-            }
-            return true;
+        try {
+            $("table#text-info").find("img[src*='progress_bar.gif']").waitUntil(Condition.not(Condition.visible), 120000);
+        } catch (ElementShould element) {
+            return false;
         }
-
-        return false;
-
+        return true;
     }
 
     @Step(value = "Проверяем, доступна ли кнопка 'Настройка СУ'")
@@ -91,11 +84,7 @@ public class MonitoringPage extends LoginPage{
         return true;
     }
 
-    public static void clickItemMenu(String itemMenu) {
-        if(isCheckLogin() && isCheckNotVisibleElement()){
-            $(byLinkText(itemMenu)).click();
-        }
-    }
+    public static void clickItemMenu(String itemMenu) { $(byLinkText(itemMenu)).click(); }
 
     @Step(value = "Переходим в раздел {section}")
     public static Object openSectionWEB(String section){
@@ -124,11 +113,8 @@ public class MonitoringPage extends LoginPage{
 
     @Step(value = "Проверяем статус службы {server}")
     public static boolean isCheckModuleStatusServer(String service){
-        if(isCheckNotVisibleElement()){
-            if($("#" + service).find("img").getAttribute("src").contains("green-icon.png")) return true;
-            if($("#" + service).find("img").getAttribute("src").contains("yellow-icon.png")) return true;
-            return false;
-        }
+        if ($("#" + service).find("img").getAttribute("src").contains("green-icon.png")) return true;
+        if ($("#" + service).find("img").getAttribute("src").contains("yellow-icon.png")) return true;
         return false;
     }
 
@@ -145,91 +131,69 @@ public class MonitoringPage extends LoginPage{
 
     @Step(value = "Проверяем на СУ состояние службы {service}")
     public static boolean isStatusService(String service, String head){
-        if(isCheckNotVisibleElement()){
-            if( ! $("h3#head_ext_info").text().contains(head) && ! $("table#text-info").find("td").text().contains("состояние службы")) $("#" + service).find(byClassName("label_type_module")).click();
-            $("table#text-info").find("td").waitUntil(Condition.text("состояние службы: "), 30000);
-            if($(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'состояние службы')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed()) return true;
-        }
+        if (!$("h3#head_ext_info").text().contains(head) && !$("table#text-info").find("td").text().contains("состояние службы"))
+            $("#" + service).find(byClassName("label_type_module")).click();
+        $("table#text-info").find("td").waitUntil(Condition.text("состояние службы: "), 30000);
+        if ($(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'состояние службы')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed())
+            return true;
         return false;
     }
 
     @Step(value = "Проверяем на СУ состояние SIP-сервера")
     public static boolean isStatusOpensips(){
-        if(isCheckNotVisibleElement()){
-            if( ! $("h3#head_ext_info").text().contains(OPENSIPS_ITEM_MENU) && ! $("table#text-info").find("td").text().contains("состояние")) $("#" + OPENSIPS_MODULE_ID).find(byClassName("label_type_module")).click();
-            $("table#text-info").find("td").waitUntil(Condition.text("состояние: "), 30000);
-            if($(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'состояние')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed()) return true;
-        }
+
+        if (!$("h3#head_ext_info").text().contains(OPENSIPS_ITEM_MENU) && !$("table#text-info").find("td").text().contains("состояние"))
+            $("#" + OPENSIPS_MODULE_ID).find(byClassName("label_type_module")).click();
+        $("table#text-info").find("td").waitUntil(Condition.text("состояние: "), 30000);
+        if ($(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'состояние')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed())
+            return true;
         return false;
     }
 
     @Step(value = "Проверяем на СУ состояние {label} у службы {service}")
     public static String isConnectService(String service, String head, String command, String label){
-        if(isCheckNotVisibleElement()){
-            if( ! $("h3#head_ext_info").text().contains(head) && ! $("table#text-info").find("td").text().contains(label)) $("#" + service).find(byClassName("label_type_module")).click();
-            if(isCheckNotVisibleElement()) {
-                $$("table#text-info td").findBy(Condition.text(label));
-                boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'" + label + "')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
-                boolean statusServer = SSHManager.isCheckQuerySSH(command);
-                if (statusServer && ! statusSU) return label + " на сервере - connect, в СУ - disconnect";
-                else if ( ! statusServer & statusSU) return label + " на сервере - disconnected, в СУ - connect";
-                else if ( ! statusServer & ! statusSU) return label + " на сервере - disconnected, в СУ - disconnected. Проверьте соединение со станцией!!!";
-                return null;
-            }
-        }
-        return "Не удалось получить статус сервиса";
-    }
 
-    @Step(value = "Проверяем на СУ соединение со станцией у службы {service}")
-    public static String isConnectStation(String service, String command){
-        if(isCheckNotVisibleElement()){
-            if( ! $("table#text-info").find("td").text().contains("соединение со станцией")) $("#" + service).find(byClassName("label_type_module")).click();
-            $("table#text-info").find("td").waitUntil(Condition.text("соединение со станцией: "), 30000);
-            boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'со станцией:')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
-            boolean statusServer = SSHManager.isCheckQuerySSH(command);
-            if(statusServer && ! statusSU) return "Соединение со станцией: на сервере - lapd_establish, в СУ - NOK";
-            else if( ! statusServer & statusSU) return "Соединение со станцией: на сервере - disconnected, в СУ - OK";
-            return null;
-        }
-        return "Не удалось получить статус станции";
+        if (!$("h3#head_ext_info").text().contains(head) && !$("table#text-info").find("td").text().contains(label))
+            $("#" + service).find(byClassName("label_type_module")).click();
+
+        $$("table#text-info td").findBy(Condition.text(label)).waitUntil(Condition.visible, 60000);
+        boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'" + label + "')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
+        boolean statusServer = SSHManager.isCheckQuerySSH(command);
+        if (statusServer && !statusSU) return label + " на сервере - connect, в СУ - disconnect";
+        else if (!statusServer & statusSU) return label + " на сервере - disconnected, в СУ - connect";
+        else if (!statusServer & !statusSU)
+            return label + " на сервере - disconnected, в СУ - disconnected. Проверьте соединение со станцией!!!";
+        return null;
     }
 
     @Step(value = "Проверяем на СУ имя интерфейса у службы {service}")
     public static String isAdapterName(String service, String head){
-        if(isCheckNotVisibleElement()){
-            if( ! $("h3#head_ext_info").text().contains(head) && ! $("table#text-info").find("td").text().contains("имя интерфейса")) $("#" + service).find(byClassName("label_type_module")).click();
-            if(isCheckNotVisibleElement()) {
-                $$("table#text-info td").findBy(Condition.text("имя интерфейса: "));
-                boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'имя интерфейса')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
-                boolean adapterSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'имя интерфейса')]//parent::tr/td[contains(text(),'" + DX500_BOOSTER_ADAPTER_NAME + "')]")).isDisplayed();
-                boolean serverAdapter = SSHManager.isCheckQuerySSH("echo s | nc l 2220 | grep 'adapter_255: 0, eth0, ready'");
-                if (statusSU && adapterSU && !serverAdapter)
-                    return "Имя интерфейса: на сервере указан некорректный сетевой интерфейс, на СУ статус интерфейса - OK";
-                else if (!statusSU && adapterSU && serverAdapter)
-                    return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK";
-                else if (statusSU && !adapterSU && serverAdapter)
-                    return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK, но указан некорректное имя интерфеса";
-                return null;
-            }
-        }
-        return "Не удалось получить статус сетевого интерфейса";
+        if (!$("h3#head_ext_info").text().contains(head) && !$("table#text-info").find("td").text().contains("имя интерфейса"))
+            $("#" + service).find(byClassName("label_type_module")).click();
+        $$("table#text-info td").findBy(Condition.text("имя интерфейса: ")).waitUntil(Condition.visible, 60000);
+        boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'имя интерфейса')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
+        boolean adapterSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'имя интерфейса')]//parent::tr/td[contains(text(),'" + DX500_BOOSTER_ADAPTER_NAME + "')]")).isDisplayed();
+        boolean serverAdapter = SSHManager.isCheckQuerySSH("echo s | nc l 2220 | grep 'adapter_255: 0, eth0, ready'");
+        if (statusSU && adapterSU && !serverAdapter)
+            return "Имя интерфейса: на сервере указан некорректный сетевой интерфейс, на СУ статус интерфейса - OK";
+        else if (!statusSU && adapterSU && serverAdapter)
+            return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK";
+        else if (statusSU && !adapterSU && serverAdapter)
+            return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK, но указан некорректное имя интерфеса";
+        return null;
     }
 
     @Step(value = "Проверяем состояние конвертера на 'Холодильнике")
     public static boolean isCheckModuleConverterLanE1(String service){
-        if(isCheckNotVisibleElement()){
-            if($("div[server='" + service + "']").find("img").getAttribute("src").contains("lite-green-icon.png")) return true;
-        }
+        if($("div[server='" + service + "']").find("img").getAttribute("src").contains("lite-green-icon.png")) return true;
         return false;
     }
 
     @Step(value = "Проверяем состояние конвертера в таблице состояний")
     public static boolean isCheckTableConverterLanE1(String service){
-        if(isCheckNotVisibleElement()){
-            $("div[server='" + service + "']").click();
-            $("table#text-info").find("td").waitUntil(Condition.text("второй уровень: "), 30000);
-            if($("article.module.width_quarter").find("img").getAttribute("src").contains("stat_ok.png")) return true;
-        }
+        $("div[server='" + service + "']").click();
+        $("table#text-info").find("td").waitUntil(Condition.text("второй уровень: "), 30000);
+        if ($("article.module.width_quarter").find("img").getAttribute("src").contains("stat_ok.png")) return true;
         return false;
     }
 

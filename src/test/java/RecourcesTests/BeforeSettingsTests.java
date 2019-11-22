@@ -21,10 +21,9 @@ import static DataTests.LOGIN.*;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BeforeAllTests implements BeforeAllCallback {
+public class BeforeSettingsTests {
 
-    @Override
-    public void beforeAll(ExtensionContext context){
+    public static void StartTests(){
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("firefox");
