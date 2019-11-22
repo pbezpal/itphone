@@ -19,8 +19,8 @@ import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
 import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.MonitoringPage.isCheckNotVisibleElement;
 import static Pages.Providers.DX500Page.dx500Page;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static java.time.Duration.ofSeconds;
+import static org.junit.jupiter.api.Assertions.*;
 
 @EpicServicesTests
 @FeatureProviderDX500
@@ -46,8 +46,13 @@ public class Test_A_DX500 {
     @Description(value = "Проверяем, что через СУ можно успешно добавить провайдер DX500")
     @Test
     void test_Add_Provider_DX500() {
-        if( ! dx500Page.isCheckProvider(DX500_TYPE_PROVIDER)) assertTrue(dx500Page.addDX500Provider(), "Провайдер DX500 не был добавлен");
-        if( ! dx500Page.isMySqlDialplan()) { failedTestWithScreenshot("Маршрут для DX500 не был добавлен в БД MySql", false); }
+        assertTimeout(ofSeconds(600), () -> {
+            if (!dx500Page.isCheckProvider(DX500_TYPE_PROVIDER))
+                assertTrue(dx500Page.addDX500Provider(), "Провайдер DX500 не был добавлен");
+            if (!dx500Page.isMySqlDialplan()) {
+                failedTestWithScreenshot("Маршрут для DX500 не был добавлен в БД MySql", false);
+            }
+        }, () -> "Время теста больше 10 минут");
     }
 
     @Story(value = "Конфигурацию сервера Ассистентов")
@@ -66,13 +71,17 @@ public class Test_A_DX500 {
     @Description(value = "Проверяем, что через СУ успешно стартует сервер Ассистентов провайдера DX500")
     @Test
     void test_DX500_Start_Server_Booster() {
-        dx500Page.clickSectionDX500();
-        boolean webStatusBooster = dx500Page.startServer(DX500_BOOSTER);
-        boolean serverStatusBooster = dx500Page.isCheckStartServers(DX500_BOOSTER);
-        if (!webStatusBooster && serverStatusBooster) failedTestWithScreenshot("На сервере " + DX500_BOOSTER + " запущен. В WEB некорректный статус сервера. Проверьте соединение со станцией!!!", true);
-        else if (webStatusBooster && !serverStatusBooster) failedTestWithScreenshot("На сервере " + DX500_BOOSTER + " не запущен. В WEB некорректно статус сервера", true);
-        else if (!webStatusBooster && !serverStatusBooster) failedTestWithScreenshot("Cервер " + DX500_BOOSTER + " не запущен.", true);
-
+        assertTimeout(ofSeconds(300), () -> {
+            dx500Page.clickSectionDX500();
+            boolean webStatusBooster = dx500Page.startServer(DX500_BOOSTER);
+            boolean serverStatusBooster = dx500Page.isCheckStartServers(DX500_BOOSTER);
+            if (!webStatusBooster && serverStatusBooster)
+                failedTestWithScreenshot("На сервере " + DX500_BOOSTER + " запущен. В WEB некорректный статус сервера. Проверьте соединение со станцией!!!", true);
+            else if (webStatusBooster && !serverStatusBooster)
+                failedTestWithScreenshot("На сервере " + DX500_BOOSTER + " не запущен. В WEB некорректно статус сервера", true);
+            else if (!webStatusBooster && !serverStatusBooster)
+                failedTestWithScreenshot("Cервер " + DX500_BOOSTER + " не запущен.", true);
+        }, () -> "Время теста больше 5 минут");
     }
 
     @Story(value = "Конфигурацию сервера Пультов")
@@ -95,15 +104,17 @@ public class Test_A_DX500 {
     @Description(value = "Проверяем, что через СУ успешно стартует сервер Пультов провайдера DX500")
     @Test
     void test_DX500_Start_Server_Pult() {
-        dx500Page.clickSectionDX500();
-        boolean webStatusPult = dx500Page.startServer(DX500_PULT);
-        boolean serverStatusPult = dx500Page.isCheckStartServers(DX500_PULT);
-        if (!webStatusPult && serverStatusPult)
-            failedTestWithScreenshot("На сервере " + DX500_PULT + " запущен. В WEB некорректный статус сервера. Проверьте соединение со станцией!!!", true);
-        else if (webStatusPult && !serverStatusPult)
-            failedTestWithScreenshot("На сервере " + DX500_PULT + " не запущен. В WEB некорректно статус сервера", true);
-        else if (!webStatusPult && !serverStatusPult)
-            failedTestWithScreenshot("Cервер " + DX500_PULT + " не запущен.", true);
+        assertTimeout(ofSeconds(300), () -> {
+            dx500Page.clickSectionDX500();
+            boolean webStatusPult = dx500Page.startServer(DX500_PULT);
+            boolean serverStatusPult = dx500Page.isCheckStartServers(DX500_PULT);
+            if (!webStatusPult && serverStatusPult)
+                failedTestWithScreenshot("На сервере " + DX500_PULT + " запущен. В WEB некорректный статус сервера. Проверьте соединение со станцией!!!", true);
+            else if (webStatusPult && !serverStatusPult)
+                failedTestWithScreenshot("На сервере " + DX500_PULT + " не запущен. В WEB некорректно статус сервера", true);
+            else if (!webStatusPult && !serverStatusPult)
+                failedTestWithScreenshot("Cервер " + DX500_PULT + " не запущен.", true);
+        }, () -> "Время теста больше 5 минут");
     }
 
     @Story(value = "Конфигурацию сервера SIP(абон)-DX")
@@ -128,12 +139,17 @@ public class Test_A_DX500 {
     @Description(value = "Проверяем, что через СУ успешно стартует сервер SIP(абон)-DX провайдера DX500")
     @Test
     void test_DX500_Start_Server_SIP_Abon_DX() {
-        dx500Page.clickSectionDX500();
-        boolean webStatusSIP = dx500Page.startServer(DX500_SIP_ABON_DX);
-        boolean serverStatusSIP = dx500Page.isCheckStartServers(DX500_SIP_ABON_DX);
-        if (!webStatusSIP && serverStatusSIP) failedTestWithScreenshot("На сервере " + DX500_SIP_ABON_DX + " запущен. В WEB некорректный статус сервера. Проверьте соединение со станцией!!!", true);
-        else if (!webStatusSIP && serverStatusSIP) failedTestWithScreenshot("На сервере " + DX500_SIP_ABON_DX + " не запущен. В WEB некорректно статус сервера", true);
-        else if (!webStatusSIP && !serverStatusSIP) failedTestWithScreenshot("Cервер " + DX500_SIP_ABON_DX + " не стартовал.", true);
+        assertTimeout(ofSeconds(300), () -> {
+            dx500Page.clickSectionDX500();
+            boolean webStatusSIP = dx500Page.startServer(DX500_SIP_ABON_DX);
+            boolean serverStatusSIP = dx500Page.isCheckStartServers(DX500_SIP_ABON_DX);
+            if (!webStatusSIP && serverStatusSIP)
+                failedTestWithScreenshot("На сервере " + DX500_SIP_ABON_DX + " запущен. В WEB некорректный статус сервера. Проверьте соединение со станцией!!!", true);
+            else if (!webStatusSIP && serverStatusSIP)
+                failedTestWithScreenshot("На сервере " + DX500_SIP_ABON_DX + " не запущен. В WEB некорректно статус сервера", true);
+            else if (!webStatusSIP && !serverStatusSIP)
+                failedTestWithScreenshot("Cервер " + DX500_SIP_ABON_DX + " не стартовал.", true);
+        }, () -> "Время теста больше 5 минут");
     }
 
     @Story(value = "Конфигурацию сервера SIP Пультов")
@@ -156,15 +172,17 @@ public class Test_A_DX500 {
     @Description(value = "Проверяем, что через СУ успешно стартует сервер SIP-Пультов провайдера DX500")
     @Test
     void test_DX500_Start_Server_SIP_Pult() {
-        dx500Page.clickSectionDX500();
-        boolean webStatusSIPPult = dx500Page.startServer(DX500_SIP_PULT);
-        boolean serverStatusSIPPult = dx500Page.isCheckStartServers(DX500_SIP_PULT);
-        if (!webStatusSIPPult && serverStatusSIPPult)
-            failedTestWithScreenshot("На сервере " + DX500_SIP_PULT + " запущен. В WEB некорректный статус сервера. Проверьте соединение со станцией!!!", true);
-        else if (webStatusSIPPult && !serverStatusSIPPult)
-            failedTestWithScreenshot("На сервере " + DX500_SIP_PULT + " не запущен. В WEB некорректно статус сервера", true);
-        else if (!webStatusSIPPult && !serverStatusSIPPult)
-            failedTestWithScreenshot("Cервер " + DX500_SIP_PULT + " не запущен.", true);
+        assertTimeout(ofSeconds(300), () -> {
+            dx500Page.clickSectionDX500();
+            boolean webStatusSIPPult = dx500Page.startServer(DX500_SIP_PULT);
+            boolean serverStatusSIPPult = dx500Page.isCheckStartServers(DX500_SIP_PULT);
+            if (!webStatusSIPPult && serverStatusSIPPult)
+                failedTestWithScreenshot("На сервере " + DX500_SIP_PULT + " запущен. В WEB некорректный статус сервера. Проверьте соединение со станцией!!!", true);
+            else if (webStatusSIPPult && !serverStatusSIPPult)
+                failedTestWithScreenshot("На сервере " + DX500_SIP_PULT + " не запущен. В WEB некорректно статус сервера", true);
+            else if (!webStatusSIPPult && !serverStatusSIPPult)
+                failedTestWithScreenshot("Cервер " + DX500_SIP_PULT + " не запущен.", true);
+        }, () -> "Время теста больше 5 минут");
     }
 
     @Story(value = "Конфигурацию сервера Занятости")
@@ -178,15 +196,17 @@ public class Test_A_DX500 {
     @Description(value = "Проверяем, что через СУ успешно стартует сервер Занятости провайдера DX500")
     @Test
     void test_DX500_Start_Server_Busy() {
-        dx500Page.clickSectionDX500();
-        boolean webStatusSIPPult = dx500Page.startServer(DX500_BUSY);
-        boolean serverStatusSIPPult = dx500Page.isCheckStartServers(DX500_BUSY);
-        if (!webStatusSIPPult && serverStatusSIPPult)
-            failedTestWithScreenshot("На сервере " + DX500_BUSY + " запущен. В WEB некорректный статус сервера. Проверьте соединение со станцией!!!", true);
-        else if (webStatusSIPPult && !serverStatusSIPPult)
-            failedTestWithScreenshot("На сервере " + DX500_BUSY + " не запущен. В WEB некорректно статус сервера", true);
-        else if (!webStatusSIPPult && !serverStatusSIPPult)
-            failedTestWithScreenshot("Cервер " + DX500_BUSY + " не запущен.", true);
+        assertTimeout(ofSeconds(300), () -> {
+            dx500Page.clickSectionDX500();
+            boolean webStatusSIPPult = dx500Page.startServer(DX500_BUSY);
+            boolean serverStatusSIPPult = dx500Page.isCheckStartServers(DX500_BUSY);
+            if (!webStatusSIPPult && serverStatusSIPPult)
+                failedTestWithScreenshot("На сервере " + DX500_BUSY + " запущен. В WEB некорректный статус сервера. Проверьте соединение со станцией!!!", true);
+            else if (webStatusSIPPult && !serverStatusSIPPult)
+                failedTestWithScreenshot("На сервере " + DX500_BUSY + " не запущен. В WEB некорректно статус сервера", true);
+            else if (!webStatusSIPPult && !serverStatusSIPPult)
+                failedTestWithScreenshot("Cервер " + DX500_BUSY + " не запущен.", true);
+        }, () -> "Время теста больше 5 минут");
     }
 
     @AfterEach

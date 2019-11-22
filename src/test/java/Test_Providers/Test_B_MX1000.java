@@ -24,8 +24,8 @@ import static DataTests.Providers.PROVIDER_MX1000.*;
 import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
 import static Pages.MonitoringPage.isCheckNotVisibleElement;
 import static Pages.MonitoringPage.isSectionMonitoring;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static java.time.Duration.ofSeconds;
+import static org.junit.jupiter.api.Assertions.*;
 
 @EpicServicesTests
 @FeatureProviderMX1000
@@ -53,15 +53,17 @@ public class Test_B_MX1000 {
     @Description(value = "Проверяем, что добавляется провайдет MX1000 типа КАТС")
     @Test
     void test_ADD_PROVIDER_MX1000() {
-        if (isCheckNotVisibleElement() && !ProvidersPage.isCheckProviderPage().isDisplayed())
-            katsPage = (KATSPage) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, MX1000_TYPE_PROVIDER);
-        if (katsPage == null) katsPage = KATSPage.getInstance();
-        assertTrue(katsPage.addMX1000(MAX1000_NAME, MX1000_HOST, MX1000_USERNAME, MX1000_PASSWORD, MX1000_DIALPLAN, MX1000_DELAY_REGISTRATION), "Не удалось добавить провайдер MX1000");
-        if (!katsPage.isSelectProvider())
-            failedTestWithScreenshot("Провайдер MX1000 не найден в базе данных MySql", false);
-        if (!katsPage.isSelectDialplan())
-            failedTestWithScreenshot("Шаблон номера для MX1000 не найден в базе данных MySql", false);
-        if (!katsPage.isMX1000()) failedTestWithScreenshot("Сервер MX1000 не установлен на сервер", false);
+        assertTimeout(ofSeconds(600), () -> {
+            if (isCheckNotVisibleElement() && !ProvidersPage.isCheckProviderPage().isDisplayed())
+                katsPage = (KATSPage) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, MX1000_TYPE_PROVIDER);
+            if (katsPage == null) katsPage = KATSPage.getInstance();
+            assertTrue(katsPage.addMX1000(MAX1000_NAME, MX1000_HOST, MX1000_USERNAME, MX1000_PASSWORD, MX1000_DIALPLAN, MX1000_DELAY_REGISTRATION), "Не удалось добавить провайдер MX1000");
+            if (!katsPage.isSelectProvider())
+                failedTestWithScreenshot("Провайдер MX1000 не найден в базе данных MySql", false);
+            if (!katsPage.isSelectDialplan())
+                failedTestWithScreenshot("Шаблон номера для MX1000 не найден в базе данных MySql", false);
+            if (!katsPage.isMX1000()) failedTestWithScreenshot("Сервер MX1000 не установлен на сервер", false);
+        }, () -> "Время теста больше 5 минут");
     }
 
     @Story(value = "Статус SIP сервера")
