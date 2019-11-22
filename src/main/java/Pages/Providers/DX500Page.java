@@ -119,7 +119,7 @@ public class DX500Page extends ProvidersPage{
 
     @Step(value = "Переходим на вкладку DX500")
     public DX500Page clickSectionDX500(){
-        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500_TYPE_PROVIDER);
+        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider("DX500");
         $("#provider_dialog_params").waitUntil(Condition.visible, 60000);
         $("li[aria-controls='dx500_settings']").click();
         return this;

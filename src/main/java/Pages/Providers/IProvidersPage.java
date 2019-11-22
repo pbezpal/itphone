@@ -24,7 +24,7 @@ public interface IProvidersPage {
 
     @Step(value = "Проверяем, открыта ли форма редактирования провайдера")
     default SelenideElement isFormEditProvider(){
-        return $("#provider_dialog_params").shouldBe(Condition.visible);
+        return $("#provider_dialog_params");
     }
 
     @Step(value = "Проверяем, есть ли провайдер {provider} в таблице провайдеров")

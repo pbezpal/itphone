@@ -1,4 +1,4 @@
-package Monitoring;
+package StatuServers;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureStatusServers;

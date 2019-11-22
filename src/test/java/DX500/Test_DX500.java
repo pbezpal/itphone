@@ -1,4 +1,4 @@
-package Providers;
+package DX500;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureProviderDX500;

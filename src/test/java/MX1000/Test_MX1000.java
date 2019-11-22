@@ -1,4 +1,4 @@
-package Providers;
+package MX1000;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureProviderMX1000;

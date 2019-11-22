@@ -1,4 +1,4 @@
-package Providers;
+package DX500;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureProviderDX500;
@@ -41,6 +41,7 @@ public class Test_DX500_Start {
         if( ! ProvidersPage.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, DX500_TYPE_PROVIDER);
         if( dx500Page == null ) dx500Page = DX500Page.getInstance();
         assertTrue(dx500Page.isCheckProvider(DX500_TYPE_PROVIDER, 60000));
+        dx500Page.clickSectionDX500();
         TEST_STATUS = true;
         TEST_MESSAGE = "";
         screenshot = false;
@@ -51,7 +52,6 @@ public class Test_DX500_Start {
     @Test
     void test_DX500_Start_Server_Booster() {
         assertTimeout(ofSeconds(300), () -> {
-            dx500Page.clickSectionDX500();
             boolean webStatusBooster = dx500Page.startServer(DX500_BOOSTER);
             boolean serverStatusBooster = dx500Page.isCheckStartServers(DX500_BOOSTER);
             if (!webStatusBooster && serverStatusBooster)
@@ -68,7 +68,6 @@ public class Test_DX500_Start {
     @Test
     void test_DX500_Start_Server_Pult() {
         assertTimeout(ofSeconds(300), () -> {
-            dx500Page.clickSectionDX500();
             boolean webStatusPult = dx500Page.startServer(DX500_PULT);
             boolean serverStatusPult = dx500Page.isCheckStartServers(DX500_PULT);
             if (!webStatusPult && serverStatusPult)
@@ -85,7 +84,6 @@ public class Test_DX500_Start {
     @Test
     void test_DX500_Start_Server_SIP_Abon_DX() {
         assertTimeout(ofSeconds(300), () -> {
-            dx500Page.clickSectionDX500();
             boolean webStatusSIP = dx500Page.startServer(DX500_SIP_ABON_DX);
             boolean serverStatusSIP = dx500Page.isCheckStartServers(DX500_SIP_ABON_DX);
             if (!webStatusSIP && serverStatusSIP)
@@ -102,7 +100,6 @@ public class Test_DX500_Start {
     @Test
     void test_DX500_Start_Server_SIP_Pult() {
         assertTimeout(ofSeconds(300), () -> {
-            dx500Page.clickSectionDX500();
             boolean webStatusSIPPult = dx500Page.startServer(DX500_SIP_PULT);
             boolean serverStatusSIPPult = dx500Page.isCheckStartServers(DX500_SIP_PULT);
             if (!webStatusSIPPult && serverStatusSIPPult)
@@ -126,7 +123,6 @@ public class Test_DX500_Start {
     @Test
     void test_DX500_Start_Server_Busy() {
         assertTimeout(ofSeconds(300), () -> {
-            dx500Page.clickSectionDX500();
             boolean webStatusSIPPult = dx500Page.startServer(DX500_BUSY);
             boolean serverStatusSIPPult = dx500Page.isCheckStartServers(DX500_BUSY);
             if (!webStatusSIPPult && serverStatusSIPPult)
