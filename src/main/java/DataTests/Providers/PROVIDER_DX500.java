@@ -92,12 +92,12 @@ public @interface PROVIDER_DX500 {
     String SIP_ABON_DX_CONFIG_MGDEV = "grep -E \"MG" + DX500_SIP_ABON_DX_SMG + "_DEV='" + IP_SERVER + ":236" + DX500_SIP_ABON_DX_SMG + "->" + DX500_SIP_ABON_DX_IP_CONVERTER + ":2350|" + IP_SERVER + ":232" + DX500_SIP_ABON_DX_SMG + "'\" /etc/smg.cfg";
 
     /***** Проверка конфигурации сервера SIP-Пульт *****/
-    String SIP_PULT_CONFIG_SG_PORT = "grep -E 'sg_port=2303' " + DX500_SIP_PULT_CONFIG;
+    String SIP_PULT_CONFIG_SG_PORT = "grep -E 'sg_port=230" + DX500_SIP_PULT_SMG + "' " + DX500_SIP_PULT_CONFIG;
     String SIP_PULT_CONFIG_IP = "grep -E 'ip=0.0.0.0' " + DX500_SIP_PULT_CONFIG;
     String SIP_PULT_CONFIG_PORT = "grep -E 'port=1224' " + DX500_SIP_PULT_CONFIG;
     String SIP_PULT_CONFIG_DB_IP = "grep -E 'db_ip=127.0.0.1' " + DX500_SIP_PULT_CONFIG;
     String SIP_PULT_CONFIG_DB_PORT = "grep -E 'db_port=1215' " + DX500_SIP_PULT_CONFIG;
-    String SIP_PULT_CONFIG_MG_PORT = "grep -E 'mg_port=2353' " + DX500_SIP_PULT_CONFIG;
+    String SIP_PULT_CONFIG_MG_PORT = "grep -E 'mg_port=235" + DX500_SIP_PULT_SMG + "' " + DX500_SIP_PULT_CONFIG;
     String sipPultRingin = "grep -E 'ring=Ring1' " + DX500_SIP_PULT_CONFIG;
     String SIP_PULT_CONFIG_SMG_ENSBLE = "grep -E 'SMG" + DX500_SIP_PULT_SMG + "_ENABLE=1' /etc/smg.cfg";
     String SIP_PULT_CONFIG_SGDEV = "grep -E \"SG" + DX500_SIP_PULT_SMG + "_DEV='" + IP_SERVER + ":232" + DX500_SIP_PULT_SMG + "->" + DX500_SIP_PULT_CONVERTER_IP + ":2300'\" /etc/smg.cfg";
