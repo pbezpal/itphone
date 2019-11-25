@@ -1,4 +1,4 @@
-package DX500;
+package DX500_After;
 
 import HelperClasses.SSHManager;
 import Pages.Providers.DX500Page;
@@ -14,7 +14,7 @@ import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.Providers.DX500Page.dx500Page;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DX500_Config extends DX500_Start{
+public class Test_DX500_Config {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;

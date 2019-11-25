@@ -1,4 +1,4 @@
-package DX500;
+package DX500_After;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureProviderDX500;
@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EpicServicesTests
 @FeatureProviderDX500
 @ExtendWith(TestRules.class)
-public class DX500_Start {
+public class Test_DX500_Start {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;

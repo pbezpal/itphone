@@ -2,7 +2,6 @@ package DX500;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureProviderDX500;
-import HelperClasses.SSHManager;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
 import Pages.Providers.ProvidersPage;
@@ -25,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @FeatureProviderDX500
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
 @ExtendWith(TestRules.class)
-public class Test_DX500_Add extends DX500_Config{
+public class Test_DX500_Add {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;
@@ -59,20 +58,6 @@ public class Test_DX500_Add extends DX500_Config{
         if( ! TEST_STATUS){
             fail(TEST_MESSAGE, new Exception(String.valueOf(screenshot)));
         }
-
-        test_Add_Provider_DX500();
-        test_DX500_Configuration_Booster();
-        test_DX500_Configuration_Pult();
-        test_DX500_Configuration_SIP_Abon_DX();
-        test_DX500_Configuration_SIP_Pult();
-        test_DX500_Configuration_Busy();
-
-        test_DX500_Start_Server_Booster();
-        test_DX500_Start_Server_Pult();
-        test_DX500_Start_Server_SIP_Abon_DX();
-        test_DX500_Start_Server_SIP_Pult();
-        test_DX500_Start_Server_Busy();
-
     }
 
     void failedTestWithScreenshot(String message, boolean screen) {
