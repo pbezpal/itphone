@@ -2,7 +2,6 @@ package DX500;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureProviderDX500;
-import HelperClasses.SSHManager;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
 import Pages.Providers.ProvidersPage;
@@ -40,7 +39,7 @@ public class Test_DX500_Start {
         StartTests();
         if( ! ProvidersPage.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, DX500_TYPE_PROVIDER);
         if( dx500Page == null ) dx500Page = DX500Page.getInstance();
-        assertTrue(dx500Page.isCheckProvider(DX500_TYPE_PROVIDER, 60000));
+        assertTrue(dx500Page.isCheckProvider(DX500_TYPE_PROVIDER), "Не науден провайдер DX500");
         dx500Page.clickSectionDX500();
         TEST_STATUS = true;
         TEST_MESSAGE = "";

@@ -1,9 +1,6 @@
 package DX500;
 
-import AnnotationsTests.ServicesTests.EpicServicesTests;
-import AnnotationsTests.ServicesTests.FeatureProviderDX500;
 import HelperClasses.SSHManager;
-import RecourcesTests.TestRules;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
@@ -11,15 +8,10 @@ import io.qameta.allure.model.Status;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.Providers.PROVIDER_DX500.*;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
-
-@EpicServicesTests
-@FeatureProviderDX500
-@ExtendWith(TestRules.class)
 public class Test_DX500_Config {
 
     private boolean TEST_STATUS;
