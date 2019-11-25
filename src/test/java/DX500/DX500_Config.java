@@ -1,9 +1,7 @@
 package DX500;
 
 import HelperClasses.SSHManager;
-import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
-import Pages.Providers.ProvidersPage;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
@@ -14,10 +12,9 @@ import org.junit.jupiter.api.Test;
 
 import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.Providers.DX500Page.dx500Page;
-import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DX500_Config {
+public class DX500_Config extends DX500_Start{
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;
@@ -29,19 +26,6 @@ public class DX500_Config {
         TEST_STATUS = true;
         TEST_MESSAGE = "";
         screenshot = false;
-    }
-
-    @Story(value = "Добавление провайдера DX500")
-    @Description(value = "Проверяем, что через СУ можно успешно добавить провайдер DX500")
-    @Test
-    public void test_Add_Provider_DX500() {
-        assertTimeout(ofSeconds(600), () -> {
-            if (!dx500Page.isCheckProvider(DX500_TYPE_PROVIDER))
-                assertTrue(dx500Page.addDX500Provider(), "Провайдер DX500 не был добавлен");
-            if (!dx500Page.isMySqlDialplan()) {
-                failedTestWithScreenshot("Маршрут для DX500 не был добавлен в БД MySql", false);
-            }
-        }, () -> "Время теста больше 10 минут");
     }
 
     @Story(value = "Конфигурацию сервера Ассистентов")
