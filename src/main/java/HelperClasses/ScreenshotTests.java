@@ -10,7 +10,7 @@ import ru.yandex.qatools.ashot.Screenshot;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.nio.file.Paths;
 
 public class ScreenshotTests {
 
@@ -25,12 +25,20 @@ public class ScreenshotTests {
     }
 
     private static AShot aShot = new AShot();
-    private static URL input = ScreenshotTests.class.getClassLoader().getResource("target/screenshots");
+    private static String pathScreenshots = "./target/classes/screenshots/";
 
     public static void AScreenshot(String filename){
         Screenshot screenshot = aShot.takeScreenshot(WebDriverRunner.getWebDriver());
-        if(input == null) new File(String.valueOf(input)).mkdirs();
-        File currentScreenshot = new File(input + filename + ".png");
+
+        if( ! java.nio.file.Files.exists(Paths.get(pathScreenshots))) {
+            try {
+                java.nio.file.Files.createDirectories(Paths.get(pathScreenshots));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        File currentScreenshot = new File(pathScreenshots + filename + ".png");
 
         try {
             ImageIO.write(screenshot.getImage(), "png", currentScreenshot);
@@ -42,8 +50,16 @@ public class ScreenshotTests {
 
     public static void AScreenshot(String filename, SelenideElement element){
         Screenshot screenshot = aShot.takeScreenshot(WebDriverRunner.getWebDriver(), element);
-        if(input == null) new File(String.valueOf(input)).mkdirs();
-        File currentScreenshot = new File(String.valueOf(input) + filename + ".png");
+
+        if( ! java.nio.file.Files.exists(Paths.get(pathScreenshots))) {
+            try {
+                java.nio.file.Files.createDirectories(Paths.get(pathScreenshots));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        File currentScreenshot = new File(pathScreenshots + filename + ".png");
 
         try {
             ImageIO.write(screenshot.getImage(), "png", currentScreenshot);

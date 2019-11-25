@@ -125,14 +125,6 @@ public class Test_DX500 {
         }
     }
 
-    @Story(value = "Сохранение настроек провайдера DX500")
-    @Description(value = "Проверяем, сохранились ли настройки провайдера DX500")
-    @AfterAll
-    static void finalTest() {
-        if (!dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500_TYPE_PROVIDER);
-        assertTrue(dx500Page.clickSaveProvider(DX500_TYPE_PROVIDER), "После сохранения провайдера " + DX500_TYPE_PROVIDER + "запись в таблице пропала");
-    }
-
     void failedTestWithScreenshot(String message, boolean screen) {
         Allure.step(message, Status.FAILED);
         TEST_STATUS = false;

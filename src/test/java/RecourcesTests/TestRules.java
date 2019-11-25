@@ -10,23 +10,14 @@ import static com.codeborne.selenide.Selenide.close;
 
 public class TestRules implements TestWatcher {
 
-        @Override
-        public void testFailed(ExtensionContext context, Throwable cause) {
-            if (cause.getMessage().equals("article module")){
-                ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()), getArticleModule());
-            }else if(cause.getMessage().equals("DOWNLOAD")){
-                ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
-                close();
-                WebDriverPool.DEFAULT.dismissAll();
-            }else if( ! cause.getMessage().equals("false")) ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
-        }
-
     @Override
     public void testAborted(ExtensionContext context, Throwable cause) {
         if (cause.getMessage().equals("article module")){
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()), getArticleModule());
         }else if(cause.getMessage().equals("DOWNLOAD")){
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
+            close();
+            WebDriverPool.DEFAULT.dismissAll();
         }else if( ! cause.getMessage().equals("false")) ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
     }
 }

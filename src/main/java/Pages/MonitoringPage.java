@@ -9,8 +9,7 @@ import com.codeborne.selenide.ex.ElementShould;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import static DataTests.OPENSIPS.OPENSIPS_ITEM_MENU;
-import static DataTests.OPENSIPS.OPENSIPS_MODULE_ID;
+import static DataTests.OPENSIPS.*;
 import static DataTests.SUBSCRIBERS.*;
 import static DataTests.Providers.PROVIDER_DX500.DX500_BOOSTER_ADAPTER_NAME;
 import static DataTests.Providers.PROVIDERS.*;
@@ -131,21 +130,13 @@ public class MonitoringPage extends LoginPage{
 
     @Step(value = "Проверяем на СУ состояние службы {service}")
     public static boolean isStatusService(String service, String head){
-        if (!$("h3#head_ext_info").text().contains(head) && !$("table#text-info").find("td").text().contains("состояние службы"))
+        String field_status_service;
+        if(service.equals(OPENSIPS_MODULE_ID)) field_status_service = "состояние";
+        else field_status_service = "состояние службы";
+        if (!$("h3#head_ext_info").text().contains(head) && !$("table#text-info").find("td").text().contains(field_status_service))
             $("#" + service).find(byClassName("label_type_module")).click();
-        $("table#text-info").find("td").waitUntil(Condition.text("состояние службы: "), 30000);
-        if ($(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'состояние службы')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed())
-            return true;
-        return false;
-    }
-
-    @Step(value = "Проверяем на СУ состояние SIP-сервера")
-    public static boolean isStatusOpensips(){
-
-        if (!$("h3#head_ext_info").text().contains(OPENSIPS_ITEM_MENU) && !$("table#text-info").find("td").text().contains("состояние"))
-            $("#" + OPENSIPS_MODULE_ID).find(byClassName("label_type_module")).click();
-        $("table#text-info").find("td").waitUntil(Condition.text("состояние: "), 30000);
-        if ($(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'состояние')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed())
+        $("table#text-info").find("td").waitUntil(Condition.text(field_status_service + ": "), 30000);
+        if ($(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'" + field_status_service + "')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed())
             return true;
         return false;
     }
@@ -162,7 +153,7 @@ public class MonitoringPage extends LoginPage{
         if (statusServer && !statusSU) return label + " на сервере - connect, в СУ - disconnect";
         else if (!statusServer & statusSU) return label + " на сервере - disconnected, в СУ - connect";
         else if (!statusServer & !statusSU)
-            return label + " на сервере - disconnected, в СУ - disconnected. Проверьте соединение со станцией!!!";
+            return label + "на сервере - disconnected, в СУ - disconnected. Проверьте соединение со станцией!!!";
         return null;
     }
 
@@ -174,12 +165,12 @@ public class MonitoringPage extends LoginPage{
         boolean statusSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'имя интерфейса')]//parent::tr//img[contains(@src,'stat_ok.png')]")).isDisplayed();
         boolean adapterSU = $(By.xpath("//article[@class='module width_quarter']//td[contains(text(),'имя интерфейса')]//parent::tr/td[contains(text(),'" + DX500_BOOSTER_ADAPTER_NAME + "')]")).isDisplayed();
         boolean serverAdapter = SSHManager.isCheckQuerySSH("echo s | nc l 2220 | grep 'adapter_255: 0, eth0, ready'");
-        if (statusSU && adapterSU && !serverAdapter)
-            return "Имя интерфейса: на сервере указан некорректный сетевой интерфейс, на СУ статус интерфейса - OK";
-        else if (!statusSU && adapterSU && serverAdapter)
+        if (! statusSU && ! adapterSU && ! serverAdapter)
+            return "Имя интерфейса: на сервере занятоссти не настроен сетевой интерфейс";
+        else if ((! statusSU || ! adapterSU) && serverAdapter)
             return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK";
-        else if (statusSU && !adapterSU && serverAdapter)
-            return "Имя интерфейса: на сервере корректный сетевой интерфейс, на СУ статус интерфейса - NOK, но указан некорректное имя интерфеса";
+        else if ((statusSU || adapterSU) && ! serverAdapter)
+            return "Имя интерфейса: на сервере не настроен сетевой интерфейс, на СУ отображается некорректная информация";
         return null;
     }
 

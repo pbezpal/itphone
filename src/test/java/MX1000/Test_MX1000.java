@@ -68,30 +68,6 @@ public class Test_MX1000 {
         }, () -> "Время теста больше 5 минут");
     }
 
-    @Story(value = "Статус SIP сервера")
-    @Description(value = "Проверяем корректное отображение статуса SIP сервера")
-    @Test
-    void test_Status_SIP_Server(){
-        if( ! isSectionMonitoring()) MonitoringPage.clickButtonMonitoringPage();
-        if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
-        if( ! isCheckNotVisibleElement() ) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
-        assertTrue(isSectionMonitoring(), "Не удалось перейти в раздел Мониторинг");
-        boolean serverStatus = DX500Page.isCheckStartServers(OPENSIPS_SERVER);
-        boolean tableStatusServer = MonitoringPage.isStatusOpensips();
-        boolean moduleStatusServer = MonitoringPage.isCheckModuleStatusServer(OPENSIPS_MODULE_ID);
-        if(serverStatus && moduleStatusServer && tableStatusServer) TEST_STATUS = true;
-        else if( ! serverStatus && (moduleStatusServer || tableStatusServer)){
-            this.TEST_STATUS = false;
-            this.TEST_MESSAGE = "На сервере не запущена служба " + OPENSIPS_SERVER + ", однако в СУ отображется статус - ОК";
-        }else if(serverStatus && ( ! moduleStatusServer || ! tableStatusServer)) {
-            this.TEST_STATUS = false;
-            this.TEST_MESSAGE = "На сервере запущена служба " + OPENSIPS_SERVER + ", однако в СУ отображается статус - NOK";
-        }else{
-            this.TEST_STATUS = false;
-            this.TEST_MESSAGE = "На сервере не запущена служба " + OPENSIPS_SERVER + " и в СУ отображается статус сервера - NOK";
-        }
-    }
-
     void settings_Opensips(){
         sipServerPage = (SipServerPage) MonitoringPage.openSectionWEB(OPENSIPS_ITEM_MENU);
         if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));

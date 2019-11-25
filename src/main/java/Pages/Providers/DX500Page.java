@@ -7,6 +7,8 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static DataTests.LOGIN.IP_SERVER;
+import static DataTests.OPENSIPS.OPENSIPS_MODULE_ID;
+import static DataTests.OPENSIPS.OPENSIPS_SERVER;
 import static DataTests.Providers.PROVIDER_DX500.*;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -143,6 +145,7 @@ public class DX500Page extends ProvidersPage{
 
     @Step(value = "Проверяем, запущен ли сервер {serverName}")
     public static boolean isCheckStartServers(String serverName){
+        if(serverName.equals(OPENSIPS_MODULE_ID)) serverName = OPENSIPS_SERVER;
         return SSHManager.isCheckQuerySSH("systemctl | grep " + serverName) && SSHManager.isCheckQuerySSH("systemctl status " + serverName + " | awk '/active/ && !/inactive/'");
     }
 

@@ -12,6 +12,7 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static DataTests.OPENSIPS.*;
 import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.MonitoringPage.*;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 @EpicServicesTests
 @FeatureStatusServers
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(TestRules.class)
 public class Test_StatusServers {
 
@@ -42,8 +43,17 @@ public class Test_StatusServers {
         TEST_STATUS = true;
     }
 
+    @Story(value = "Статус SIP сервера")
+    @Description(value = "Проверяем корректное отображение статуса SIP сервера")
+    @Order(1)
+    @Test
+    void test_Status_SIP_Server(){
+        getStatusServer(OPENSIPS_MODULE_ID, OPENSIPS_ITEM_MENU);
+    }
+
     @Story(value = "Статус сервера Ассистентов")
     @Description(value = "Проверяем корректное отображение статуса сервера Ассистентов")
+    @Order(2)
     @Test
     void test_Booster_Status_Server(){
         getStatusServer(DX500_BOOSTER, DX500_BOOSTER_HEAD_MODULE);
@@ -51,6 +61,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус сервера контактов на сервере Ассистентов")
     @Description(value = "Проверяем корректное отображение статус сервера контактов на сервере Ассистентов")
+    @Order(3)
     @Test
     void test_Booster_Status_Server_Contacts(){
         getStatusArticleModule(DX500_BOOSTER, DX500_BOOSTER_HEAD_MODULE, BOOSTER_CONNECT_CONTACTS, labelContacts);
@@ -58,6 +69,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус станции на сервере Ассистентов")
     @Description(value = "Проверяем корректное отображение статус станции на сервере Ассистентов")
+    @Order(4)
     @Test
     void test_Booster_Status_Connect_Station(){
         getStatusArticleModule(DX500_BOOSTER, DX500_BOOSTER_HEAD_MODULE, BOOSTER_CONNECT_STATION, labelStation);
@@ -66,6 +78,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус сервера Пультов")
     @Description(value = "Проверяем корректное отображение статуса сервера Пультов")
+    @Order(5)
     @Test
     void test_Pult_Status_Server(){
         getStatusServer(DX500_PULT, DX500_PULT_HEAD_MODULE);
@@ -73,6 +86,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус сервера контактов на сервере Пультов")
     @Description(value = "Проверяем корректное отображение статус сервера контактов на сервере Пультов")
+    @Order(6)
     @Test
     void test_Pult_Status_Server_Contacts(){
         getStatusArticleModule(DX500_PULT, DX500_PULT_HEAD_MODULE, PULT_CONNECT_CONTACTS, labelContacts);
@@ -80,6 +94,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус станции на сервере Пультов")
     @Description(value = "Проверяем корректное отображение статус станции на сервере Пультов")
+    @Order(7)
     @Test
     void test_Pult_Status_Connect_Station(){
         getStatusArticleModule(DX500_PULT, DX500_PULT_HEAD_MODULE, PULT_CONNECT_STATION, labelStation);
@@ -87,6 +102,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус конвертера Lan/E1 сервере Пультов")
     @Description(value = "Проверяем корректное отображение статуса конвертера Lan/E1 сервера Пультов")
+    @Order(8)
     @Test
     void test_Pult_Status_Converter(){
         getStatusConverter(DX500_PULT, DX500_PULT_SMG);
@@ -94,6 +110,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус сервера SIP(абон)-DX")
     @Description(value = "Проверяем корректное отображение статуса сервера SIP(абон)-DX")
+    @Order(9)
     @Test
     void test_SIP_Abon_DX_Status_Server(){
         getStatusServer(DX500_SIP_ABON_DX, DX500_SIP_ABON_DX_HEADER_MODULE);
@@ -101,6 +118,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус конвертера Lan/E1 сервере SIP(абон)-DX")
     @Description(value = "Проверяем корректное отображение статуса конвертера Lan/E1 сервера SIP(абон)-DX")
+    @Order(10)
     @Test
     void test_SIP_Abon_DX_Status_Converter(){
         getStatusConverter(DX500_SIP_ABON_DX, DX500_SIP_ABON_DX_SMG);
@@ -108,13 +126,15 @@ public class Test_StatusServers {
 
     @Story(value = "Статус сервера SIP Пульт")
     @Description(value = "Проверяем корректное отображение статуса сервера SIP Пульт")
+    @Order(11)
     @Test
     void test_SIP_Pult_Status_Server(){
         getStatusServer(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE);
     }
 
     @Story(value = "Статус сервера контактов на сервере SIP Пульт")
-    @Description(value = "Проверяем корректное отображение статус сервера контактов на сервере SIP ekmn")
+    @Description(value = "Проверяем корректное отображение статус сервера контактов на сервере SIP Пульт")
+    @Order(12)
     @Test
     void test_SIP_Pult_Status_Server_Contacts(){
         getStatusArticleModule(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_CONTACTS, labelContacts);
@@ -122,6 +142,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус станции на сервере SIP Пульт")
     @Description(value = "Проверяем корректное отображение статус станции на сервере SIP Пульт")
+    @Order(13)
     @Test
     void test_SIP_Pult_Status_Connect_Station(){
         this.TEST_MESSAGE = MonitoringPage.isConnectService(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_STATION, labelStation);
@@ -130,6 +151,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус линейного эхо-компенсатора на сервере SIP Пульт")
     @Description(value = "Проверяем корректное отображение статуса линейного эхо-компенсатора на сервере SIP Пульт")
+    @Order(14)
     @Test
     void test_SIP_Pult_Status_Lec(){
         getStatusArticleModule(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_STATUS_LEC, labelLec);
@@ -137,6 +159,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус матрицы занятости на сервере SIP Пульт")
     @Description(value = "Проверяем корректное отображение статуса матрицы занятости на сервере SIP Пульт")
+    @Order(15)
     @Test
     void test_SIP_Pult_Connect_BUSY(){
         getStatusArticleModule(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_BUSY, labelBusy);
@@ -144,6 +167,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус конвертера Lan/E1 сервере SIP Пульт")
     @Description(value = "Проверяем корректное отображение статуса конвертера Lan/E1 сервера Пульт")
+    @Order(16)
     @Test
     void test_SIP_Pult_Status_Converter(){
         getStatusConverter(DX500_SIP_PULT, DX500_SIP_PULT_SMG);
@@ -151,6 +175,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус сервера Занятости")
     @Description(value = "Проверяем корректное отображение статуса сервера Занятости")
+    @Order(17)
     @Test
     void test_Busy_Status_Server(){
         getStatusServer(DX500_BUSY, DX500_BUSY_HEAD_MODULE);
@@ -158,6 +183,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус сетевого интерфейса на сервере Занятости")
     @Description(value = "Проверяем корректное отображение статус сетевого интерфейса на сервере Занятости")
+    @Order(18)
     @Test
     void test_Busy_Status_Network(){
         assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус SMG");
@@ -167,6 +193,7 @@ public class Test_StatusServers {
 
     @Story(value = "Статус станции на сервере Занятости")
     @Description(value = "Проверяем корректное отображение статус станции на сервере Занятости")
+    @Order(19)
     @Test
     void test_Busy_Status_Connect_Station(){
         getStatusArticleModule(DX500_BUSY, DX500_BUSY_HEAD_MODULE, BUSY_CONNECT_STATION, labelStation);
@@ -227,7 +254,7 @@ public class Test_StatusServers {
     }
 
     void getStatusArticleModule(String service, String headModule, String command, String label){
-        assertTrue(isCheckNotVisibleElement(), "Не удалось получить статус для " + label + " для сервера " + DX500_BOOSTER);
+        assertTrue(isCheckNotVisibleElement(), "Не удалось получить статус для " + label + " для сервера " + service);
         this.TEST_MESSAGE = MonitoringPage.isConnectService(service, headModule, command, label);
         reportArticleModule();
     }
