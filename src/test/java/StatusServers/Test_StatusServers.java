@@ -5,7 +5,6 @@ import AnnotationsTests.ServicesTests.FeatureStatusServers;
 import HelperClasses.SSHManager;
 import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
-import Pages.Providers.DX500Page;
 import RecourcesTests.TestRules;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
@@ -15,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static DataTests.OPENSIPS.*;
 import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.MonitoringPage.*;
+import static Pages.Providers.DX500Page.isCheckStartServers;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -217,7 +217,8 @@ public class Test_StatusServers {
 
     public void getStatusServer(String server, String headModule){
         assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус пераметра " + server);
-        boolean serverStatus = DX500Page.isCheckStartServers(server);
+        assertTrue(isCheckStartServers(server), "Сервер не запущен!!!");
+        boolean serverStatus = isCheckStartServers(server);
         boolean tableStatusServer = MonitoringPage.isStatusService(server, headModule);
         boolean moduleStatusServer = MonitoringPage.isCheckModuleStatusServer(server);
         if(serverStatus && moduleStatusServer && tableStatusServer) TEST_STATUS = true;
@@ -236,6 +237,7 @@ public class Test_StatusServers {
 
     public void getStatusConverter(String server, String SMG){
         assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус SMG");
+        assertTrue(isCheckStartServers(server), "Сервер не запущен!!!");
         boolean converterStatus = SSHManager.isCheckQuerySSH("smg.status s | grep 231" + SMG + " -A 7 | grep 'lapd_ready: establish'");
         boolean moduleStatusConverter = MonitoringPage.isCheckModuleConverterLanE1(server);
         boolean tableStatusConverter = MonitoringPage.isCheckTableConverterLanE1(DX500_SIP_PULT);
