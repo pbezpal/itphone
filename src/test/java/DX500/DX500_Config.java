@@ -1,31 +1,23 @@
 package DX500;
 
-import AnnotationsTests.ServicesTests.EpicServicesTests;
-import AnnotationsTests.ServicesTests.FeatureProviderDX500;
 import HelperClasses.SSHManager;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
 import Pages.Providers.ProvidersPage;
-import RecourcesTests.TestRules;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import io.qameta.allure.model.Status;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
 import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.Providers.DX500Page.dx500Page;
-import static RecourcesTests.BeforeSettingsTests.StartTests;
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.*;
 
-@EpicServicesTests
-@FeatureProviderDX500
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
-@ExtendWith(TestRules.class)
-public class Test_DX500 {
+public class DX500_Config {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;
@@ -33,8 +25,6 @@ public class Test_DX500 {
 
     @BeforeEach
     void setUp(){
-        StartTests();
-        if( ! ProvidersPage.isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, DX500_TYPE_PROVIDER);
         if( dx500Page == null ) dx500Page = DX500Page.getInstance();
         TEST_STATUS = true;
         TEST_MESSAGE = "";
@@ -136,4 +126,5 @@ public class Test_DX500 {
         TEST_MESSAGE = TEST_MESSAGE + "\n" + message;
         screenshot = screen;
     }
+
 }
