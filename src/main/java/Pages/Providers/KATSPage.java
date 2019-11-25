@@ -12,7 +12,7 @@ public class KATSPage extends ProvidersPage implements IProvidersPage {
     public static KATSPage katsPage = new KATSPage();
     public static KATSPage getInstance() {return katsPage;}
 
-    @Step(value = "Проверяем, установлен ли на сервер MAX1000")
+    @Step(value = "Проверяем, установлен ли на сервер MX1000")
     public boolean isMX1000(){
         return SSHManager.isCheckQuerySSH(MX1000_STATUS);
     }

@@ -111,13 +111,6 @@ public class Test_DX500_Start {
         }, () -> "Время теста больше 5 минут");
     }
 
-    @Story(value = "Конфигурацию сервера Занятости")
-    @Description(value = "Проверяем, что конфигурация сервера Занятости сохранилась")
-    @Test
-    void test_DX500_Configuration_Busy(){
-        if( ! SSHManager.isCheckQuerySSH(BUSY_CONFIG_ADAPTER_NAME)) failedTestWithScreenshot("Неверное значение в параметре adapter_name", false);
-    }
-
     @Story(value = "Старт сервера Занятости провайдера DX500")
     @Description(value = "Проверяем, что через СУ успешно стартует сервер Занятости провайдера DX500")
     @Test

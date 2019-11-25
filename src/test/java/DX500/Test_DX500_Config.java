@@ -95,6 +95,13 @@ public class Test_DX500_Config {
         if( !SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_MGDEV)) failedTestWithScreenshot("Неверное значение в параметре MG3_DEV файла /etc/smg.cfg", false);
     }
 
+    @Story(value = "Конфигурацию сервера Занятости")
+    @Description(value = "Проверяем, что конфигурация сервера Занятости сохранилась")
+    @Test
+    void test_DX500_Configuration_Busy(){
+        if( ! SSHManager.isCheckQuerySSH(BUSY_CONFIG_ADAPTER_NAME)) failedTestWithScreenshot("Неверное значение в параметре adapter_name", false);
+    }
+
     @AfterEach
     void tearDown(){
         if( ! TEST_STATUS){
