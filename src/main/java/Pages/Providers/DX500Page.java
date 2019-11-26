@@ -50,7 +50,9 @@ public class DX500Page extends ProvidersPage{
 
     @Step(value = "Нажимаем кнопку 'Добавить SMG' на сервере {serverName}")
     public DX500Page clickButtonAddSMG(String serverName){
-        $("form[id*='" + serverName + "']").find("button.btn-dx500-add-smg").click();
+        if($("form[id*='" + serverName + "']").find("button.btn-dx500-add-smg").isDisplayed()) {
+            $("form[id*='" + serverName + "']").find("button.btn-dx500-add-smg").click();
+        }
         return this;
     }
 

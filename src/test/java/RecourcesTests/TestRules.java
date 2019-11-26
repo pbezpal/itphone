@@ -13,11 +13,16 @@ public class TestRules implements TestWatcher {
     public void testFailed(ExtensionContext context, Throwable cause){
         if (cause.getCause().toString().contains("article module")) {
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()), getArticleModule());
+            refresh();
         }else if(cause.getCause().toString().contains("DOWNLOAD")) {
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
             refresh();
         }else if (cause.getCause().toString().contains("false")){}
-        else ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
+        else {
+            ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
+            refresh();
+        }
+
     }
 
     /*@Override
