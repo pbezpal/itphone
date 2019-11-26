@@ -108,6 +108,12 @@ public class MonitoringPage extends LoginPage{
         return null;
     }
 
+    @Step(value = "Переходим на страницу 'Управление кластерами'")
+    public static ManagementBoosterPage clickLinkSimple(){
+        if($("a.link_simple").isDisplayed()) $("a.link_simple").click();
+        return ManagementBoosterPage.getInstance();
+    }
+
     /***** Раздел состояний серверов *****/
 
     @Step(value = "Проверяем статус службы {server}")

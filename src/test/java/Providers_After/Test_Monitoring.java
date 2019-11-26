@@ -1,7 +1,7 @@
-package StatusServers;
+package Providers_After;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
-import AnnotationsTests.ServicesTests.FeatureStatusServers;
+import AnnotationsTests.Monitoring.FeatureStatusServers;
 import HelperClasses.SSHManager;
 import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 @FeatureStatusServers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(TestRules.class)
-public class Test_StatusServers {
+public class Test_Monitoring {
 
     private static boolean TEST_STATUS;
     private static String TEST_MESSAGE;

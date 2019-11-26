@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @EpicServicesTests
 @FeatureProviderDX500
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 @ExtendWith(TestRules.class)
 public class Test_DX500_Add {
 

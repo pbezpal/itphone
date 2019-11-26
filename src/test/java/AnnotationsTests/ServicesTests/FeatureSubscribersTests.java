@@ -6,6 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Feature(value = "Тестирование раздела 'Спавочник абонентов'")
+@Feature(value = "Спавочник абонентов")
 public @interface FeatureSubscribersTests {
 }
