@@ -1,4 +1,4 @@
-package AnnotationsTests.ServicesTests;
+package AnnotationsTests.Monitoring;
 
 import io.qameta.allure.Feature;
 
@@ -6,6 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Feature(value = "Тестирование раздела Мониторинг")
+@Feature(value = "Статус серверов")
 public @interface FeatureStatusServers {
 }
