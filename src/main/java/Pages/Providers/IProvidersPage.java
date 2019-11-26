@@ -33,6 +33,11 @@ public interface IProvidersPage {
         return false;
     }
 
+    @Step(value = "Нажимаем кнопку 'Добавить'")
+    default void clickButtonAddProvider(){
+        $("button#add_provider").shouldBe(Condition.visible).click();
+    }
+
     @Step(value = "Нажимаем кнопку 'Редактировать' у провайдера {provider}")
     default void clickButtonEditProvider(String provider){
         $(byXpath("//table[@id='it_phone_providers']//td[text()='" + provider + "']//parent::tr//img[contains(@class,'cmd-button-edit')]")).click();

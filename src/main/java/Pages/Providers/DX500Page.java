@@ -19,7 +19,7 @@ public class DX500Page extends ProvidersPage{
 
     public boolean addDX500Provider(){
         isCheckProviderPage();
-        $("#add_provider").click();
+        clickButtonAddProvider();
         isFormEditProvider();
         clickSelectTypeProvider(DX500_TYPE_PROVIDER);
         addServers();

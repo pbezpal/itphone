@@ -145,8 +145,7 @@ public class Test_Monitoring {
     @Order(13)
     @Test
     void test_SIP_Pult_Status_Connect_Station(){
-        this.TEST_MESSAGE = MonitoringPage.isConnectService(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_STATION, labelStation);
-        reportArticleModule();
+        getStatusArticleModule(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_STATION, labelStation);
     }
 
     @Story(value = "Статус линейного эхо-компенсатора на сервере SIP Пульт")
@@ -186,7 +185,8 @@ public class Test_Monitoring {
     @Order(18)
     @Test
     void test_Busy_Status_Network(){
-        assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус SMG");
+        assertTrue(isCheckStartServers(DX500_BUSY), "Сервер не запущен!!!");
+        assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус интервейса сервера занятости");
         this.TEST_MESSAGE = MonitoringPage.isAdapterName(DX500_BUSY, DX500_BUSY_HEAD_MODULE);
         reportArticleModule();
     }
@@ -256,6 +256,7 @@ public class Test_Monitoring {
     }
 
     void getStatusArticleModule(String service, String headModule, String command, String label){
+        assertTrue(isCheckStartServers(service), "Сервер не запущен!!!");
         assertTrue(isCheckNotVisibleElement(), "Не удалось получить статус для " + label + " для сервера " + service);
         this.TEST_MESSAGE = MonitoringPage.isConnectService(service, headModule, command, label);
         reportArticleModule();

@@ -55,7 +55,7 @@ public class KATSPage extends ProvidersPage implements IProvidersPage {
 
     public void addMX1000(String name, String domain, String username, String password, String dialplan, String interval){
         isCheckProviderPage();
-        $("#add_provider").click();
+        clickButtonAddProvider();
         isFormEditProvider();
         clickSelectTypeProvider(MX1000_TYPE_PROVIDER);
         setNameProvider(name);
