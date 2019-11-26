@@ -21,6 +21,7 @@ import static DataTests.Providers.PROVIDER_DX500.*;
 import static DataTests.Providers.PROVIDER_DX500.DX500_BUSY;
 import static Pages.Providers.DX500Page.dx500Page;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
+import static com.codeborne.selenide.Selenide.refresh;
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -139,6 +140,7 @@ public class Test_DX500_Start {
     static void finalTest() {
         if (!dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500_TYPE_PROVIDER);
         assertTrue(dx500Page.clickSaveProvider(DX500_TYPE_PROVIDER), "После сохранения провайдера " + DX500_TYPE_PROVIDER + "запись в таблице пропала");
+        refresh();
     }
 
     void failedTestWithScreenshot(String message, boolean screen) {

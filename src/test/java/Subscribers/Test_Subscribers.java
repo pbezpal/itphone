@@ -10,6 +10,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;;
 import io.qameta.allure.model.Status;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,7 @@ import static DataTests.SUBSCRIBERS.*;
 import static Pages.MonitoringPage.isCheckNotVisibleDownload;
 import static Pages.SubscribersPage.subscribersPage;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
+import static com.codeborne.selenide.Selenide.refresh;
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -113,4 +115,8 @@ public class Test_Subscribers {
         }
     }
 
+    @AfterAll
+    static void afterAllTests(){
+        refresh();
+    }
 }

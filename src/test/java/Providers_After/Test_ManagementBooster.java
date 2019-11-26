@@ -6,6 +6,7 @@ import Pages.MonitoringPage;
 import RecourcesTests.TestRules;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static Pages.MonitoringPage.*;
 import static Pages.MonitoringPage.isSectionMonitoring;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
+import static com.codeborne.selenide.Selenide.refresh;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -35,6 +37,11 @@ public class Test_ManagementBooster {
     @Test
     void test_Management_Booster(){
         if( ! clickLinkSimple().isManagementBoosterPage()) fail("Ошибка при переходе на страницу 'Управление кластерами'", new Exception("DOWNLOAD"));
+    }
+
+    @AfterAll
+    static void afterAllTests(){
+        refresh();
     }
 
 }

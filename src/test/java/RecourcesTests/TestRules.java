@@ -14,26 +14,21 @@ public class TestRules implements TestWatcher {
         if (cause.getCause().toString().contains("article module")) {
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()), getArticleModule());
             refresh();
-        }else if(cause.getCause().toString().contains("DOWNLOAD")) {
-            ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
-            refresh();
-        }else if (cause.getCause().toString().contains("false")){}
-        else {
+        }else if ( ! cause.getCause().toString().contains("false")){
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
             refresh();
         }
 
     }
 
-    /*@Override
+    @Override
     public void testAborted(ExtensionContext context, Throwable cause) {
         if (cause.getCause().toString().contains("article module")) {
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()), getArticleModule());
-        }else if(cause.getCause().toString().contains("DOWNLOAD")) {
+            refresh();
+        }else if ( ! cause.getCause().toString().contains("false")) {
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
             refresh();
-        }else if ( ! cause.getCause().toString().contains("false")){
-            ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
         }
-    }*/
+    }
 }

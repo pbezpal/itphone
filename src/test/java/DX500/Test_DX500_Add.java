@@ -17,6 +17,7 @@ import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
 import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.Providers.DX500Page.dx500Page;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
+import static com.codeborne.selenide.Selenide.refresh;
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,6 +58,11 @@ public class Test_DX500_Add {
         if( ! TEST_STATUS){
             fail(TEST_MESSAGE, new Exception(String.valueOf(screenshot)));
         }
+    }
+
+    @AfterAll
+    static void afterAllTests(){
+        refresh();
     }
 
     void failedTestWithScreenshot(String message, boolean screen) {

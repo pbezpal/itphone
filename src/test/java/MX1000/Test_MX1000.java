@@ -22,6 +22,7 @@ import static DataTests.Providers.PROVIDER_MX1000.*;
 import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
 import static Pages.MonitoringPage.*;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
+import static com.codeborne.selenide.Selenide.refresh;
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,6 +51,7 @@ public class Test_MX1000 {
 
     @Story(value = "Добавление провайдетра MX1000")
     @Description(value = "Проверяем, что добавляется провайдет MX1000 типа КАТС")
+    @Disabled
     @Test
     void test_ADD_PROVIDER_MX1000() {
         assertTimeout(ofSeconds(600), () -> {
@@ -87,5 +89,10 @@ public class Test_MX1000 {
         if( ! TEST_STATUS){
             fail(TEST_MESSAGE, new Exception(String.valueOf(screenshot)));
         }
+    }
+
+    @AfterAll
+    static void afterAllTests(){
+        refresh();
     }
 }

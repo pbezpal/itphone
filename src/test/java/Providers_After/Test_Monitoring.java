@@ -16,6 +16,7 @@ import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.MonitoringPage.*;
 import static Pages.Providers.DX500Page.isCheckStartServers;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
+import static com.codeborne.selenide.Selenide.refresh;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -46,6 +47,7 @@ public class Test_Monitoring {
     @Story(value = "Статус SIP сервера")
     @Description(value = "Проверяем корректное отображение статуса SIP сервера")
     @Order(1)
+    @Disabled
     @Test
     void test_Status_SIP_Server(){
         getStatusServer(OPENSIPS_MODULE_ID, OPENSIPS_ITEM_MENU);
@@ -218,6 +220,10 @@ public class Test_Monitoring {
     public void getStatusServer(String server, String headModule){
         assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус пераметра " + server);
         assertTrue(isCheckStartServers(server), "Сервер не запущен!!!");
+        if(isCheckStartServers(server) && ! MonitoringPage.isStatusService(server, headModule) || ! MonitoringPage.isCheckModuleStatusServer(server)){
+            clickUpdateMonitoring();
+            assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус пераметра " + server);
+        }
         boolean serverStatus = isCheckStartServers(server);
         boolean tableStatusServer = MonitoringPage.isStatusService(server, headModule);
         boolean moduleStatusServer = MonitoringPage.isCheckModuleStatusServer(server);
@@ -260,5 +266,10 @@ public class Test_Monitoring {
         assertTrue(isCheckNotVisibleElement(), "Не удалось получить статус для " + label + " для сервера " + service);
         this.TEST_MESSAGE = MonitoringPage.isConnectService(service, headModule, command, label);
         reportArticleModule();
+    }
+
+    @AfterAll
+    static void afterAllTests(){
+        refresh();
     }
 }
