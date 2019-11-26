@@ -34,7 +34,7 @@ public class Test_Subscribers {
     @BeforeEach
     void setUp(){
         StartTests();
-        if (!SubscribersPage.isSubscribersPage().isDisplayed())
+        if( ! SubscribersPage.isSubscribersPage().isDisplayed())
             subscribersPage = (SubscribersPage) MonitoringPage.openSectionWEB(SUBSCRIBERS_ITEM_MENU);
         if (subscribersPage == null) subscribersPage = SubscribersPage.getInstance();
         if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
@@ -49,11 +49,11 @@ public class Test_Subscribers {
     void test_Subscriber_5000(){
         assertTimeout(ofSeconds(600), () -> {
             subscribersPage.addSubscriber(SUBSCRIBER_5000, SUBSCRIBER_PORT_DX_5000, false);
-            assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_5000), "Пользователь " + SUBSCRIBER_5000 + " не найден");
-            if (!SSHManager.isCheckQuerySSH("/var/db/sv-contacts/userlist.sh + grep " + SUBSCRIBER_5000))
+            assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_5000), "Пользователь " + SUBSCRIBER_5000 + " не добален");
+            /*if (!SSHManager.isCheckQuerySSH("/var/db/sv-contacts/userlist.sh + grep " + SUBSCRIBER_5000))
                 failedTestWithScreenshot("Пользователь " + SUBSCRIBER_5000 + " не найден на сервере", false);
             if (!SSHManager.isCheckQuerySSH(SV_CONTACTS_STATUS))
-                failedTestWithScreenshot("Сервер контактов не запущен", false);
+                failedTestWithScreenshot("Сервер контактов не запущен", false);*/
         }, () -> "Время теста больше 5 минут");
     }
 
@@ -63,11 +63,11 @@ public class Test_Subscribers {
     void test_Subscriber_5001(){
         assertTimeout(ofSeconds(600), () -> {
             subscribersPage.addSubscriber(SUBSCRIBER_5001, SUBSCRIBER_PORT_DX_5001, false);
-            assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_5001), "Пользователь " + SUBSCRIBER_5001 + " не найден");
-            if (!SSHManager.isCheckQuerySSH("/var/db/sv-contacts/userlist.sh + grep " + SUBSCRIBER_5001))
+            assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_5001), "Пользователь " + SUBSCRIBER_5001 + " не добален");
+            /*if (!SSHManager.isCheckQuerySSH("/var/db/sv-contacts/userlist.sh + grep " + SUBSCRIBER_5001))
                 failedTestWithScreenshot("Пользователь " + SUBSCRIBER_5001 + " не найден на сервере", false);
             if (!SSHManager.isCheckQuerySSH(SV_CONTACTS_STATUS))
-                failedTestWithScreenshot("Сервер контактов не запущен", false);
+                failedTestWithScreenshot("Сервер контактов не запущен", false);*/
         }, () -> "Время теста больше 5 минут");
     }
 
@@ -77,11 +77,11 @@ public class Test_Subscribers {
     void test_Subscriber_4000(){
         assertTimeout(ofSeconds(600), () -> {
             subscribersPage.addSubscriber(SUBSCRIBER_4000, SUBSCRIBER_PORT_DX_4000, true);
-            assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_4000), "Пользователь " + SUBSCRIBER_4000 + " не найден");
-            if (!SSHManager.isCheckQuerySSH("/var/db/sv-contacts/userlist.sh + grep " + SUBSCRIBER_4000))
+            assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_4000), "Пользователь " + SUBSCRIBER_4000 + " не добален");
+            /*if (!SSHManager.isCheckQuerySSH("/var/db/sv-contacts/userlist.sh + grep " + SUBSCRIBER_4000))
                 failedTestWithScreenshot("Пользователь " + SUBSCRIBER_4000 + " не найден на сервере", false);
             if (!SSHManager.isCheckQuerySSH(SV_CONTACTS_STATUS))
-                failedTestWithScreenshot("Сервер контактов не запущен", false);
+                failedTestWithScreenshot("Сервер контактов не запущен", false);*/
         }, () -> "Время теста больше 5 минут");
     }
 
@@ -91,12 +91,11 @@ public class Test_Subscribers {
     void test_Subscriber_4001(){
         assertTimeout(ofSeconds(600), () -> {
             subscribersPage.addSubscriber(SUBSCRIBER_4001, SUBSCRIBER_PORT_DX_4001, true);
-            if (!subscribersPage.isFilterSubscriber(SUBSCRIBER_4001))
-                failedTestWithScreenshot("Пользователь " + SUBSCRIBER_4001 + " не найден", true);
-            if (!SSHManager.isCheckQuerySSH("/var/db/sv-contacts/userlist.sh + grep " + SUBSCRIBER_4001))
+            assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_4001), "Пользователь " + SUBSCRIBER_4001 + " не добален");
+            /*if (!SSHManager.isCheckQuerySSH("/var/db/sv-contacts/userlist.sh + grep " + SUBSCRIBER_4001))
                 failedTestWithScreenshot("Пользователь " + SUBSCRIBER_4001 + " не найден на сервере", false);
             if (!SSHManager.isCheckQuerySSH(SV_CONTACTS_STATUS))
-                failedTestWithScreenshot("Сервер контактов не запущен", false);
+                failedTestWithScreenshot("Сервер контактов не запущен", false);*/
         }, () -> "Время теста больше 5 минут");
     }
 

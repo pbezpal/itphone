@@ -44,8 +44,8 @@ public class SubscribersPage {
             $("button#add_subscriber").click();
             StepReport.stepTest("Проверяем, что появилась форма 'Добавление абонента'");
             $("form#subscriber_change").shouldBe(Condition.visible);
-            StepReport.stepTest("Нажимаем кнопку 'Добавить учётную запись'");
-            $("i#sp_user_params_trigger").click();
+            //StepReport.stepTest("Нажимаем кнопку 'Добавить учётную запись'");
+            //$("i#sp_user_params_trigger").click();
             StepReport.stepTest("Вводим имя пользователя - " + subscriber);
             $("input#sp_user_name").clear();
             $("input#sp_user_name").setValue(subscriber);
@@ -63,8 +63,8 @@ public class SubscribersPage {
             $("input#sp_user_password").setValue(SUBSCRIBER_PASSWORD);
             StepReport.stepTest("Вводим подтверждение пароля - " + SUBSCRIBER_PASSWORD);
             $("input#sp_user_pwd_confirm").setValue(SUBSCRIBER_PASSWORD);
-            StepReport.stepTest("Нажимаем кнопку для добавления учётной записи SIP");
-            $(byXpath("//span[text()='SIP']//ancestor::div[@class='sp-wrap-header']/i")).click();
+            //StepReport.stepTest("Нажимаем кнопку для добавления учётной записи SIP");
+            //$(byXpath("//span[text()='SIP']//ancestor::div[@class='sp-wrap-header']/i")).click();
             By locatorsip = byXpath("//span[text()='SIP']//ancestor::fieldset[contains(@class,'dialog sp-wrap-label params-set set-type')]");
             if( ! $(locatorsip).find(byName("serv_ip")).text().equals(IP_SERVER)){
                 StepReport.stepTest("Вводим IP адрес SIP сервера - " + IP_SERVER);
@@ -90,12 +90,12 @@ public class SubscribersPage {
             StepReport.stepTest("Вводим фамилию абонента " + subscriber);
             $(byName("2")).setValue(subscriber);
             if(KATS){
-                $("i#sp_katc_params_trigger").click();
+                $("i.icon-calcplus.sp_katc_params_trigger").click();
                 $("div[aria-describedby='sp_katc']").shouldBe(Condition.visible);
                 if( ! $("input#katc_fActive").isSelected()) $("input#katc_fActive").click();
                 StepReport.stepTest("Включаем у пользоватея КАТС");
                 $$("div[aria-describedby='sp_katc'] span").findBy(Condition.text("Добавить")).click();
-                $("span.js-katcInfo").shouldBe(Condition.visible);
+                //$("span.js-katcInfo").shouldBe(Condition.visible);
             }
             StepReport.stepTest("Сохраняем настройки");
             $$("div.ui-dialog-buttonset span").findBy(Condition.text("Сохранить")).click();

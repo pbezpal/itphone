@@ -16,9 +16,8 @@ public class TestRules implements TestWatcher {
         }else if(cause.getCause().toString().contains("DOWNLOAD")) {
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
             refresh();
-        }else if ( ! cause.getCause().toString().contains("false")){
-            ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
-        }
+        }else if (cause.getCause().toString().contains("false")){}
+        else ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
     }
 
     /*@Override

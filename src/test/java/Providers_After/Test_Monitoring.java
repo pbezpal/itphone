@@ -1,6 +1,6 @@
 package Providers_After;
 
-import AnnotationsTests.ServicesTests.EpicServicesTests;
+import AnnotationsTests.Monitoring.EpicMonitoringTests;
 import AnnotationsTests.Monitoring.FeatureStatusServers;
 import HelperClasses.SSHManager;
 import HelperClasses.ScreenshotTests;
@@ -19,7 +19,7 @@ import static RecourcesTests.BeforeSettingsTests.StartTests;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-@EpicServicesTests
+@EpicMonitoringTests
 @FeatureStatusServers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(TestRules.class)

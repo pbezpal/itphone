@@ -21,10 +21,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 @ExtendWith(TestRules.class)
 public class Test_ManagementBooster {
 
-    private static boolean TEST_STATUS;
-    private static String TEST_MESSAGE;
-    private static String filename;
-
     @BeforeEach
     void setUp(){
         StartTests();
@@ -32,7 +28,6 @@ public class Test_ManagementBooster {
         if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
         if( ! isCheckNotVisibleElement()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
         assertTrue(isSectionMonitoring(), "Не удалось перейти в раздел Мониторинг");
-        TEST_STATUS = true;
     }
 
     @Story(value = "Переход на страницу 'Управление кластерами'")
