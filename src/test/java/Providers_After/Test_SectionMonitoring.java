@@ -16,6 +16,7 @@ import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.MonitoringPage.*;
 import static Pages.Providers.DX500Page.isCheckStartServers;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
+import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.refresh;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,8 +37,8 @@ public class Test_SectionMonitoring {
     void setUp(){
         StartTests();
         if( ! isSectionMonitoring()) MonitoringPage.clickButtonMonitoringPage();
-        if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
-        if( ! isCheckNotVisibleElement()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
+        assertTrue(isCheckNotVisibleDownload(),"Невозможно продолжать тестирование, СУ недоступно");
+        assertTrue(isCheckNotVisibleElement(),"Невозможно продолжать тестирование, СУ недоступно");
         assertTrue(isSectionMonitoring(), "Не удалось перейти в раздел Мониторинг");
         TEST_STATUS = true;
     }
@@ -222,6 +223,7 @@ public class Test_SectionMonitoring {
     @Test
     void test_Management_Booster(){
         filename = new Object(){}.getClass().getEnclosingMethod().getName();
+        assertTrue(isCheckStartServers(DX500_BOOSTER), "Сервер не запущен!!!");
         assertTrue(clickLinkSimple().isManagementBoosterPage(), "Ошибка при переходе на страницу 'Управление кластерами'");
     }
 
@@ -261,7 +263,7 @@ public class Test_SectionMonitoring {
 
     public void getStatusConverter(String server, String SMG){
         assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус SMG");
-        //assertTrue(isCheckStartServers(server), "Сервер не запущен!!!");
+        assertTrue(isCheckStartServers(server), "Сервер не запущен!!!");
         boolean converterStatus = SSHManager.isCheckQuerySSH("smg.status s | grep 231" + SMG + " -A 7 | grep 'lapd_ready: establish'");
         boolean moduleStatusConverter = MonitoringPage.isCheckModuleConverterLanE1(server);
         boolean tableStatusConverter = MonitoringPage.isCheckTableConverterLanE1(DX500_SIP_PULT);
