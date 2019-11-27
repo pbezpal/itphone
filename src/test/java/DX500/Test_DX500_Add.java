@@ -114,8 +114,8 @@ public class Test_DX500_Add {
         }, () -> "Время теста больше 10 минут");
     }
 
-    @Story(value = "Вводим имя провайдера")
-    @Description(value = "Вводим имя провайдера в поле Название")
+    @Story(value = "Добавляем провайдера")
+    @Description(value = "Добавляем провайдера и проверяем, что провайдер создался")
     @Test
     void test_Save_Provider() {
         filename = new Object(){}.getClass().getEnclosingMethod().getName();
