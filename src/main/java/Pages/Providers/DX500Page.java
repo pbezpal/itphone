@@ -2,6 +2,7 @@ package Pages.Providers;
 
 import HelperClasses.SSHManager;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.ElementNotFound;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -28,6 +29,11 @@ public class DX500Page extends ProvidersPage{
         clickButtonAddProviders();
 
         return isCheckProvider(DX500_TYPE_PROVIDER, 60000);
+    }
+
+    @Step(value = "Проверяем, есть ли раздел DX500")
+    public static SelenideElement getSectionDX500(){
+        return $("li[aria-controls='dx500_settings']");
     }
 
     @Step(value = "Создаем сервер {serverName}")
@@ -87,6 +93,7 @@ public class DX500Page extends ProvidersPage{
     }
 
     public DX500Page setServer(String serverName, String numberSMG, String converterIP){
+        if(getSectionDX500().attr("aria-selected").equals("false")) getSectionDX500().click();
         if( ! $("#provider_dx500_tab_elem").find("a[id*='" + serverName + "']").isDisplayed()) addServer(serverName);
         if(serverName.equals(DX500_SIP_ABON_DX_OPTION)) serverName = DX500_SIP_ABON_DX;
         clickSectionServer(serverName);
@@ -99,6 +106,7 @@ public class DX500Page extends ProvidersPage{
     }
 
     public DX500Page setServer(String server){
+        if(getSectionDX500().attr("aria-selected").equals("false")) getSectionDX500().click();
         if( ! $("#provider_dx500_tab_elem").find("a[id*='" + server + "']").isDisplayed()) addServer(server);
         clickSectionServer(server);
         if(server.equals(DX500_BOOSTER)){
@@ -113,7 +121,7 @@ public class DX500Page extends ProvidersPage{
     }
 
     public DX500Page addServers(){
-        setServer(DX500_SIP_ABON_DX, DX500_SIP_ABON_DX_SMG, DX500_SIP_ABON_DX_IP_CONVERTER);
+        setServer(DX500_SIP_ABON_DX, DX500_SIP_ABON_DX_SMG, DX500_SIP_ABON_DX_CONVERTER_IP);
         setServer(DX500_BOOSTER);
         setServer(DX500_BUSY);
         setServer(DX500_PULT, DX500_PULT_SMG, DX500_PULT_CONVERTER_IP);
@@ -123,7 +131,7 @@ public class DX500Page extends ProvidersPage{
 
     @Step(value = "Переходим на вкладку DX500")
     public DX500Page clickSectionDX500(){
-        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider("DX500");
+        if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonEditProvider(DX500_TYPE_PROVIDER);
         $("#provider_dialog_params").waitUntil(Condition.visible, 60000);
         $("li[aria-controls='dx500_settings']").click();
         return this;

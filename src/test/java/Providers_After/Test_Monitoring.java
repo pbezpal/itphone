@@ -17,18 +17,16 @@ import static Pages.MonitoringPage.*;
 import static Pages.Providers.DX500Page.isCheckStartServers;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
 import static com.codeborne.selenide.Selenide.refresh;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 @EpicMonitoringTests
 @FeatureStatusServers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ExtendWith(TestRules.class)
 public class Test_Monitoring {
 
     private static boolean TEST_STATUS;
     private static String TEST_MESSAGE;
-    private static String filename;
+    private String filename;
     private static final String labelContacts = "сервер контактов:";
     private static final String labelStation = "соединение со станцией:";
     private static final String labelLec = "линейный эхо-компенсатор:";
@@ -47,7 +45,6 @@ public class Test_Monitoring {
     @Story(value = "Статус SIP сервера")
     @Description(value = "Проверяем корректное отображение статуса SIP сервера")
     @Order(1)
-    @Disabled
     @Test
     void test_Status_SIP_Server(){
         getStatusServer(OPENSIPS_MODULE_ID, OPENSIPS_ITEM_MENU);
@@ -58,6 +55,7 @@ public class Test_Monitoring {
     @Order(2)
     @Test
     void test_Booster_Status_Server(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusServer(DX500_BOOSTER, DX500_BOOSTER_HEAD_MODULE);
     }
 
@@ -66,6 +64,7 @@ public class Test_Monitoring {
     @Order(3)
     @Test
     void test_Booster_Status_Server_Contacts(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusArticleModule(DX500_BOOSTER, DX500_BOOSTER_HEAD_MODULE, BOOSTER_CONNECT_CONTACTS, labelContacts);
     }
 
@@ -74,6 +73,7 @@ public class Test_Monitoring {
     @Order(4)
     @Test
     void test_Booster_Status_Connect_Station(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusArticleModule(DX500_BOOSTER, DX500_BOOSTER_HEAD_MODULE, BOOSTER_CONNECT_STATION, labelStation);
     }
 
@@ -83,6 +83,7 @@ public class Test_Monitoring {
     @Order(5)
     @Test
     void test_Pult_Status_Server(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusServer(DX500_PULT, DX500_PULT_HEAD_MODULE);
     }
 
@@ -91,6 +92,7 @@ public class Test_Monitoring {
     @Order(6)
     @Test
     void test_Pult_Status_Server_Contacts(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusArticleModule(DX500_PULT, DX500_PULT_HEAD_MODULE, PULT_CONNECT_CONTACTS, labelContacts);
     }
 
@@ -99,6 +101,7 @@ public class Test_Monitoring {
     @Order(7)
     @Test
     void test_Pult_Status_Connect_Station(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusArticleModule(DX500_PULT, DX500_PULT_HEAD_MODULE, PULT_CONNECT_STATION, labelStation);
     }
 
@@ -107,6 +110,7 @@ public class Test_Monitoring {
     @Order(8)
     @Test
     void test_Pult_Status_Converter(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusConverter(DX500_PULT, DX500_PULT_SMG);
     }
 
@@ -115,14 +119,16 @@ public class Test_Monitoring {
     @Order(9)
     @Test
     void test_SIP_Abon_DX_Status_Server(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusServer(DX500_SIP_ABON_DX, DX500_SIP_ABON_DX_HEADER_MODULE);
     }
 
-    @Story(value = "Статус конвертера Lan/E1 сервере SIP(абон)-DX")
+    @Story(value = "Статус конвертера Lan/E1 на сервере SIP(абон)-DX")
     @Description(value = "Проверяем корректное отображение статуса конвертера Lan/E1 сервера SIP(абон)-DX")
     @Order(10)
     @Test
     void test_SIP_Abon_DX_Status_Converter(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusConverter(DX500_SIP_ABON_DX, DX500_SIP_ABON_DX_SMG);
     }
 
@@ -131,6 +137,7 @@ public class Test_Monitoring {
     @Order(11)
     @Test
     void test_SIP_Pult_Status_Server(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusServer(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE);
     }
 
@@ -139,6 +146,7 @@ public class Test_Monitoring {
     @Order(12)
     @Test
     void test_SIP_Pult_Status_Server_Contacts(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusArticleModule(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_CONTACTS, labelContacts);
     }
 
@@ -147,6 +155,7 @@ public class Test_Monitoring {
     @Order(13)
     @Test
     void test_SIP_Pult_Status_Connect_Station(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusArticleModule(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_STATION, labelStation);
     }
 
@@ -155,6 +164,7 @@ public class Test_Monitoring {
     @Order(14)
     @Test
     void test_SIP_Pult_Status_Lec(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusArticleModule(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_STATUS_LEC, labelLec);
     }
 
@@ -163,14 +173,16 @@ public class Test_Monitoring {
     @Order(15)
     @Test
     void test_SIP_Pult_Connect_BUSY(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusArticleModule(DX500_SIP_PULT, DX500_SIP_PULT_HEAD_MODULE, SIP_PULT_CONNECT_BUSY, labelBusy);
     }
 
-    @Story(value = "Статус конвертера Lan/E1 сервере SIP Пульт")
+    @Story(value = "Статус конвертера Lan/E1 на сервере SIP Пульт")
     @Description(value = "Проверяем корректное отображение статуса конвертера Lan/E1 сервера Пульт")
     @Order(16)
     @Test
     void test_SIP_Pult_Status_Converter(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusConverter(DX500_SIP_PULT, DX500_SIP_PULT_SMG);
     }
 
@@ -179,6 +191,7 @@ public class Test_Monitoring {
     @Order(17)
     @Test
     void test_Busy_Status_Server(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusServer(DX500_BUSY, DX500_BUSY_HEAD_MODULE);
     }
 
@@ -187,6 +200,7 @@ public class Test_Monitoring {
     @Order(18)
     @Test
     void test_Busy_Status_Network(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         assertTrue(isCheckStartServers(DX500_BUSY), "Сервер не запущен!!!");
         assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус интервейса сервера занятости");
         this.TEST_MESSAGE = MonitoringPage.isAdapterName(DX500_BUSY, DX500_BUSY_HEAD_MODULE);
@@ -198,23 +212,18 @@ public class Test_Monitoring {
     @Order(19)
     @Test
     void test_Busy_Status_Connect_Station(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusArticleModule(DX500_BUSY, DX500_BUSY_HEAD_MODULE, BUSY_CONNECT_STATION, labelStation);
     }
 
     public void reportArticleModule(){
-        if(this.TEST_MESSAGE != null) {
-            filename = new Object(){}.getClass().getEnclosingMethod().getName();
-            ScreenshotTests.AScreenshot(filename, getArticleModule());
-            fail(this.TEST_MESSAGE, new Exception("article module"));
-        }
+        ScreenshotTests.AScreenshot(filename, getArticleModule());
+        assertEquals(this.TEST_MESSAGE, null, this.TEST_MESSAGE);
     }
 
     public void reportModule(){
-        if( ! this.TEST_STATUS){
-            filename = new Object(){}.getClass().getEnclosingMethod().getName();
-            ScreenshotTests.AScreenshot(filename);
-            fail(this.TEST_MESSAGE);
-        }
+        ScreenshotTests.AScreenshot(filename);
+        assertTrue(this.TEST_STATUS, this.TEST_MESSAGE);
     }
 
     public void getStatusServer(String server, String headModule){
@@ -243,7 +252,7 @@ public class Test_Monitoring {
 
     public void getStatusConverter(String server, String SMG){
         assertTrue(isCheckNotVisibleElement(),"Невозможно получить статус SMG");
-        assertTrue(isCheckStartServers(server), "Сервер не запущен!!!");
+        //assertTrue(isCheckStartServers(server), "Сервер не запущен!!!");
         boolean converterStatus = SSHManager.isCheckQuerySSH("smg.status s | grep 231" + SMG + " -A 7 | grep 'lapd_ready: establish'");
         boolean moduleStatusConverter = MonitoringPage.isCheckModuleConverterLanE1(server);
         boolean tableStatusConverter = MonitoringPage.isCheckTableConverterLanE1(DX500_SIP_PULT);

@@ -1,8 +1,5 @@
 package DataTests.Providers;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
 import static DataTests.GET_DATA_TESTS.*;
 import static DataTests.LOGIN.IP_SERVER;
 
@@ -17,7 +14,7 @@ public @interface PROVIDER_DX500 {
     String DX500_SIP_ABON_DX = getProperty("DX500_SIP_ABON_DX");
     String DX500_SIP_ABON_DX_OPTION = getProperty("DX500_SIP_ABON_DX_OPTION");
     String DX500_SIP_ABON_DX_SMG = getProperty("DX500_SIP_ABON_DX_SMG");
-    String DX500_SIP_ABON_DX_IP_CONVERTER = getProperty("DX500_SIP_ABON_DX_IP_CONVERTER");
+    String DX500_SIP_ABON_DX_CONVERTER_IP = getProperty("DX500_SIP_ABON_DX_CONVERTER_IP");
     String DX500_SIP_ABON_DX_CONFIG = getProperty("DX500_SIP_ABON_DX_CONFIG");
 
     /***** Параметры настрйоки Ассистента *****/
@@ -88,8 +85,8 @@ public @interface PROVIDER_DX500 {
     String SIP_ABON_DX_CONFIG_MEDIA_GATE_IP = "grep -E 'media_gate_ip=127.0.0.1' " + DX500_SIP_ABON_DX_CONFIG;
     String SIP_ABON_DX_CONFIG_MEDIA_GATE_PORT = "grep -E 'media_gate_port=2350' " + DX500_SIP_ABON_DX_CONFIG;
     String SIP_ABON_DX_CONFIG_SMG_ENABLE = "grep -E 'SMG" + DX500_SIP_ABON_DX_SMG + "_ENABLE=1' /etc/smg.cfg";
-    String SIP_ABON_DX_CONFIG_SGDEV = "grep -E \"SG" + DX500_SIP_ABON_DX_SMG + "_DEV='" + IP_SERVER + ":232" + DX500_SIP_ABON_DX_SMG + "->" + DX500_SIP_ABON_DX_IP_CONVERTER + ":2300'\" /etc/smg.cfg";
-    String SIP_ABON_DX_CONFIG_MGDEV = "grep -E \"MG" + DX500_SIP_ABON_DX_SMG + "_DEV='" + IP_SERVER + ":236" + DX500_SIP_ABON_DX_SMG + "->" + DX500_SIP_ABON_DX_IP_CONVERTER + ":2350|" + IP_SERVER + ":232" + DX500_SIP_ABON_DX_SMG + "'\" /etc/smg.cfg";
+    String SIP_ABON_DX_CONFIG_SGDEV = "grep -E \"SG" + DX500_SIP_ABON_DX_SMG + "_DEV='" + IP_SERVER + ":232" + DX500_SIP_ABON_DX_SMG + "->" + DX500_SIP_ABON_DX_CONVERTER_IP + ":2300'\" /etc/smg.cfg";
+    String SIP_ABON_DX_CONFIG_MGDEV = "grep -E \"MG" + DX500_SIP_ABON_DX_SMG + "_DEV='" + IP_SERVER + ":236" + DX500_SIP_ABON_DX_SMG + "->" + DX500_SIP_ABON_DX_CONVERTER_IP + ":2350|" + IP_SERVER + ":232" + DX500_SIP_ABON_DX_SMG + "'\" /etc/smg.cfg";
 
     /***** Проверка конфигурации сервера SIP-Пульт *****/
     String SIP_PULT_CONFIG_SG_PORT = "grep -E 'sg_port=230" + DX500_SIP_PULT_SMG + "' " + DX500_SIP_PULT_CONFIG;

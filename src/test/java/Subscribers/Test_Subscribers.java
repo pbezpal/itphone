@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.SUBSCRIBERS.*;
+import static HelperClasses.ScreenshotTests.AScreenshot;
 import static Pages.MonitoringPage.isCheckNotVisibleDownload;
 import static Pages.SubscribersPage.subscribersPage;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
@@ -31,6 +32,7 @@ public class Test_Subscribers {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;
+    private String filename;
     private static boolean screenshot;
 
     @BeforeEach
@@ -49,6 +51,7 @@ public class Test_Subscribers {
     @Description(value = "Добавляем пользьзователя 5000 и проверяем, что пользователь 5000 был успешно добавился")
     @Test
     void test_Subscriber_5000(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         assertTimeout(ofSeconds(600), () -> {
             subscribersPage.addSubscriber(SUBSCRIBER_5000, SUBSCRIBER_PORT_DX_5000, false);
             assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_5000), "Пользователь " + SUBSCRIBER_5000 + " не добален");
@@ -63,6 +66,7 @@ public class Test_Subscribers {
     @Description(value = "Добавляем пользьзователя 5001 и проверяем, что пользователь 5001 был успешно добавился")
     @Test
     void test_Subscriber_5001(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         assertTimeout(ofSeconds(600), () -> {
             subscribersPage.addSubscriber(SUBSCRIBER_5001, SUBSCRIBER_PORT_DX_5001, false);
             assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_5001), "Пользователь " + SUBSCRIBER_5001 + " не добален");
@@ -77,6 +81,7 @@ public class Test_Subscribers {
     @Description(value = "Добавляем пользьзователя 4000 и проверяем, что пользователь 4000 был успешно добавился")
     @Test
     void test_Subscriber_4000(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         assertTimeout(ofSeconds(600), () -> {
             subscribersPage.addSubscriber(SUBSCRIBER_4000, SUBSCRIBER_PORT_DX_4000, true);
             assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_4000), "Пользователь " + SUBSCRIBER_4000 + " не добален");
@@ -91,28 +96,19 @@ public class Test_Subscribers {
     @Description(value = "Добавляем пользьзователя 4001 и проверяем, что пользователь 4001 был успешно добавился")
     @Test
     void test_Subscriber_4001(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
         assertTimeout(ofSeconds(600), () -> {
             subscribersPage.addSubscriber(SUBSCRIBER_4001, SUBSCRIBER_PORT_DX_4001, true);
             assertTrue(subscribersPage.isFilterSubscriber(SUBSCRIBER_4001), "Пользователь " + SUBSCRIBER_4001 + " не добален");
-            /*if (!SSHManager.isCheckQuerySSH("/var/db/sv-contacts/userlist.sh + grep " + SUBSCRIBER_4001))
-                failedTestWithScreenshot("Пользователь " + SUBSCRIBER_4001 + " не найден на сервере", false);
+            /*assertTrue(SSHManager.isCheckQuerySSH("/var/db/sv-contacts/userlist.sh + grep " + SUBSCRIBER_4001), ,"Пользователь " + SUBSCRIBER_4001 + " не найден на сервере");
             if (!SSHManager.isCheckQuerySSH(SV_CONTACTS_STATUS))
                 failedTestWithScreenshot("Сервер контактов не запущен", false);*/
         }, () -> "Время теста больше 5 минут");
     }
 
-    void failedTestWithScreenshot(String message, boolean screen) {
-        Allure.step(message, Status.FAILED);
-        TEST_STATUS = false;
-        TEST_MESSAGE = TEST_MESSAGE + "; " + message;
-        this.screenshot = screen;
-    }
-
     @AfterEach
     void tearDown(){
-        if( ! TEST_STATUS){
-            fail(TEST_MESSAGE, new Exception(String.valueOf(screenshot)));
-        }
+        AScreenshot(filename);
     }
 
     @AfterAll

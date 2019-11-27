@@ -14,7 +14,8 @@ public class TestRules implements TestWatcher {
         if (cause.getCause().toString().contains("article module")) {
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()), getArticleModule());
             refresh();
-        }else if ( ! cause.getCause().toString().contains("false")){
+        }else if ( ! cause.getCause().toString().contains("false")) {
+        }else if(cause == null){
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
             refresh();
         }
@@ -26,7 +27,9 @@ public class TestRules implements TestWatcher {
         if (cause.getCause().toString().contains("article module")) {
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()), getArticleModule());
             refresh();
-        }else if ( ! cause.getCause().toString().contains("false")) {
+        }else if (cause.getCause().toString().contains("false")) {
+
+        }else if(cause == null){
             ScreenshotTests.AScreenshot(String.valueOf(context.getTestMethod()));
             refresh();
         }

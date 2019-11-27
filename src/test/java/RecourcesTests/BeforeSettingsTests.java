@@ -52,8 +52,8 @@ public class BeforeSettingsTests {
         }
         assertTrue(MonitoringPage.isCheckLogin(), "Не удалось авторизоваться на сервере");
 
-        if( ! isCheckNotVisibleDownload()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
-        if( ! isCheckNotVisibleElement()) fail("Невозможно продолжать тестирование, СУ недоступно", new Exception("DOWNLOAD"));
+        assertTrue(isCheckNotVisibleDownload(), "Невозможно продолжать тестирование, СУ недоступно");
+        assertTrue(isCheckNotVisibleElement(), "Невозможно продолжать тестирование, СУ недоступно");
 
     }
 }

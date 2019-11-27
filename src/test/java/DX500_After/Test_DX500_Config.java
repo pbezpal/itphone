@@ -3,22 +3,26 @@ package DX500_After;
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureProviderDX500;
 import HelperClasses.SSHManager;
+import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
 import RecourcesTests.TestRules;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import io.qameta.allure.model.Status;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
 import static DataTests.Providers.PROVIDER_DX500.*;
+import static Pages.MonitoringPage.isCheckNotVisibleDownload;
 import static Pages.Providers.DX500Page.dx500Page;
+import static Pages.Providers.ProvidersPage.isCheckProviderPage;
 import static org.junit.jupiter.api.Assertions.*;
 
 @EpicServicesTests
 @FeatureProviderDX500
-@ExtendWith(TestRules.class)
 public class Test_DX500_Config {
 
     private boolean TEST_STATUS;
@@ -27,7 +31,11 @@ public class Test_DX500_Config {
 
     @BeforeEach
     void setUp(){
+        if( ! isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, DX500_TYPE_PROVIDER);
         if( dx500Page == null ) dx500Page = DX500Page.getInstance();
+        assertTrue(isCheckNotVisibleDownload(), "Невозможно продолжать тестирование, СУ недоступно");
+        assertTrue(isCheckProviderPage().isDisplayed(), "Ошибка при переходе на страницу провайдеров");
+        assertTrue(dx500Page.isCheckProvider(DX500_TYPE_PROVIDER, 30000), "Провайдер DX500 не создан");
         TEST_STATUS = true;
         TEST_MESSAGE = "";
         screenshot = false;
@@ -95,6 +103,15 @@ public class Test_DX500_Config {
         if( !SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_MGDEV)) failedTestWithScreenshot("Неверное значение в параметре MG3_DEV файла /etc/smg.cfg", false);
     }
 
+    @Step(value = "Маршрутизация вызовов")
+    @Description(value = "Проверяе, есть ли маршрутизация вызовов для провайдера")
+    @Test
+    void test_DX500_Route_Calls(){
+        if (!dx500Page.isMySqlDialplan()) {
+            failedTestWithScreenshot("Маршрут для DX500 не был добавлен в БД MySql", false);
+        }
+    }
+
     @Story(value = "Конфигурацию сервера Занятости")
     @Description(value = "Проверяем, что конфигурация сервера Занятости сохранилась")
     @Test
@@ -104,9 +121,7 @@ public class Test_DX500_Config {
 
     @AfterEach
     void tearDown(){
-        if( ! TEST_STATUS){
-            fail(TEST_MESSAGE, new Exception(String.valueOf(screenshot)));
-        }
+        assertTrue(TEST_STATUS, TEST_MESSAGE);
     }
 
     void failedTestWithScreenshot(String message, boolean screen) {
