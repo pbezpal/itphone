@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EpicMonitoringTests
 @FeatureStatusServers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class Test_Monitoring {
+public class Test_SectionMonitoring {
 
     private static boolean TEST_STATUS;
     private static String TEST_MESSAGE;
@@ -214,6 +214,15 @@ public class Test_Monitoring {
     void test_Busy_Status_Connect_Station(){
         filename = new Object(){}.getClass().getEnclosingMethod().getName();
         getStatusArticleModule(DX500_BUSY, DX500_BUSY_HEAD_MODULE, BUSY_CONNECT_STATION, labelStation);
+    }
+
+    @Story(value = "Переход на страницу 'Управление кластерами'")
+    @Description(value = "Проверяем, что на странице Мониторинг корректно работает переход на страницу 'Управление кластерами'")
+    @Order(20)
+    @Test
+    void test_Management_Booster(){
+        filename = new Object(){}.getClass().getEnclosingMethod().getName();
+        assertTrue(clickLinkSimple().isManagementBoosterPage(), "Ошибка при переходе на страницу 'Управление кластерами'");
     }
 
     public void reportArticleModule(){

@@ -37,7 +37,7 @@ public class Test_DX500_Add {
         if( ! isCheckProviderPage().isDisplayed()) dx500Page = (DX500Page) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, DX500_TYPE_PROVIDER);
         if( dx500Page == null ) dx500Page = DX500Page.getInstance();
         assertTrue(isCheckNotVisibleDownload(), "Невозможно продолжать тестирование, СУ недоступно");
-        //assertTrue(isCheckProviderPage().isDisplayed(), "Ошибка при переходе на страницу провайдеров");
+        assertTrue(isCheckProviderPage().isDisplayed(), "Ошибка при переходе на страницу провайдеров");
         if( ! dx500Page.isFormEditProvider().isDisplayed()) dx500Page.clickButtonAddProvider();
         assertTrue(dx500Page.isFormEditProvider().isDisplayed(), "Форма редактирования провайдера не появилась");
         if( ! getSectionDX500().isDisplayed()) dx500Page.clickSelectTypeProvider(DX500_TYPE_PROVIDER);

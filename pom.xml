@@ -165,8 +165,7 @@
                         <include>**/DX500_After/Test_DX500_Config.java</include>
                         <include>**/DX500_After/Test_DX500_Start.java</include>
                         <include>**/MX1000/Test_MX1000.java</include>
-                        <include>**/Providers_After/Test_Monitoring.java</include>
-                        <include>**/Providers_After/Test_ManagementBooster.java</include>
+                        <include>**/Providers_After/Test_SectionMonitoring.java</include>
                         <include>**/Subscribers/Test_Subscribers.java</include>
                     </includes>
                 </configuration>
