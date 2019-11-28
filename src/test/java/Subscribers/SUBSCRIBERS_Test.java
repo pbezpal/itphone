@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EpicServicesTests
 @FeatureSubscribersTests
 @ExtendWith(TestRules.class)
-public class Test_Subscribers {
+public class SUBSCRIBERS_Test {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;

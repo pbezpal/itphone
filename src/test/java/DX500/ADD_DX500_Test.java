@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EpicServicesTests
 @FeatureProviderDX500
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
-public class Test_DX500_Add {
+public class ADD_DX500_Test {
 
     private String filename;
 

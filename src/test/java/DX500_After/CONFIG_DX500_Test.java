@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @EpicServicesTests
 @FeatureProviderDX500
-public class Test_DX500_Config {
+public class CONFIG_DX500_Test {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;

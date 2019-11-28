@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EpicServicesTests
 @FeatureProviderMX1000
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
-public class Test_MX1000 {
+public class ADD_MX1000_Test {
 
     private KATSPage katsPage = null;
     private SipServerPage sipServerPage;

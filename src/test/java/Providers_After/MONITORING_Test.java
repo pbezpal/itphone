@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EpicMonitoringTests
 @FeatureStatusServers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class Test_SectionMonitoring {
+public class MONITORING_Test {
 
     private static boolean TEST_STATUS;
     private static String TEST_MESSAGE;
@@ -51,7 +51,7 @@ public class Test_SectionMonitoring {
         getStatusServer(OPENSIPS_MODULE_ID, OPENSIPS_ITEM_MENU);
     }
 
-    /*@Story(value = "Статус сервера Ассистентов")
+    @Story(value = "Статус сервера Ассистентов")
     @Description(value = "Проверяем корректное отображение статуса сервера Ассистентов")
     @Order(2)
     @Test
@@ -225,7 +225,7 @@ public class Test_SectionMonitoring {
         filename = new Object(){}.getClass().getEnclosingMethod().getName();
         assertTrue(isCheckStartServers(DX500_BOOSTER), "Сервер не запущен!!!");
         assertTrue(clickLinkSimple().isManagementBoosterPage(), "Ошибка при переходе на страницу 'Управление кластерами'");
-    }*/
+    }
 
     public void reportArticleModule(){
         ScreenshotTests.AScreenshot(filename, getArticleModule());

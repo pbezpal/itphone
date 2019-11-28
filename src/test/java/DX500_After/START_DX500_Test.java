@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EpicServicesTests
 @FeatureProviderDX500
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
-public class Test_DX500_Start {
+public class START_DX500_Test {
 
     private boolean TEST_STATUS;
     private String TEST_MESSAGE;
