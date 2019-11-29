@@ -102,7 +102,7 @@ public class CONFIG_DX500_Test {
         if( !SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_MGDEV)) failedTestWithScreenshot("Неверное значение в параметре MG3_DEV файла /etc/smg.cfg");
     }
 
-    @Step(value = "Маршрутизация вызовов")
+    @Story(value = "Маршрутизация вызовов")
     @Description(value = "Проверяе, есть ли маршрутизация вызовов для провайдера")
     @Disabled
     @Test
