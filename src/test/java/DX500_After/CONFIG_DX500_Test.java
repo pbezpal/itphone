@@ -44,62 +44,62 @@ public class CONFIG_DX500_Test {
     @Disabled
     @Test
     public void test_DX500_Configuration_Booster(){
-        if( ! SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_DB_IP)) failedTestWithScreenshot("Неверное значение в параметре db_ip", false);
-        if( ! SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_DB_PORT)) failedTestWithScreenshot("Неверное значение в параметре db_port", false);
-        if( ! SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_ADAPTER_NAME)) failedTestWithScreenshot("Неверное значение в параметре adapter_name", false);
-        if( ! SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_STATION)) failedTestWithScreenshot("Неверное значение в параметре station", false);
-        if( ! SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_IP)) failedTestWithScreenshot("Неверное значение в параметре ip", false);
-        if( !SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_PORT)) failedTestWithScreenshot("Неверное значение в параметре port", false);
+        if( ! SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_DB_IP)) failedTestWithScreenshot("Неверное значение в параметре db_ip");
+        if( ! SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_DB_PORT)) failedTestWithScreenshot("Неверное значение в параметре db_port");
+        if( ! SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_ADAPTER_NAME)) failedTestWithScreenshot("Неверное значение в параметре adapter_name");
+        if( ! SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_STATION)) failedTestWithScreenshot("Неверное значение в параметре station");
+        if( ! SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_IP)) failedTestWithScreenshot("Неверное значение в параметре ip");
+        if( !SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_PORT)) failedTestWithScreenshot("Неверное значение в параметре port");
     }
 
     @Story(value = "Конфигурацию сервера Пультов")
     @Description(value = "Проверяем, что конфигурация сервера Пультов сохранилась")
     @Test
     public void test_DX500_Configuration_Pult(){
-        if( ! SSHManager.isCheckQuerySSH(PULT_CONFIG_CONTACT_IP)) failedTestWithScreenshot("Неверное значение в параметре db_ip", false);
-        if( ! SSHManager.isCheckQuerySSH(PULT_CONFIG_CONTACT_PORT)) failedTestWithScreenshot("Неверное значение в параметре db_port", false);
-        if( ! SSHManager.isCheckQuerySSH(PULT_CONFIG_SIG_GATE_PORT)) failedTestWithScreenshot("Неверное значение в параметре sig_gate_port", false);
-        if( ! SSHManager.isCheckQuerySSH(PULT_CONFIG_IP)) failedTestWithScreenshot("Неверное значение в параметре ip", false);
-        if( ! SSHManager.isCheckQuerySSH(PULT_CONFIG_PORT)) failedTestWithScreenshot("Неверное значение в параметре port", false);
-        if( !SSHManager.isCheckQuerySSH(PULT_CONFIG_MEDIA_GATE_PORT)) failedTestWithScreenshot("Неверное значение в параметре media_gate_port", false);
+        if( ! SSHManager.isCheckQuerySSH(PULT_CONFIG_CONTACT_IP)) failedTestWithScreenshot("Неверное значение в параметре db_ip");
+        if( ! SSHManager.isCheckQuerySSH(PULT_CONFIG_CONTACT_PORT)) failedTestWithScreenshot("Неверное значение в параметре db_port");
+        if( ! SSHManager.isCheckQuerySSH(PULT_CONFIG_SIG_GATE_PORT)) failedTestWithScreenshot("Неверное значение в параметре sig_gate_port");
+        if( ! SSHManager.isCheckQuerySSH(PULT_CONFIG_IP)) failedTestWithScreenshot("Неверное значение в параметре ip");
+        if( ! SSHManager.isCheckQuerySSH(PULT_CONFIG_PORT)) failedTestWithScreenshot("Неверное значение в параметре port");
+        if( !SSHManager.isCheckQuerySSH(PULT_CONFIG_MEDIA_GATE_PORT)) failedTestWithScreenshot("Неверное значение в параметре media_gate_port");
         //Проверка настроек SMG
-        if( ! SSHManager.isCheckQuerySSH(PULT_SMG_ENABLE)) failedTestWithScreenshot("Неверное значение в параметре SMG1_ENABLE файла /etc/smg.cfg", false);
-        if( ! SSHManager.isCheckQuerySSH(PULT_SMG_SGDEV)) failedTestWithScreenshot("Неверное значение в параметре SG1_DEV файла /etc/smg.cfg", false);
-        if( !SSHManager.isCheckQuerySSH(PULT_SMG_MGDEV)) failedTestWithScreenshot("Неверное значение в параметре MG1_DEV файла /etc/smg.cfg", false);
+        if( ! SSHManager.isCheckQuerySSH(PULT_SMG_ENABLE)) failedTestWithScreenshot("Неверное значение в параметре SMG1_ENABLE файла /etc/smg.cfg");
+        if( ! SSHManager.isCheckQuerySSH(PULT_SMG_SGDEV)) failedTestWithScreenshot("Неверное значение в параметре SG1_DEV файла /etc/smg.cfg");
+        if( !SSHManager.isCheckQuerySSH(PULT_SMG_MGDEV)) failedTestWithScreenshot("Неверное значение в параметре MG1_DEV файла /etc/smg.cfg");
     }
 
     @Story(value = "Конфигурацию сервера SIP(абон)-DX")
     @Description(value = "Проверяем, что конфигурация сервера SIP(абон)-DX сохранилась")
     @Test
     public void test_DX500_Configuration_SIP_Abon_DX(){
-        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_DB_IP)) failedTestWithScreenshot("Неверное значение в параметре db_ip", false);
-        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_DB_PORT)) failedTestWithScreenshot("Неверное значение в параметре db_port", false);
-        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_SIG_GATE_IP)) failedTestWithScreenshot("Неверное значение в параметре sig_gate_ip", false);
-        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_SIG_GATE_PORT)) failedTestWithScreenshot("Неверное значение в параметре sig_gate_port", false);
-        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_IP)) failedTestWithScreenshot("Неверное значение в параметре ip", false);
-        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_PORT)) failedTestWithScreenshot("Неверное значение в параметре port", false);
-        if( !SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_MEDIA_GATE_IP)) failedTestWithScreenshot("Неверное значение в параметре media_gate_ip", false);
-        if( !SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_MEDIA_GATE_PORT)) failedTestWithScreenshot("Неверное значение в параметре media_gate_port", false);
+        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_DB_IP)) failedTestWithScreenshot("Неверное значение в параметре db_ip");
+        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_DB_PORT)) failedTestWithScreenshot("Неверное значение в параметре db_port");
+        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_SIG_GATE_IP)) failedTestWithScreenshot("Неверное значение в параметре sig_gate_ip");
+        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_SIG_GATE_PORT)) failedTestWithScreenshot("Неверное значение в параметре sig_gate_port");
+        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_IP)) failedTestWithScreenshot("Неверное значение в параметре ip");
+        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_PORT)) failedTestWithScreenshot("Неверное значение в параметре port");
+        if( !SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_MEDIA_GATE_IP)) failedTestWithScreenshot("Неверное значение в параметре media_gate_ip");
+        if( !SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_MEDIA_GATE_PORT)) failedTestWithScreenshot("Неверное значение в параметре media_gate_port");
         //Проверка настроек SMG
-        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_SMG_ENABLE)) failedTestWithScreenshot("Неверное значение в параметре SMG0_ENABLE файла /etc/smg.cfg", false);
-        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_SGDEV)) failedTestWithScreenshot("Неверное значение в параметре SG0_DEV файла /etc/smg.cfg", false);
-        if( !SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_MGDEV)) failedTestWithScreenshot("Неверное значение в параметре MG0_DEV файла /etc/smg.cfg", false);
+        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_SMG_ENABLE)) failedTestWithScreenshot("Неверное значение в параметре SMG0_ENABLE файла /etc/smg.cfg");
+        if( ! SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_SGDEV)) failedTestWithScreenshot("Неверное значение в параметре SG0_DEV файла /etc/smg.cfg");
+        if( !SSHManager.isCheckQuerySSH(SIP_ABON_DX_CONFIG_MGDEV)) failedTestWithScreenshot("Неверное значение в параметре MG0_DEV файла /etc/smg.cfg");
     }
 
     @Story(value = "Конфигурацию сервера SIP Пультов")
     @Description(value = "Проверяем, что конфигурация сервера SIP Пультов сохранилась")
     @Test
     public void test_DX500_Configuration_SIP_Pult(){
-        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_DB_IP)) failedTestWithScreenshot("Неверное значение в параметре db_ip", false);
-        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_DB_PORT)) failedTestWithScreenshot("Неверное значение в параметре db_port", false);
-        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_SG_PORT)) failedTestWithScreenshot("Неверное значение в параметре sg_port", false);
-        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_IP)) failedTestWithScreenshot("Неверное значение в параметре ip", false);
-        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_PORT)) failedTestWithScreenshot("Неверное значение в параметре port", false);
-        if( !SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_MG_PORT)) failedTestWithScreenshot("Неверное значение в параметре mg_port", false);
+        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_DB_IP)) failedTestWithScreenshot("Неверное значение в параметре db_ip");
+        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_DB_PORT)) failedTestWithScreenshot("Неверное значение в параметре db_port");
+        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_SG_PORT)) failedTestWithScreenshot("Неверное значение в параметре sg_port");
+        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_IP)) failedTestWithScreenshot("Неверное значение в параметре ip");
+        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_PORT)) failedTestWithScreenshot("Неверное значение в параметре port");
+        if( !SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_MG_PORT)) failedTestWithScreenshot("Неверное значение в параметре mg_port");
         //Проверка настроек SMG
-        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_SMG_ENSBLE)) failedTestWithScreenshot("Неверное значение в параметре SMG3_ENABLE файла /etc/smg.cfg", false);
-        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_SGDEV)) failedTestWithScreenshot("Неверное значение в параметре SG3_DEV файла /etc/smg.cfg", false);
-        if( !SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_MGDEV)) failedTestWithScreenshot("Неверное значение в параметре MG3_DEV файла /etc/smg.cfg", false);
+        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_SMG_ENSBLE)) failedTestWithScreenshot("Неверное значение в параметре SMG3_ENABLE файла /etc/smg.cfg");
+        if( ! SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_SGDEV)) failedTestWithScreenshot("Неверное значение в параметре SG3_DEV файла /etc/smg.cfg");
+        if( !SSHManager.isCheckQuerySSH(SIP_PULT_CONFIG_MGDEV)) failedTestWithScreenshot("Неверное значение в параметре MG3_DEV файла /etc/smg.cfg");
     }
 
     @Step(value = "Маршрутизация вызовов")
@@ -108,7 +108,7 @@ public class CONFIG_DX500_Test {
     @Test
     void test_DX500_Route_Calls(){
         if (!dx500Page.isMySqlDialplan()) {
-            failedTestWithScreenshot("Маршрут для DX500 не был добавлен в БД MySql", false);
+            failedTestWithScreenshot("Маршрут для DX500 не был добавлен в БД MySql");
         }
     }
 
@@ -116,7 +116,7 @@ public class CONFIG_DX500_Test {
     @Description(value = "Проверяем, что конфигурация сервера Занятости сохранилась")
     @Test
     void test_DX500_Configuration_Busy(){
-        if( ! SSHManager.isCheckQuerySSH(BUSY_CONFIG_ADAPTER_NAME)) failedTestWithScreenshot("Неверное значение в параметре adapter_name", false);
+        if( ! SSHManager.isCheckQuerySSH(BUSY_CONFIG_ADAPTER_NAME)) failedTestWithScreenshot("Неверное значение в параметре adapter_name");
     }
 
     @AfterEach
@@ -124,11 +124,10 @@ public class CONFIG_DX500_Test {
         assertTrue(TEST_STATUS, TEST_MESSAGE);
     }
 
-    void failedTestWithScreenshot(String message, boolean screen) {
+    void failedTestWithScreenshot(String message) {
         Allure.step(message, Status.FAILED);
         TEST_STATUS = false;
         TEST_MESSAGE = TEST_MESSAGE + "\n" + message;
-        screenshot = screen;
     }
 
 }
