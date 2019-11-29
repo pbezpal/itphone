@@ -104,6 +104,7 @@ public class CONFIG_DX500_Test {
 
     @Step(value = "Маршрутизация вызовов")
     @Description(value = "Проверяе, есть ли маршрутизация вызовов для провайдера")
+    @Disabled
     @Test
     void test_DX500_Route_Calls(){
         if (!dx500Page.isMySqlDialplan()) {
