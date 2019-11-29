@@ -53,6 +53,7 @@ public class MONITORING_Test {
 
     @Story(value = "Статус сервера Ассистентов")
     @Description(value = "Проверяем корректное отображение статуса сервера Ассистентов")
+    @Disabled
     @Order(2)
     @Test
     void test_Booster_Status_Server(){
@@ -62,6 +63,7 @@ public class MONITORING_Test {
 
     @Story(value = "Статус сервера контактов на сервере Ассистентов")
     @Description(value = "Проверяем корректное отображение статус сервера контактов на сервере Ассистентов")
+    @Disabled
     @Order(3)
     @Test
     void test_Booster_Status_Server_Contacts(){
@@ -71,6 +73,7 @@ public class MONITORING_Test {
 
     @Story(value = "Статус станции на сервере Ассистентов")
     @Description(value = "Проверяем корректное отображение статус станции на сервере Ассистентов")
+    @Disabled
     @Order(4)
     @Test
     void test_Booster_Status_Connect_Station(){
@@ -219,6 +222,7 @@ public class MONITORING_Test {
 
     @Story(value = "Переход на страницу 'Управление кластерами'")
     @Description(value = "Проверяем, что на странице Мониторинг корректно работает переход на страницу 'Управление кластерами'")
+    @Disabled
     @Order(20)
     @Test
     void test_Management_Booster(){

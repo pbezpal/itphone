@@ -4,13 +4,9 @@ import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureProviderDX500;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
-import RecourcesTests.TestRules;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
-import io.qameta.allure.model.Status;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
 import static DataTests.Providers.PROVIDER_DX500.*;
@@ -56,6 +52,7 @@ public class ADD_DX500_Test {
 
     @Story(value = "Сервер Ассистент")
     @Description(value = "Добавляем сервер Ассистентов")
+    @Disabled
     @Test
     void test_Add_Booster(){
         filename = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -134,11 +131,4 @@ public class ADD_DX500_Test {
     static void afterAllTests(){
         refresh();
     }
-
-    /*void failedTestWithScreenshot(String message, boolean screen) {
-        Allure.step(message, Status.FAILED);
-        TEST_STATUS = false;
-        TEST_MESSAGE = TEST_MESSAGE + "\n" + message;
-        screenshot = screen;
-    }*/
 }

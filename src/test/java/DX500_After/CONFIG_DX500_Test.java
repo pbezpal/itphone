@@ -5,14 +5,12 @@ import AnnotationsTests.ServicesTests.FeatureProviderDX500;
 import HelperClasses.SSHManager;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
-import RecourcesTests.TestRules;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import io.qameta.allure.model.Status;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
 import static DataTests.Providers.PROVIDER_DX500.*;
@@ -43,6 +41,7 @@ public class CONFIG_DX500_Test {
 
     @Story(value = "Конфигурацию сервера Ассистентов")
     @Description(value = "Проверяем, что конфигурация сервера Ассистентов сохранилась")
+    @Disabled
     @Test
     public void test_DX500_Configuration_Booster(){
         if( ! SSHManager.isCheckQuerySSH(BOOSTER_CONFIG_DB_IP)) failedTestWithScreenshot("Неверное значение в параметре db_ip", false);

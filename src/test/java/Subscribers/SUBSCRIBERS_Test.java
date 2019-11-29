@@ -2,14 +2,11 @@ package Subscribers;
 
 import AnnotationsTests.ServicesTests.EpicServicesTests;
 import AnnotationsTests.ServicesTests.FeatureSubscribersTests;
-import HelperClasses.SSHManager;
 import Pages.MonitoringPage;
 import Pages.SubscribersPage;
 import RecourcesTests.TestRules;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;;
-import io.qameta.allure.model.Status;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

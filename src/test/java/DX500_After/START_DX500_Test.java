@@ -5,13 +5,9 @@ import AnnotationsTests.ServicesTests.FeatureProviderDX500;
 import Pages.MonitoringPage;
 import Pages.Providers.DX500Page;
 import Pages.Providers.ProvidersPage;
-import RecourcesTests.TestRules;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
-import io.qameta.allure.model.Status;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.Providers.PROVIDERS.PROVIDERS_ITEM_MENU;
 import static DataTests.Providers.PROVIDER_DX500.*;
@@ -29,8 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class START_DX500_Test {
 
-    private boolean TEST_STATUS;
-    private String TEST_MESSAGE;
     private String filename;
 
     @BeforeEach
@@ -40,12 +34,11 @@ public class START_DX500_Test {
         if( dx500Page == null ) dx500Page = DX500Page.getInstance();
         assertTrue(dx500Page.isCheckProvider(DX500_TYPE_PROVIDER), "Провайдер DX500 не создан");
         dx500Page.clickSectionDX500();
-        TEST_STATUS = true;
-        TEST_MESSAGE = "";
     }
 
     @Story(value = "Старт сервера Ассистентов провайдера DX500")
     @Description(value = "Проверяем, что через СУ успешно стартует сервер Ассистентов провайдера DX500")
+    @Disabled
     @Test
     void test_DX500_Start_Server_Booster() {
         filename = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -104,12 +97,6 @@ public class START_DX500_Test {
     static void finalTest() {
         refresh();
     }
-
-    /*void failedTestWithScreenshot(String message) {
-        Allure.step(message, Status.FAILED);
-        TEST_STATUS = false;
-        TEST_MESSAGE = TEST_MESSAGE + "\n" + message;
-    }*/
 
     void startService(String service){
         assertTimeout(ofSeconds(300), () -> {
