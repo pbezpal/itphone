@@ -5,6 +5,7 @@ import Pages.MonitoringPage;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.stqa.selenium.factory.WebDriverPool;
@@ -24,8 +25,8 @@ public class BeforeSettingsTests {
     public static void StartTests(){
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("firefox");
-        capabilities.setVersion("70.0");
+        capabilities.setBrowserName("chrome");
+        capabilities.setVersion("78.0");
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", false);
         capabilities.setCapability("acceptInsecureCerts", true);
@@ -36,11 +37,10 @@ public class BeforeSettingsTests {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        driver.manage().window().setSize(new Dimension(1920, 1080));
         WebDriverRunner.setWebDriver(driver);
 
         Configuration.baseUrl = HOST_SERVER;
-        Configuration.startMaximized = true;
-        //Configuration.browserSize = "1280x1024";
         Configuration.screenshots = false;
 
         if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains(HOST_SERVER)) open("/");
