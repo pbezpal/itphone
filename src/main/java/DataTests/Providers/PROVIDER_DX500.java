@@ -70,8 +70,8 @@ public @interface PROVIDER_DX500 {
     String PULT_CONFIG_PORT = "grep -E 'port=1220' " + DX500_PULT_CONFIG;
     String PULT_CONFIG_MEDIA_GATE_PORT = "grep -E 'media_gate_port=235" + DX500_PULT_SMG + "' " + DX500_PULT_CONFIG;
     String PULT_SMG_ENABLE = "grep -E 'SMG" + DX500_PULT_SMG + "_ENABLE=1' /etc/smg.cfg";
-    String PULT_SMG_SGDEV = "grep -E \"SG" + DX500_PULT_SMG + "_DEV='" + IP_SERVER + ":232" + DX500_PULT_SMG + "->" + DX500_PULT_CONVERTER_IP + ":2300'\" /etc/smg.cfg";
-    String PULT_SMG_MGDEV = "grep -E \"MG" + DX500_PULT_SMG + "_DEV='" + IP_SERVER + ":236" + DX500_PULT_SMG + "->" + DX500_PULT_CONVERTER_IP + ":2350|" + IP_SERVER + ":232" + DX500_PULT_SMG + "'\" /etc/smg.cfg";
+    String PULT_SMG_SGDEV = "cat /etc/smg.cfg | grep \"SG" + DX500_PULT_SMG + "_DEV='" + IP_SERVER + ":232" + DX500_PULT_SMG + "->" + DX500_PULT_CONVERTER_IP + ":2300'\"";
+    String PULT_SMG_MGDEV = "cat /etc/smg.cfg | grep \"MG" + DX500_PULT_SMG + "_DEV='" + IP_SERVER + ":236" + DX500_PULT_SMG + "->" + DX500_PULT_CONVERTER_IP + ":2350|" + IP_SERVER + ":232" + DX500_PULT_SMG + "'\"";
     String PULT_CONNECT_STATION = "echo s | nc l " + DX500_PULT_CONTROL_PORT + " | grep 'sg_l3_state: lapd_establish'";
     String PULT_CONNECT_CONTACTS = "echo s | nc l " + DX500_PULT_CONTROL_PORT + " | grep 'db: logined'";
 
@@ -81,12 +81,12 @@ public @interface PROVIDER_DX500 {
     String SIP_ABON_DX_CONFIG_DB_IP = "grep -E 'db_ip=127.0.0.1' " + DX500_SIP_ABON_DX_CONFIG;
     String SIP_ABON_DX_CONFIG_DB_PORT = "grep -E 'db_port=1215' " + DX500_SIP_ABON_DX_CONFIG;
     String SIP_ABON_DX_CONFIG_SIG_GATE_IP = "grep -E 'sig_gate_ip=127.0.0.1' " + DX500_SIP_ABON_DX_CONFIG;
-    String SIP_ABON_DX_CONFIG_SIG_GATE_PORT = "grep -E 'sig_gate_port=2300' " + DX500_SIP_ABON_DX_CONFIG;
+    String SIP_ABON_DX_CONFIG_SIG_GATE_PORT = "grep -E 'sig_gate_port=230" + DX500_SIP_ABON_DX_SMG + "' " + DX500_SIP_ABON_DX_CONFIG;
     String SIP_ABON_DX_CONFIG_MEDIA_GATE_IP = "grep -E 'media_gate_ip=127.0.0.1' " + DX500_SIP_ABON_DX_CONFIG;
-    String SIP_ABON_DX_CONFIG_MEDIA_GATE_PORT = "grep -E 'media_gate_port=2350' " + DX500_SIP_ABON_DX_CONFIG;
+    String SIP_ABON_DX_CONFIG_MEDIA_GATE_PORT = "grep -E 'media_gate_port=235" + DX500_SIP_ABON_DX_SMG + "' " + DX500_SIP_ABON_DX_CONFIG;
     String SIP_ABON_DX_CONFIG_SMG_ENABLE = "grep -E 'SMG" + DX500_SIP_ABON_DX_SMG + "_ENABLE=1' /etc/smg.cfg";
-    String SIP_ABON_DX_CONFIG_SGDEV = "grep -E \"SG" + DX500_SIP_ABON_DX_SMG + "_DEV='" + IP_SERVER + ":232" + DX500_SIP_ABON_DX_SMG + "->" + DX500_SIP_ABON_DX_CONVERTER_IP + ":2300'\" /etc/smg.cfg";
-    String SIP_ABON_DX_CONFIG_MGDEV = "grep -E \"MG" + DX500_SIP_ABON_DX_SMG + "_DEV='" + IP_SERVER + ":236" + DX500_SIP_ABON_DX_SMG + "->" + DX500_SIP_ABON_DX_CONVERTER_IP + ":2350|" + IP_SERVER + ":232" + DX500_SIP_ABON_DX_SMG + "'\" /etc/smg.cfg";
+    String SIP_ABON_DX_CONFIG_SGDEV = "cat /etc/smg.cfg | grep \"SG" + DX500_SIP_ABON_DX_SMG + "_DEV='" + IP_SERVER + ":232" + DX500_SIP_ABON_DX_SMG + "->" + DX500_SIP_ABON_DX_CONVERTER_IP + ":2300'\"";
+    String SIP_ABON_DX_CONFIG_MGDEV = "cat /etc/smg.cfg | grep \"MG" + DX500_SIP_ABON_DX_SMG + "_DEV='" + IP_SERVER + ":236" + DX500_SIP_ABON_DX_SMG + "->" + DX500_SIP_ABON_DX_CONVERTER_IP + ":2350|" + IP_SERVER + ":232" + DX500_SIP_ABON_DX_SMG + "'\"";
 
     /***** Проверка конфигурации сервера SIP-Пульт *****/
     String SIP_PULT_CONFIG_SG_PORT = "grep -E 'sg_port=230" + DX500_SIP_PULT_SMG + "' " + DX500_SIP_PULT_CONFIG;
@@ -97,8 +97,8 @@ public @interface PROVIDER_DX500 {
     String SIP_PULT_CONFIG_MG_PORT = "grep -E 'mg_port=235" + DX500_SIP_PULT_SMG + "' " + DX500_SIP_PULT_CONFIG;
     String sipPultRingin = "grep -E 'ring=Ring1' " + DX500_SIP_PULT_CONFIG;
     String SIP_PULT_CONFIG_SMG_ENSBLE = "grep -E 'SMG" + DX500_SIP_PULT_SMG + "_ENABLE=1' /etc/smg.cfg";
-    String SIP_PULT_CONFIG_SGDEV = "grep -E \"SG" + DX500_SIP_PULT_SMG + "_DEV='" + IP_SERVER + ":232" + DX500_SIP_PULT_SMG + "->" + DX500_SIP_PULT_CONVERTER_IP + ":2300'\" /etc/smg.cfg";
-    String SIP_PULT_CONFIG_MGDEV = "grep -E \"MG" + DX500_SIP_PULT_SMG + "_DEV='" + IP_SERVER + ":236" + DX500_SIP_PULT_SMG + "->" + DX500_SIP_PULT_CONVERTER_IP + ":2350|" + IP_SERVER + ":232" + DX500_SIP_PULT_SMG + "'\" /etc/smg.cfg";
+    String SIP_PULT_CONFIG_SGDEV = "cat /etc/smg.cfg | grep \"SG" + DX500_SIP_PULT_SMG + "_DEV='" + IP_SERVER + ":232" + DX500_SIP_PULT_SMG + "->" + DX500_SIP_PULT_CONVERTER_IP + ":2300'\"";
+    String SIP_PULT_CONFIG_MGDEV = "cat /etc/smg.cfg | grep \"MG" + DX500_SIP_PULT_SMG + "_DEV='" + IP_SERVER + ":236" + DX500_SIP_PULT_SMG + "->" + DX500_SIP_PULT_CONVERTER_IP + ":2350|" + IP_SERVER + ":232" + DX500_SIP_PULT_SMG + "'\"";
     String SIP_PULT_CONNECT_STATION = "echo s | nc l " + DX500_SIP_PULT_CONTROL_PORT + " | grep 'l3_state              : established (connected to Station)'";
     String SIP_PULT_CONNECT_CONTACTS = "echo s | nc l " + DX500_SIP_PULT_CONTROL_PORT + " | grep 'connection_to_contacts: yes'";
     String SIP_PULT_CONNECT_BUSY = "echo s | nc l "  + DX500_SIP_PULT_CONTROL_PORT +  " | grep 'connection_to_busy    : yes'";

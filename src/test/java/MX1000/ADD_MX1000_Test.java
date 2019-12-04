@@ -60,11 +60,11 @@ public class ADD_MX1000_Test {
 
     @Story(value = "Добавление провайдетра MX1000")
     @Description(value = "Проверяем, что добавляется провайдет MX1000 типа КАТС")
-    @Disabled
     @Test
     void test_Provider_MX1000() {
         filename = new Object(){}.getClass().getEnclosingMethod().getName();
         assertTimeout(ofSeconds(600), () -> {
+            assertTrue(sipServerPage.isCheckSettingsSipServer(), "Невозмоожно добавить провайдер MX1000. ненастроен SIP сервер");
             if (isCheckNotVisibleElement() && !ProvidersPage.isCheckProviderPage().isDisplayed())
                 katsPage = (KATSPage) MonitoringPage.openSectionWEB(PROVIDERS_ITEM_MENU, MX1000_TYPE_PROVIDER);
             if (katsPage == null) katsPage = KATSPage.getInstance();

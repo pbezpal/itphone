@@ -5,18 +5,15 @@ import AnnotationsTests.Monitoring.FeatureStatusServers;
 import HelperClasses.SSHManager;
 import HelperClasses.ScreenshotTests;
 import Pages.MonitoringPage;
-import RecourcesTests.TestRules;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static DataTests.OPENSIPS.*;
 import static DataTests.Providers.PROVIDER_DX500.*;
 import static Pages.MonitoringPage.*;
 import static Pages.Providers.DX500Page.isCheckStartServers;
 import static RecourcesTests.BeforeSettingsTests.StartTests;
-import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.refresh;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -270,7 +267,7 @@ public class MONITORING_Test {
         assertTrue(isCheckStartServers(server), "Сервер не запущен!!!");
         boolean converterStatus = SSHManager.isCheckQuerySSH("smg.status s | grep 231" + SMG + " -A 7 | grep 'lapd_ready: establish'");
         boolean moduleStatusConverter = MonitoringPage.isCheckModuleConverterLanE1(server);
-        boolean tableStatusConverter = MonitoringPage.isCheckTableConverterLanE1(DX500_SIP_PULT);
+        boolean tableStatusConverter = MonitoringPage.isCheckTableConverterLanE1(server);
         if(converterStatus && moduleStatusConverter && tableStatusConverter) TEST_STATUS = true;
         else if( ! converterStatus && (moduleStatusConverter || tableStatusConverter)){
             this.TEST_STATUS = false;

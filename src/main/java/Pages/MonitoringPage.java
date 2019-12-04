@@ -182,13 +182,13 @@ public class MonitoringPage extends LoginPage{
 
     @Step(value = "Проверяем состояние конвертера на 'Холодильнике")
     public static boolean isCheckModuleConverterLanE1(String service){
-        if($("div[server='" + service + "']").find("img").getAttribute("src").contains("lite-green-icon.png")) return true;
+        if($("div[server*='" + service + "']").find("img").getAttribute("src").contains("lite-green-icon.png")) return true;
         return false;
     }
 
     @Step(value = "Проверяем состояние конвертера в таблице состояний")
     public static boolean isCheckTableConverterLanE1(String service){
-        $("div[server='" + service + "']").click();
+        $("div[server*='" + service + "']").click();
         $("table#text-info").find("td").waitUntil(Condition.text("второй уровень: "), 30000);
         if ($("article.module.width_quarter").find("img").getAttribute("src").contains("stat_ok.png")) return true;
         return false;

@@ -18,15 +18,14 @@ import static Pages.MonitoringPage.isCheckNotVisibleDownload;
 import static Pages.MonitoringPage.isCheckNotVisibleElement;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class BeforeSettingsTests {
 
     public static void StartTests(){
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("firefox");
-        capabilities.setVersion("70.0");
+        capabilities.setBrowserName("chrome");
+        capabilities.setVersion("78.0");
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", false);
         capabilities.setCapability("acceptInsecureCerts", true);
