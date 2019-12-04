@@ -24,8 +24,8 @@ public class BeforeSettingsTests {
     public static void StartTests(){
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("chrome");
-        capabilities.setVersion("78.0");
+        capabilities.setBrowserName("firefox");
+        capabilities.setVersion("70.0");
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", false);
         capabilities.setCapability("acceptInsecureCerts", true);
@@ -40,6 +40,7 @@ public class BeforeSettingsTests {
 
         Configuration.baseUrl = HOST_SERVER;
         Configuration.startMaximized = true;
+        //Configuration.browserSize = "1280x1024";
         Configuration.screenshots = false;
 
         if( ! WebDriverRunner.getWebDriver().getCurrentUrl().contains(HOST_SERVER)) open("/");
